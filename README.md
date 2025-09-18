@@ -49,6 +49,29 @@ The main goal of the platform is to empower artisans to easily showcase their pr
 
 ---
 
+## Features
+
+- **User Registration & Login**  
+  Separate sign-up and login interfaces for artisans and clients.  
+
+- **User Profiles**  
+  - Artisans: showcase their crafts with descriptions and images.  
+  - Clients: manage their personal information and view past requests.  
+
+- **Product & Service Showcase**  
+  Artisans can display handcrafted products and offer live shows or interactive workshops.  
+
+- **Collaboration Requests**  
+  Clients can send offers to artisans (purchase, live show, or workshop).  
+  Artisans can accept or reject requests, and provide cost and timeframe details.  
+
+- **Basic Contract Flow**  
+  Once both parties agree, the platform records a simple contract for the request.  
+
+- **Profile Enhancement**  
+  Completed offers are added to the artisan’s profile to build trust and credibility with future clients.  
+
+
 ### Risks
 
 | Risk                                                                 | Level of Risk | Mitigation Strategy                                                                 |
