@@ -49,7 +49,7 @@ The main goal of the platform is to empower artisans to easily showcase their pr
 
 ---
 
-## Features
+## MVP Features
 
 - **User Registration & Login**  
   Separate sign-up and login interfaces for artisans and clients.  
