@@ -55,8 +55,8 @@ The main goal of the platform is to empower artisans to easily showcase their pr
   Separate sign-up and login interfaces for artisans and clients.  
 
 - **User Profiles**  
-  - Artisans: showcase their crafts with descriptions and images.  
-  - Clients: manage their personal information and view past requests.  
+   Artisans: showcase their crafts with descriptions and images.  
+   Clients: manage their personal information and view past requests.  
 
 - **Product & Service Showcase**  
   Artisans can display handcrafted products and offer live shows or interactive workshops.  
