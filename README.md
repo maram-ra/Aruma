@@ -27,12 +27,18 @@ The main goal of the platform is to empower artisans to easily showcase their pr
 
 ### Stakeholders and Roles
 
-| Name              | Role               | Responsibilities                                                                 |
-|-------------------|-------------------|---------------------------------------------------------------------------------|
-| Maram Alsofyani   | Project Manager   | Leads the project, coordinates team tasks, contributes to backend, frontend, and UI/UX. |
-| Shurooq Alabbadi  | Frontend Developer | Focuses on frontend components while also contributing to backend and database tasks. |
-| Layan Aljunayh    | Backend Developer | Focuses on backend and database development while also supporting frontend and UI/UX. |
-| Razan Alabdulhadi | UI/UX Designer    | Focuses on design and user experience while also contributing to frontend and backend tasks. |
+All team members are involved in every part of the project.  
+Primary roles are assigned but will be rotated among the team to ensure shared learning and balanced responsibilities.  
+
+| Name              | Role(s)                                    | Responsibilities                                                                 |
+|-------------------|--------------------------------------------|---------------------------------------------------------------------------------|
+| Maram Alsofyani   | **Project Manager** / **Development Lead** | Coordinates team tasks, oversees technical direction, and contributes across backend, frontend, and UI/UX. |
+| Shurooq Alabbadi  | **Frontend Developer** / **Quality Assurance** | Focuses on frontend components, performs feature testing, and supports backend integration. |
+| Layan Aljunayh    | **Backend Developer** / **Project Evaluator** | Focuses on backend and database development, evaluates project progress, and supports frontend/UI. |
+| Razan Alabdulhadi | **UI/UX Designer** / **Quality Assurance** | Designs user experience, ensures usability testing, and contributes to frontend and backend tasks. |
+
+
+**Note:** Roles such as Development Lead, Quality Assurance, and Project Evaluator will rotate among the team during the project lifecycle.  
 
 ---
 
