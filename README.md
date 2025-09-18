@@ -91,3 +91,13 @@ The main goal of the platform is to empower artisans to easily showcase their pr
 | Technical Documentation    | Week 4–5      | Architecture diagrams, Feature specifications              |
 | MVP Development            | Week 6–9      | Functional MVP with user stories                            |
 | Project Closure            | Week 10–12    | Testing, presentation, project wrap-up                      |
+
+
+
+## Future Features
+- **Payment Integration**
+  Secure online payments for products, workshops, and live shows.
+- **User Reviews & Ratings**
+  Allow clients to rate artisans and leave feedback to build more trust.
+- **Service Verification**
+  Formal verification badges for artisans to increase credibility
