@@ -1,5 +1,4 @@
 # Aruma
-![Aruma Logo](.png)
 ## Project Charter
 
 ---
