@@ -27,12 +27,12 @@ The main goal of the platform is to empower artisans to easily showcase their pr
 
 ### Stakeholders and Roles
 
-| Name              | Role              | Responsibilities                                                                 |
-|-------------------|------------------|---------------------------------------------------------------------------------|
-| Maram Alsofyani   | Project Manager  | Leads the project, coordinates team tasks, oversees backend, and contributes to frontend and UI/UX. |
-| Shurooq Alabbadi  | Frontend Developer | Builds user interface components, ensures responsive design, and supports backend integration. |
-| Layan Aljunayh    | Backend Developer | Designs and manages databases, develops backend features, and contributes to system architecture. |
-| Razan Alabdulhadi | UI/UX Designer     | Creates user-friendly designs, improves user experience, and supports project documentation. |
+| Name              | Role               | Responsibilities                                                                 |
+|-------------------|-------------------|---------------------------------------------------------------------------------|
+| Maram Alsofyani   | Project Manager   | Leads the project, coordinates team tasks, contributes to backend, frontend, and UI/UX. |
+| Shurooq Alabbadi  | Frontend Developer | Focuses on frontend components while also contributing to backend and database tasks. |
+| Layan Aljunayh    | Backend Developer | Focuses on backend and database development while also supporting frontend and UI/UX. |
+| Razan Alabdulhadi | UI/UX Designer    | Focuses on design and user experience while also contributing to frontend and backend tasks. |
 
 ---
 
