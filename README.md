@@ -7,8 +7,14 @@
 
 ### Project Objectives
 
-**Purpose**  
-The main goal of the platform is to empower artisans to easily showcase their products and services, reach more clients, and grow their presence through a comprehensive digital space that includes selling handcrafted products, offering live show requests, and organizing interactive workshops.
+### Purpose
+
+The main goal of the platform is to empower artisans to showcase their products and services, reach more clients, and strengthen their market presence through a comprehensive digital space.  
+
+Our platform enables **artisans** to present their work in a **digital marketplace** that highlights handcrafted products, workshops, and live shows, while maintaining a **dedicated personal profile** that organizes all their submitted work and builds credibility with clients.  
+
+At the same time, it allows **clients** to explore the marketplace, view artisans’ profiles, and engage with them through collaboration requests for products, workshops, or live shows.  
+
 
 **Target Audience:**
 
