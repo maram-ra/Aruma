@@ -9,6 +9,11 @@
 **MVP Scope:**  
 Basic authentication with email and password. No social logins or advanced security required at this stage.  
 
+**Acceptance Criteria:**  
+- Given a new user submits valid registration info  
+- When they confirm the form  
+- Then the system saves their account and redirects them to login.  
+
 ---
 
 ### 2. Artisan Profile
@@ -17,6 +22,11 @@ Basic authentication with email and password. No social logins or advanced secur
 
 **MVP Scope:**  
 Profile includes name, bio, craft type, and images. No advanced customization or categories.  
+
+**Acceptance Criteria:**  
+- Given an artisan logs in  
+- When they update their profile details  
+- Then the system saves the changes and updates their public profile.  
 
 ---
 
@@ -27,6 +37,11 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 **MVP Scope:**  
 Simple list/grid of artisans with name, short bio, and one featured image. No filters or advanced search.  
 
+**Acceptance Criteria:**  
+- Given I am on the marketplace page  
+- When I scroll through the list  
+- Then I can view artisan profiles with minimal details.  
+
 ---
 
 ### 4. Collaboration Requests
@@ -35,6 +50,11 @@ Simple list/grid of artisans with name, short bio, and one featured image. No fi
 
 **MVP Scope:**  
 Request form includes type (product/workshop/live show) and a message. Artisans can accept or reject only. No messaging or chat.  
+
+**Acceptance Criteria:**  
+- Given a client sends a request  
+- When the artisan reviews it  
+- Then they can accept or reject the request with one click.  
 
 ---
 
@@ -46,6 +66,11 @@ Request form includes type (product/workshop/live show) and a message. Artisans 
 **MVP Scope:**  
 Simple status tracking only. No legal documents or payment integration.  
 
+**Acceptance Criteria:**  
+- Given a request is accepted  
+- When the artisan enters cost and timeframe  
+- Then the client can confirm, and the system updates the contract status.  
+
 ---
 
 ### 6. Profile Enhancement
@@ -53,6 +78,11 @@ Simple status tracking only. No legal documents or payment integration.
 
 **MVP Scope:**  
 Show a list of completed requests in the artisan profile. No ratings or reviews.  
+
+**Acceptance Criteria:**  
+- Given an artisan marks a request as completed  
+- When the contract is closed  
+- Then the system adds this request to the artisan’s profile under “Completed Work.”  
 
 ---
 
@@ -70,6 +100,6 @@ Show a list of completed requests in the artisan profile. No ratings or reviews.
 ---
 
 ## Notes
-- **Adapt to the MVP:** Stories are simplified to the minimum functionality required.  
-- **Collaborate Actively:** Stories are divided among team members while ensuring collective review.  
-- **Keep it Clear and Simple:** Each story focuses on one functionality only, described in plain and direct language.  
+- **Adapt to the MVP:** Stories are scoped to the simplest working version.  
+- **Collaborate Actively:** Each story is owned by one team member but reviewed collectively.  
+- **Keep it Clear and Simple:** Features are described in plain language with clear acceptance criteria.  
