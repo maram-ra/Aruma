@@ -10,9 +10,9 @@
 Basic authentication with email and password. No social logins or advanced security required at this stage.  
 
 **Acceptance Criteria:**  
-- Given a new user submits valid registration info  
-- When they confirm the form  
-- Then the system saves their account and redirects them to login.  
+1. Given a new user submits valid registration info  
+2. When they confirm the form  
+3. Then the system saves their account and redirects them to login.  
 
 ---
 
@@ -24,9 +24,9 @@ Basic authentication with email and password. No social logins or advanced secur
 Profile includes name, bio, craft type, and images. No advanced customization or categories.  
 
 **Acceptance Criteria:**  
-- Given an artisan logs in  
-- When they update their profile details  
-- Then the system saves the changes and updates their public profile.  
+1. Given an artisan logs in  
+2. When they update their profile details  
+3. Then the system saves the changes and updates their public profile.  
 
 ---
 
@@ -38,9 +38,9 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 Simple list/grid of artisans with name, short bio, and one featured image. No filters or advanced search.  
 
 **Acceptance Criteria:**  
-- Given I am on the marketplace page  
-- When I scroll through the list  
-- Then I can view artisan profiles with minimal details.  
+1. Given I am on the marketplace page  
+2. When I scroll through the list  
+3. Then I can view artisan profiles with minimal details.  
 
 ---
 
@@ -52,9 +52,9 @@ Simple list/grid of artisans with name, short bio, and one featured image. No fi
 Request form includes type (product/workshop/live show) and a message. Artisans can accept or reject only. No messaging or chat.  
 
 **Acceptance Criteria:**  
-- Given a client sends a request  
-- When the artisan reviews it  
-- Then they can accept or reject the request with one click.  
+1. Given a client sends a request  
+2. When the artisan reviews it  
+3. Then they can accept or reject the request with one click.  
 
 ---
 
@@ -67,9 +67,9 @@ Request form includes type (product/workshop/live show) and a message. Artisans 
 Simple status tracking only. No legal documents or payment integration.  
 
 **Acceptance Criteria:**  
-- Given a request is accepted  
-- When the artisan enters cost and timeframe  
-- Then the client can confirm, and the system updates the contract status.  
+1. Given a request is accepted  
+2. When the artisan enters cost and timeframe  
+3. Then the client can confirm, and the system updates the contract status.  
 
 ---
 
@@ -80,22 +80,23 @@ Simple status tracking only. No legal documents or payment integration.
 Show a list of completed requests in the artisan profile. No ratings or reviews.  
 
 **Acceptance Criteria:**  
-- Given an artisan marks a request as completed  
-- When the contract is closed  
-- Then the system adds this request to the artisan’s profile under “Completed Work.”  
+1. Given an artisan marks a request as completed  
+2. When the contract is closed  
+3. Then the system adds this request to the artisan’s profile under “Completed Work.”  
 
 ---
 
 ## Future Features
 
-1. **Payment Integration**  
-   Secure online payments for products, workshops, and live shows.  
+### 1. Payment Integration
+- As a **client**, I want to pay securely through the platform, so that I can complete transactions without external tools.  
 
-2. **User Reviews & Ratings**  
-   Clients can rate artisans and leave feedback.  
+### 2. User Reviews & Ratings
+- As a **client**, I want to leave reviews and ratings on artisan profiles, so that I can share my experience with others.  
+- As an **artisan**, I want to receive feedback, so that I can improve my services and gain more credibility.  
 
-3. **Service Verification**  
-   Verified badges for artisans to build more trust.  
+### 3. Service Verification
+- As a **platform admin**, I want to verify artisan identities and award badges, so that clients can trust the legitimacy of services.  
 
 ---
 
