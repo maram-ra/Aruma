@@ -1,4 +1,4 @@
-# Aruma
+# Aruma - أرومة
 ## Project Charter
 
 ---
