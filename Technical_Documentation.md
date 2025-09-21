@@ -127,7 +127,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ```mermaid
 flowchart LR
     subgraph Client
-        A[Web/Mobile Browser]
+        A[Web Browser]
     end
 
     subgraph Frontend [Presentation Layer]
@@ -135,9 +135,9 @@ flowchart LR
     end
 
     subgraph Backend [Application Layer]
-        C[API Layer: Flask / Express]
+        C[API Layer: Flask ]
         F[Business Logic]
-        G[Security: Auth & Encryption]
+        G[Security: Auth ]
     end
 
     subgraph Database [Data Layer]
