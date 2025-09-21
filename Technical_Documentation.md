@@ -175,7 +175,6 @@ flowchart LR
 - `name` (string)
 - `email` (string, unique)
 - `password` (string)
-- `craft_type` (string)
 - `bio: string`
 - `craftType: string`
 - `images: string[]`
@@ -191,7 +190,7 @@ flowchart LR
 
 ---
 
-### 2.2 client Class
+### 2.2 Client Class
 **Purpose:** Represent client and handle authentication and profile management.
 
 **Attributes:**
@@ -217,7 +216,7 @@ flowchart LR
 - `artisan_id` (int, FK to User.user_id)
 - `request_type` (enum: "product", "workshop", "live_show")
 - `message` (text)
-- `status` (enum: "pending", "accepted", "rejected", "completed")
+- `status` (enum: "pending", "accepted", "rejected")
 - `cost` (decimal, optional)
 - `timeframe` (string, optional)
 - `created_at`, `updated_at` (datetime)
