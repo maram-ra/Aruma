@@ -208,25 +208,8 @@ flowchart LR
 
 ---
 
-### 2.3 ArtisanProfile Class
-**Purpose:** Store artisan-specific details.
-
-**Attributes:**
-- `artisan_id` (int, FK to User.user_id)
-- `bio` (text)
-- `craft_type` (string)
-- `images` (array of image URLs)
-- `completed_requests` (list of request IDs)
-
-**Methods:**
-- `add_image(image_url)`
-- `update_bio(bio_text)`
-- `get_profile()`
-
----
-
-### 2.4 Request / Collaboration Class
-**Purpose:** Handle collaboration requests from clients to artisans.
+### 2.3 Request Class
+**Purpose:** Handle requests from clients to artisans.
 
 **Attributes:**
 - `request_id` (int, PK)
@@ -246,7 +229,7 @@ flowchart LR
 
 ---
 
-### 2.5 Contract Class
+### 2.4 Contract Class
 **Purpose:** Track accepted collaboration agreements.
 
 **Attributes:**
