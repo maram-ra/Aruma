@@ -116,8 +116,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ### Proposed Tech Stack for Aruma
 - **Frontend:** HTML, CSS, JavaScript (basic web pages for the MVP).  
-- **Backend:** Python (Flask) or Node.js (Express) — handles requests and business logic.  
-- **Database:** PostgreSQL (to store users, profiles, requests, and contracts).  
+- **Backend:** Node.js (Express) — handles requests and business logic.  
+- **Database:** MongoDB (to store users, profiles, requests, and contracts).  
 - **External APIs:** Not required for the MVP (future integrations may include payment gateways or identity verification).  
 
 ---
