@@ -167,17 +167,38 @@ flowchart LR
 
 ## 2. Backend Components & Classes
 
-### 2.1 User Class
-**Purpose:** Represent users (artisan or client) and handle authentication and profile management.
+### 2.1 Artisan Class
+**Purpose:** Represent artisan and handle authentication and profile management.
 
 **Attributes:**
-- `user_id` (int, PK)
+- `artisan_id` (int, PK)
 - `name` (string)
 - `email` (string, unique)
-- `password_hash` (string)
-- `user_type` (string: "artisan" or "client")
-- `created_at` (datetime)
-- `updated_at` (datetime)
+- `password` (string)
+- `craft_type` (string)
+- `bio: string`
+- `craftType: string`
+- `images: string[]`
+- `offersWorkshop: boolean`
+- `offersLiveShow: boolean`
+- `completedWorkCount: number`
+  
+**Methods:**
+- `register()` – Save new user to database.
+- `login()` – Authenticate user credentials.
+- `update_profile()` – Update user details.
+- `get_profile()` – Retrieve public profile info.
+
+---
+
+### 2.2 client Class
+**Purpose:** Represent client and handle authentication and profile management.
+
+**Attributes:**
+- `client_id` (int, PK)
+- `name` (string)
+- `email` (string, unique)
+- `password` (string)
 
 **Methods:**
 - `register()` – Save new user to database.
@@ -187,7 +208,7 @@ flowchart LR
 
 ---
 
-### 2.2 ArtisanProfile Class
+### 2.3 ArtisanProfile Class
 **Purpose:** Store artisan-specific details.
 
 **Attributes:**
@@ -204,7 +225,7 @@ flowchart LR
 
 ---
 
-### 2.3 Request / Collaboration Class
+### 2.4 Request / Collaboration Class
 **Purpose:** Handle collaboration requests from clients to artisans.
 
 **Attributes:**
@@ -225,7 +246,7 @@ flowchart LR
 
 ---
 
-### 2.4 Contract Class
+### 2.5 Contract Class
 **Purpose:** Track accepted collaboration agreements.
 
 **Attributes:**
