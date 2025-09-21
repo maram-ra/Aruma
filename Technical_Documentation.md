@@ -103,4 +103,34 @@ Show a list of completed requests in the artisan profile. No ratings or reviews.
 ## Notes
 - **Adapt to the MVP:** Stories are scoped to the simplest working version.  
 - **Collaborate Actively:** Each story is owned by one team member but reviewed collectively.  
-- **Keep it Clear and Simple:** Features are described in plain language with clear acceptance criteria.  
+- **Keep it Clear and Simple:** Features are described in plain language with clear acceptance criteria.
+
+
+---
+
+## 1. System Architecture
+
+### Purpose
+To illustrate how the MVP components (frontend, backend, database, and external services) interact with each other, and how data flows between them.
+
+---
+
+### Proposed Tech Stack for Aruma
+- **Frontend:** HTML, CSS, JavaScript (basic web pages for the MVP).  
+- **Backend:** Python (Flask) or Node.js (Express) — handles requests and business logic.  
+- **Database:** PostgreSQL (to store users, profiles, requests, and contracts).  
+- **External APIs:** Not required for the MVP (future integrations may include payment gateways or identity verification).  
+
+---
+
+### High-Level Architecture Diagram
+
+```mermaid
+flowchart TD
+    A[Client Browser] --> B[Frontend HTML/CSS/JS]
+    B --> C[Backend Flask / Express API]
+    C --> D[Database PostgreSQL]
+    D --> C
+    C --> B
+    B --> A
+
