@@ -126,11 +126,9 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ```mermaid
 flowchart TD
-    A[Client Browser] --> B[Frontend: HTML, CSS, JavaScript]
-    B --> C[Backend: Flask / Express API + Business Logic]
-    C --> D[Database: PostgreSQL]
+    A[Client Browser] --> B[Frontend HTML/CSS/JS]
+    B --> C[Backend Flask / Express API]
+    C --> D[Database PostgreSQL]
     D --> C
     C --> B
     B --> A
-
-    C -.-> E[Future: External APIs (Payments, Authentication, Verification)]
