@@ -125,10 +125,38 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ### High-Level Architecture Diagram
 
 ```mermaid
-flowchart TD
-    A[Client Browser] --> B[Frontend HTML/CSS/JS]
-    B --> C[Backend Flask / Express API]
-    C --> D[Database PostgreSQL]
-    D --> C
+flowchart LR
+    subgraph Client
+        A[Web/Mobile Browser]
+    end
+
+    subgraph Frontend [Presentation Layer]
+        B[Frontend: HTML, CSS, JavaScript]
+    end
+
+    subgraph Backend [Application Layer]
+        C[API Layer: Flask / Express]
+        F[Business Logic]
+        G[Security: Auth & Encryption]
+    end
+
+    subgraph Database [Data Layer]
+        D[(PostgreSQL Database)]
+    end
+
+    subgraph External [External Services]
+        E[Future APIs: Payment, Verification, Authentication]
+    end
+
+    A --> B
+    B --> C
+    C --> F
+    F --> D
+    D --> F
+    F --> C
     C --> B
     B --> A
+
+    C -.-> G
+    G -.-> C
+    C -.-> E
