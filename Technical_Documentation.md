@@ -161,3 +161,82 @@ flowchart LR
     G -.-> C
     C -.-> E
 
+```
+
+---
+
+## 2. Backend Components & Classes
+
+### 2.1 User Class
+**Purpose:** Represent users (artisan or client) and handle authentication and profile management.
+
+**Attributes:**
+- `user_id` (int, PK)
+- `name` (string)
+- `email` (string, unique)
+- `password_hash` (string)
+- `user_type` (string: "artisan" or "client")
+- `created_at` (datetime)
+- `updated_at` (datetime)
+
+**Methods:**
+- `register()` – Save new user to database.
+- `login()` – Authenticate user credentials.
+- `update_profile()` – Update user details.
+- `get_profile()` – Retrieve public profile info.
+
+---
+
+### 2.2 ArtisanProfile Class
+**Purpose:** Store artisan-specific details.
+
+**Attributes:**
+- `artisan_id` (int, FK to User.user_id)
+- `bio` (text)
+- `craft_type` (string)
+- `images` (array of image URLs)
+- `completed_requests` (list of request IDs)
+
+**Methods:**
+- `add_image(image_url)`
+- `update_bio(bio_text)`
+- `get_profile()`
+
+---
+
+### 2.3 Request / Collaboration Class
+**Purpose:** Handle collaboration requests from clients to artisans.
+
+**Attributes:**
+- `request_id` (int, PK)
+- `client_id` (int, FK to User.user_id)
+- `artisan_id` (int, FK to User.user_id)
+- `request_type` (enum: "product", "workshop", "live_show")
+- `message` (text)
+- `status` (enum: "pending", "accepted", "rejected", "completed")
+- `cost` (decimal, optional)
+- `timeframe` (string, optional)
+- `created_at`, `updated_at` (datetime)
+
+**Methods:**
+- `create_request()`
+- `update_status(new_status)`
+- `set_terms(cost, timeframe)`
+
+---
+
+### 2.4 Contract Class
+**Purpose:** Track accepted collaboration agreements.
+
+**Attributes:**
+- `contract_id` (int, PK)
+- `request_id` (int, FK to Request.request_id)
+- `status` (enum: "pending", "confirmed", "completed")
+- `cost` (decimal)
+- `timeframe` (string)
+- `created_at`, `updated_at` (datetime)
+
+**Methods:**
+- `confirm_contract()`
+- `complete_contract()`
+
