@@ -206,3 +206,59 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 - `confirm_contract()`
 - `complete_contract()`
 
+
+
+## database scheme
+
+### 1. Artisans 
+
+| Field | Type | Constraints | Description |
+|-------|------|-------------|-------------|
+| _id | ObjectId | Primary Key | Unique artisan identifier |
+| name | String | Required | Artisan's full name |
+| email | String | Unique, Required | Artisan's email address |
+| password | String | Required | Hashed password |
+| bio | String | Optional | Artisan's biography |
+| craftType | String | Required | Type of craft specialty |
+| images | [String] | Optional | Array of image URLs |
+| offersWorkshop | Boolean | Default: false | Whether artisan offers workshops |
+| offersLiveShow | Boolean | Default: false | Whether artisan offers live shows |
+| completedWorkCount | Number | Default: 0 | Number of completed works |
+| createdAt | Date | Auto-generated | Document creation timestamp |
+| updatedAt | Date | Auto-generated | Document last update timestamp |
+
+### 2. Clients 
+| Field | Type | Constraints | Description |
+|-------|------|-------------|-------------|
+| _id | ObjectId | Primary Key | Unique client identifier |
+| name | String | Required | Client's full name |
+| email | String | Unique, Required | Client's email address |
+| password | String | Required | Hashed password |
+| createdAt | Date | Auto-generated | Document creation timestamp |
+| updatedAt | Date | Auto-generated | Document last update timestamp |
+
+### 3. Requests 
+| Field | Type | Constraints | Description |
+|-------|------|-------------|-------------|
+| _id | ObjectId | Primary Key | Unique request identifier |
+| client_id | ObjectId | Required, FK to Clients | Reference to client |
+| artisan_id | ObjectId | Required, FK to Artisans | Reference to artisan |
+| request_type | String | Enum: ["product", "workshop", "live_show"] | Type of request |
+| message | String | Required | Request details/message |
+| status | String | Enum: ["pending", "accepted", "rejected"] | Current request status |
+| cost | Number | Optional | Proposed cost |
+| timeframe | String | Optional | Proposed timeframe |
+| createdAt | Date | Auto-generated | Document creation timestamp |
+| updatedAt | Date | Auto-generated | Document last update timestamp |
+
+### 4. Contracts 
+| Field | Type | Constraints | Description |
+|-------|------|-------------|-------------|
+| _id | ObjectId | Primary Key | Unique contract identifier |
+| request_id | ObjectId | Required, FK to Requests | Reference to request |
+| status | String | Enum: ["pending", "confirmed", "completed"] | Current contract status |
+| cost | Number | Required | Agreed cost |
+| timeframe | String | Required | Agreed timeframe |
+| createdAt | Date | Auto-generated | Document creation timestamp |
+| updatedAt | Date | Auto-generated | Document last update timestamp |
+
