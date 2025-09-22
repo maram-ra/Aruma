@@ -53,12 +53,10 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 **Artisan Profile page:**
 <p align="center"><img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" /></p>
 
-**Artisan Profile page:** 
 ---
 
 ### 3. Marketplace Browsing
-- As a **client**, I want to browse artisans in a marketplace, so that I can discover products, workshops, and live shows.  
-- As an **anonymous visitor**, I want to preview the marketplace, so that I can see artisans before registering.  
+- As a **client**, I want to browse artisans in a marketplace, so that I can discover products, workshops, and live shows.    
 
 **MVP Scope:**  
 Simple list/grid of artisans with name, short bio, and one featured image. No filters or advanced search.  
@@ -67,6 +65,9 @@ Simple list/grid of artisans with name, short bio, and one featured image. No fi
 1. Given I am on the marketplace page  
 2. When I scroll through the list  
 3. Then I can view artisan profiles with minimal details.  
+
+**Marketplace Browsing page:**
+<p align="center"><img width="800" alt="Marketplace Browsing page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/landing%20page.png" /></p>
 
 ---
 
