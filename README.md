@@ -1,6 +1,5 @@
 # Aruma - أرومة
 
-<img width="252" height="197" alt="Screenshot 2025-09-22 124656" src="https://github.com/user-attachments/assets/de8cf8de-78f1-4d71-ba7d-16b4fffa21f4" />
 
 ## Project Charter
 
