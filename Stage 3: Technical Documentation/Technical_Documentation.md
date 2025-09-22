@@ -1,6 +1,6 @@
 
+<img width="1024" height="534" alt="ARUMA" src="https://github.com/user-attachments/assets/83d1e099-42dc-4a9c-8aeb-91e27b3ed662" />
 
-<img width="700" height="700" alt="ARUMA" src="https://github.com/user-attachments/assets/cbb6f5a1-639d-47c9-aa9b-4e3b925f7967" />
 
 
 # User Stories
