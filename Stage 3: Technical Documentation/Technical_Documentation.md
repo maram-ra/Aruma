@@ -15,6 +15,7 @@ Basic authentication with email and password. No social logins or advanced secur
 3. Then the system saves their account and redirects them to login.  
 
 **User type page:** 
+
 <img width="800" alt="User type page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/user%20type.png" />
 
 **Register and Login pages for artisan:** 
