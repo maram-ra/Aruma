@@ -46,6 +46,10 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 2. When they update their profile details  
 3. Then the system saves the changes and updates their public profile.  
 
+**Artisan Profile page:**
+<img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" />
+
+**Artisan Profile page:** 
 ---
 
 ### 3. Marketplace Browsing
