@@ -1,3 +1,8 @@
+
+
+<img width="1024" height="1024" alt="ARUMA" src="https://github.com/user-attachments/assets/cbb6f5a1-639d-47c9-aa9b-4e3b925f7967" />
+
+
 # User Stories
 
 ## Must Have (MVP)
