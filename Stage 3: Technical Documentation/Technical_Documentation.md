@@ -14,6 +14,13 @@ Basic authentication with email and password. No social logins or advanced secur
 2. When they confirm the form  
 3. Then the system saves their account and redirects them to login.  
 
+![User type page](Stage 3: Technical Documentation/Mockups/user type.png)
+---
+![Register page for artisan](Stage 3: Technical Documentation/Mockups/artisan/Register Page for artisans.png)
+![Login page for artisan](Stage 3: Technical Documentation/Mockups/artisan/Login Page.png)
+---
+![Register page for client](Stage 3: Technical Documentation/Mockups/client/Register Page for client.png)
+![Login page for client](Stage 3: Technical Documentation/Mockups/client/Login Page.png)
 ---
 
 ### 2. Artisan Profile
