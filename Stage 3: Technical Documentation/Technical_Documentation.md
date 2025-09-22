@@ -22,17 +22,19 @@ Basic authentication with email and password. No social logins or advanced secur
 3. Then the system saves their account and redirects them to login.  
 
 **User type page:** 
-
+<p align="center">
 <img width="800" alt="User type page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/user%20type.png" />
-
+</p>
 **Register and Login pages for artisan:** 
+<p align="center">
 <img width="800" alt="Register page for artisan" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/Register%20Page%20for%20artisans.png" />
 <img width="800" alt="Login page for artisan" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/Login%20Page.png" />
-
+</p>
 **Register and Login pages for client:**  
+<p align="center">
 <img width="800" alt="Register page for client" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/Register%20Page%20for%20client.png" />
 <img width="800" alt="Login page for client" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/Login%20Page.png" />
-
+</p>
 
 ### 2. Artisan Profile
 - As an **artisan**, I want to create and update my profile with details and images, so that clients can view my work.  
@@ -47,7 +49,7 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 3. Then the system saves the changes and updates their public profile.  
 
 **Artisan Profile page:**
-<img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" />
+<p align="center"><img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" /></p>
 
 **Artisan Profile page:** 
 ---
