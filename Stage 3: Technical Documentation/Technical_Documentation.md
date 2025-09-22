@@ -275,5 +275,5 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ### database schema
 
-<img width="800" alt="database schema" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66](https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" />
+<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" />
 
