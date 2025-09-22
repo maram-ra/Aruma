@@ -298,15 +298,12 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ### ER diagrams :
 
 ## ArtisansToRequest
-<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ArtsansToRequest.png
-" />
+<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ArtsansToRequest.png" />
 
 ## ClientToContract
-<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ClientToContract.png
-" />
+<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ClientToContract.png" />
 
 ## RequestToContract
-<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/RequestToContract.png
-" />
+<img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/RequestToContract.png" />
 
 ---
