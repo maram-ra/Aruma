@@ -3,8 +3,6 @@
 </p>
 
 
-## Project Charter
-
 ---
 
 ## Stage 2: Project Charter
