@@ -50,7 +50,7 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 2. When they update their profile details  
 3. Then the system saves the changes and updates their public profile.  
 
-**Artisan Profile page:**
+**Artisan Profile page (for artisan):**
 <p align="center"><img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" /></p>
 
 ---
@@ -66,12 +66,12 @@ Simple list/grid of artisans with name, short bio, and one featured image. No fi
 2. When I scroll through the list  
 3. Then I can view artisan profiles with minimal details.  
 
-**Marketplace Browsing page:**
+**Marketplace Browsing page (for client):**
 <p align="center"><img width="800" alt="Marketplace Browsing page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/landing%20page.png" /></p>
 
 ---
 
-### 4. Collaboration Requests
+### 4. Requests
 - As a **client**, I want to send a request to an artisan, so that I can collaborate with them.  
 - As an **artisan**, I want to accept or reject client requests, so that I can control my work.  
 
@@ -83,6 +83,8 @@ Request form includes type (product/workshop/live show) and a message. Artisans 
 2. When the artisan reviews it  
 3. Then they can accept or reject the request with one click.  
 
+**Requests page (for artisan):**
+<p align="center"><img width="800" alt="Requests page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/RequestsPage.png" /></p>
 ---
 
 ### 5. Basic Contract Flow
