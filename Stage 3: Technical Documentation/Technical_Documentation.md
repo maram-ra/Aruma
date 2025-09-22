@@ -1,9 +1,9 @@
 
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/83d1e099-42dc-4a9c-8aeb-91e27b3ed662" width="300" />
 </p>
 
+---
 
 # User Stories
 
