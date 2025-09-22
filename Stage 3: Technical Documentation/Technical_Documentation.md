@@ -1,5 +1,5 @@
 
-<img width="1024" height="534" alt="ARUMA" src="https://github.com/user-attachments/assets/83d1e099-42dc-4a9c-8aeb-91e27b3ed662" />
+<img width="512" height="267" alt="ARUMA" src="https://github.com/user-attachments/assets/83d1e099-42dc-4a9c-8aeb-91e27b3ed662" />
 
 
 
