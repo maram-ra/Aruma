@@ -156,6 +156,9 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <img width="800" alt="High-Level Architecture" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66" />
 </p>
 ---
+## Flow diagrams :
+<p align="center"><img width="800" alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
+
 
 ## 2. Backend Components & Classes
 
@@ -295,17 +298,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center">
 <img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" />
 </p>
----
 
-### ER diagrams :
-
-## ArtisansToRequest
-<p align="center"><img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ArtsansToRequest.png" /></p>
-
-## ClientToContract
-<p align="center"><img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ClientToContract.png" /></p>
-
-## RequestToContract
-<p align="center"><img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/RequestToContract.png" /></p>
-
+## ER diagrams :
+<p align="center"><img width="800" alt="ERD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ER%20diagram-Aruma.png" /></p>
 ---
