@@ -152,7 +152,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ## High-Level Architecture
 <p align="center">
-<img width="800" alt="High-Level Architecture" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66" />
+<img alt="High-Level Architecture" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66" />
 </p>
 
 ## Flow diagrams 
