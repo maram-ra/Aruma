@@ -157,7 +157,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 </p>
 ---
 ## Flow diagrams :
-<p align="center"><img width="800" alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
+<p align="center"><img alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
 
 
 ## 2. Backend Components & Classes
