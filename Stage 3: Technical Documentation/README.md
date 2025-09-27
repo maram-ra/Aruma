@@ -298,6 +298,5 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <img width="800" alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" />
 </p>
 
-## ER diagrams :
+### ER diagrams 
 <p align="center"><img width="800" alt="ERD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ER%20diagram-Aruma.png" /></p>
----
