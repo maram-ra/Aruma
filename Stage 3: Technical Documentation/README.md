@@ -4,7 +4,7 @@
 
 ---
 
-# User Stories
+# 1. User Stories
 ### User Stories (As an artisan)
 - As an artisan, I want to register, so that I can create a profile and use the platform.
 - As an artisan, I want to login, so that I can manage my profile and receive request from clients.
@@ -145,7 +145,7 @@ Show a list of completed requests in the artisan profile. No ratings or reviews.
 
 
 ---
-##  System Architecture
+# 2. System Architecture
 
 ### Purpose
 To illustrate how the MVP components (frontend, backend, database, and external services) interact with each other, and how data flows between them.
@@ -160,7 +160,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ---
 
-## High-Level Architecture
+## High-Level diagrams
 <p align="center">
 <img alt="High-Level Architecture" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66" />
 </p>
@@ -169,9 +169,9 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center"><img alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
 
 
-## 2. Backend Components & Classes
+## 3.  Components, Classes, and Database Design:
 
-### 2.1 Artisan Class
+### 3.1.1 Artisan Class
 **Purpose:** Represent artisan and handle authentication and profile management.
 
 **Attributes:**
@@ -194,7 +194,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ---
 
-### 2.2 Client Class
+### 3.1.2 Client Class
 **Purpose:** Represent client and handle authentication and profile management.
 
 **Attributes:**
@@ -211,7 +211,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ---
 
-### 2.3 Request Class
+### 3.1.3 Request Class
 **Purpose:** Handle requests from clients to artisans.
 
 **Attributes:**
@@ -232,7 +232,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ---
 
-### 2.4 Contract Class
+### 3.1.4 Contract Class
 **Purpose:** Track accepted collaboration agreements.
 
 **Attributes:**
@@ -247,66 +247,11 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 - `confirm_contract()`
 - `complete_contract()`
 
-
-
-## database scheme
-
-### 1. Artisans 
-
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| _id | ObjectId | Primary Key | Unique artisan identifier |
-| name | String | Required | Artisan's full name |
-| email | String | Unique, Required | Artisan's email address |
-| password | String | Required | Hashed password |
-| bio | String | Optional | Artisan's biography |
-| craftType | String | Required | Type of craft specialty |
-| images | [String] | Optional | Array of image URLs |
-| offersWorkshop | Boolean | Default: false | Whether artisan offers workshops |
-| offersLiveShow | Boolean | Default: false | Whether artisan offers live shows |
-| completedWorkCount | Number | Default: 0 | Number of completed works |
-| createdAt | Date | Auto-generated | Document creation timestamp |
-| updatedAt | Date | Auto-generated | Document last update timestamp |
-
-### 2. Clients 
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| _id | ObjectId | Primary Key | Unique client identifier |
-| name | String | Required | Client's full name |
-| email | String | Unique, Required | Client's email address |
-| password | String | Required | Hashed password |
-| createdAt | Date | Auto-generated | Document creation timestamp |
-| updatedAt | Date | Auto-generated | Document last update timestamp |
-
-### 3. Requests 
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| _id | ObjectId | Primary Key | Unique request identifier |
-| client_id | ObjectId | Required, FK to Clients | Reference to client |
-| artisan_id | ObjectId | Required, FK to Artisans | Reference to artisan |
-| request_type | String | Enum: ["product", "workshop", "live_show"] | Type of request |
-| message | String | Required | Request details/message |
-| status | String | Enum: ["pending", "accepted", "rejected"] | Current request status |
-| cost | Number | Optional | Proposed cost |
-| timeframe | String | Optional | Proposed timeframe |
-| createdAt | Date | Auto-generated | Document creation timestamp |
-| updatedAt | Date | Auto-generated | Document last update timestamp |
-
-### 4. Contracts 
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| _id | ObjectId | Primary Key | Unique contract identifier |
-| request_id | ObjectId | Required, FK to Requests | Reference to request |
-| status | String | Enum: ["pending", "confirmed", "completed"] | Current contract status |
-| cost | Number | Required | Agreed cost |
-| timeframe | String | Required | Agreed timeframe |
-| createdAt | Date | Auto-generated | Document creation timestamp |
-| updatedAt | Date | Auto-generated | Document last update timestamp |
-
-## database schema
-<p align="center">
-<img alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" />
-</p>
-
-## ER diagrams 
+## 3.2 ER diagrams 
 <p align="center"><img  alt="ERD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ER%20diagram-Aruma.png" /></p>
+
+## 3.3 database schema
+<p align="center">
+<img alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" /></p>
+
+
