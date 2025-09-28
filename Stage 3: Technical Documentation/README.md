@@ -259,7 +259,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 | updatedAt | Date | Auto-generated | Document last update timestamp |
 
 ### 2. Clients 
-| Field | Type | Constraints | Description |
+| Field |
 |-------|------|-------------|-------------|
 | _id | ObjectId | Primary Key | Unique client identifier |
 | name | String | Required | Client's full name |
