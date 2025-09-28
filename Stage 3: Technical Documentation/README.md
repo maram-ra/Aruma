@@ -265,9 +265,132 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center"><img  alt="Request to contract" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Request%20to%20Contract%20Flow.png" /></p>
 
 # 5. API Specifications
-### 5.1 List of external APIs
-### 5.2 Table of internal API endpoints
+# 4. Document External and Internal APIs
 
+##  External APIs  
+
+Currently, no external APIs are used in the MVP version of the project.  
+
+
+##  Internal API Endpoints
+
+###  Base URL:
+```
+http://localhost:3000/api/v1
+```
+
+---
+
+###  Artisan Endpoints
+
+| Endpoint                          | Method | Input Format | Output Format | Description                                         |
+|----------------------------------|--------|---------------|----------------|-----------------------------------------------------|
+| `/auth/artisan/register`         | POST   | JSON          | JSON           | Artisan registration                                |
+| `/auth/artisan/login`            | POST   | JSON          | JSON + Token   | Artisan login                                       |
+| `/artisan/:id`                   | GET    | URL param     | JSON           | Get artisan public profile                          |
+| `/artisan/:id`                   | PUT    | JSON          | JSON           | Update artisan profile                              |
+| `/artisan/:id/requests`          | GET    | URL param     | JSON           | Get all requests sent to this artisan               |
+| `/artisan/:id/requests/:rid`     | PUT    | JSON          | JSON           | Accept or reject a request                          |
+| `/artisan/:id/contracts/:cid`    | PUT    | JSON          | JSON           | Mark contract as complete                           |
+| `/artisan/:id/completed-work`    | GET    | URL param     | JSON           | Retrieve completed work for portfolio display       |
+
+---
+
+###  Client Endpoints
+
+| Endpoint                          | Method | Input Format | Output Format | Description                                         |
+|----------------------------------|--------|---------------|----------------|-----------------------------------------------------|
+| `/auth/client/register`          | POST   | JSON          | JSON           | Client registration                                 |
+| `/auth/client/login`             | POST   | JSON          | JSON + Token   | Client login                                        |
+| `/client/:id`                    | GET    | URL param     | JSON           | Get client profile                                  |
+| `/client/:id/requests`           | POST   | JSON          | JSON           | Send request to artisan                             |
+| `/client/:id/contracts/:cid`     | PUT    | JSON          | JSON           | Accept or reject contract terms                     |
+| `/client/:id/reviews`            | POST   | JSON          | JSON           | Submit review after contract completion             |
+
+---
+
+###  Requests & Contracts
+
+| Endpoint                          | Method | Input Format | Output Format | Description                                         |
+|----------------------------------|--------|---------------|----------------|-----------------------------------------------------|
+| `/requests/:id`                  | GET    | URL param     | JSON           | View specific request                               |
+| `/requests/:id/status`           | PUT    | JSON          | JSON           | Update request status (accept/reject)               |
+| `/contracts/:id`                 | GET    | URL param     | JSON           | View contract details                               |
+| `/contracts/:id/terms`           | PUT    | JSON          | JSON           | Artisan sets terms (cost + timeframe)               |
+| `/contracts/:id/confirm`         | PUT    | JSON          | JSON           | Client confirms contract                            |
+| `/contracts/:id/complete`        | PUT    | JSON          | JSON           | Artisan marks contract as completed                 |
+
+---
+
+##  Sample Request/Response Formats
+
+###  Artisan Registration
+
+**POST** `/auth/artisan/register`
+
+```json
+Request:
+{
+  "name": "Nour AlSami",
+  "email": "nour@crafts.com",
+  "password": "secure123"
+}
+
+Response:
+{
+  "message": "Artisan registered successfully",
+  "artisan_id": "art123"
+}
+```
+
+---
+
+###  Send a Request
+
+**POST** `/client/cli123/requests`
+
+```json
+Request:
+{
+  "artisan_id": "art456",
+  "request_type": "workshop",
+  "message": "I would like to schedule a clay workshop for 3 people."
+}
+
+Response:
+{
+  "request_id": "req789",
+  "status": "pending"
+}
+```
+
+---
+
+### 📃 Set Contract Terms
+
+**PUT** `/contracts/req789/terms`
+
+```json
+Request:
+{
+  "cost": 250,
+  "timeframe": "3 days"
+}
+
+Response:
+{
+  "message": "Contract terms set",
+  "status": "awaiting_client_confirmation"
+}
+```
+
+---
+
+##  Notes on API Design
+
+- **Authentication**: Token-based (JWT), returned upon successful login.
+- **Input/Output Format**: All APIs use `application/json`.
+- **Status Codes**: Standard HTTP codes (200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found).
 
 # 6. SCM and QA Plans
 ### 6.1 SCM strategy
