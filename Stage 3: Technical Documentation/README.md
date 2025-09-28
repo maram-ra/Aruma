@@ -169,7 +169,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center"><img alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
 
 
-## 3.  Components, Classes, and Database Design:
+## 3. Classes, and Database Design:
 
 ### 3.1.1 Artisan Class
 **Purpose:** Represent artisan and handle authentication and profile management.
@@ -254,4 +254,11 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center">
 <img alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" /></p>
 
+# 4. Sequence Diagrams
+# 5. API Specifications
+## 5.1 List of external APIs
+## 5.2 Table of internal API endpoints
+# 6. SCM and QA Plans
+## 6.1 SCM strategy
+## 6.2 QA strategy
 
