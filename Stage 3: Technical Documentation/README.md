@@ -5,6 +5,29 @@
 ---
 
 # User Stories
+## User Stories (As an artisan)
+- As an artisan, I want to register, so that I can create a profile and use the platform.
+- As an artisan, I want to login, so that I can manage my profile and receive request from clients.
+- As an artisan, I want to create and update my profile with details and images, so that clients can view my work.
+- As an artisan, I want to accept or reject client requests, so that I can control my work.
+- As an artisan, I want to create a contract when accepting a request, so that the client knows the conditions.
+- As an artisan, I want to know if the client accepts the contract, so that I can start working on the request.
+- As an artisan, I want to know if the client rejects the contract, so that I can accept a new request.
+- As an artisan, I want to inform the client that the request has been completed, so that I can receive the client feedback.
+- As an artisan, I want to receive feedback, so that I can improve my services and gain more credibility.
+- As an artisan, I want completed requests to appear on my profile, so that I can build credibility with clients.
+
+## ## User Stories (As a client)
+- As a client, I want to register, so that I can create a profile and use the platform.
+- As a client, I want to login, so that I can browse artisans’ profile.
+- As a client, I want to browse artisans’ profile, so that I can discover products, workshops, and live shows.
+- As a client, I want to view artisan completed requests, so that I can evaluate their work.
+- As a client, I want to send a request to an artisan, so that I can buy a product or schedule a workshop or live show.
+- As a client, I want to know if the artisan rejects my request, so that I can find another artisan to complete my request.
+- As a client, I want to know if the artisan accepts my request, so that I can accept or reject the contract.
+- As a client, I want to the artisan’s contract, so that we both agree on a clear condition.
+- As a client, I want to know if the artisan completes my request, so that I can review the artisan work.
+- As a client, I want to leave reviews and ratings on artisan profiles, so that I can share my experience with others.
 
 ## Must Have (MVP)
 
