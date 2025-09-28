@@ -5,7 +5,7 @@
 ---
 
 # User Stories
-## User Stories (As an artisan)
+### User Stories (As an artisan)
 - As an artisan, I want to register, so that I can create a profile and use the platform.
 - As an artisan, I want to login, so that I can manage my profile and receive request from clients.
 - As an artisan, I want to create and update my profile with details and images, so that clients can view my work.
@@ -17,7 +17,7 @@
 - As an artisan, I want to receive feedback, so that I can improve my services and gain more credibility.
 - As an artisan, I want completed requests to appear on my profile, so that I can build credibility with clients.
 
-## ## User Stories (As a client)
+### User Stories (As a client)
 - As a client, I want to register, so that I can create a profile and use the platform.
 - As a client, I want to login, so that I can browse artisans’ profile.
 - As a client, I want to browse artisans’ profile, so that I can discover products, workshops, and live shows.
