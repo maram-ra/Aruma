@@ -392,7 +392,49 @@ Response:
 - **Input/Output Format**: All APIs use `application/json`.
 - **Status Codes**: Standard HTTP codes (200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found).
 
-# 6. SCM and QA Plans
-### 6.1 SCM strategy
-### 6.2 QA strategy
+ ---
+# Development & QA Strategy 
+
+## 1. Source Code Management (SCM)
+
+- **Version Control Tool:** Git (GitHub repository).  
+- **Branching Strategy:**
+  - `main`: Stable production-ready code.  
+  - `development`: Integration branch for all new features.  
+  - `feature/*`: Each new feature or task has its own branch (e.g., `feature/user-auth`).  
+- **Workflow:**
+  - Developers create feature branches from `development`.  
+  - Regular commits with clear, descriptive messages.  
+  - Pull Requests (PRs) are required before merging.  
+  - All PRs must be reviewed by at least one team member before merge.  
+
+---
+
+## 2. Quality Assurance (QA)
+
+- **Testing Strategy:**
+  - **Unit Tests:** Cover core logic and API endpoints.  
+  - **Integration Tests:** Validate interactions between services (e.g., API + database).  
+
+- **Testing Tools:**
+  - **Jest:** Unit and integration testing for backend logic.  
+  - **Postman:** API testing and collection sharing for team validation.  
+
+- **Deployment Pipeline:**
+  - **Staging Environment:** New features deployed for internal QA validation.  
+  - **Production Environment:** Only code from `main` branch, after passing QA approval.  
+  - CI/CD with GitHub Actions to automate build, test, and deploy processes.  
+
+---
+
+## Deliverables
+
+- **SCM Strategy:**  
+  - Git with branching model (`main`, `development`, `feature/*`).  
+  - Code reviews and PR approval required before merge.  
+
+- **QA Strategy:**  
+  - Testing layers (unit, integration).  
+  - Tools: Jest, Postman.  
+  - Deployment pipeline with staging and production environments.  
 
