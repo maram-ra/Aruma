@@ -366,7 +366,7 @@ Response:
 
 ---
 
-### 📃 Set Contract Terms
+### Set Contract Terms
 
 **PUT** `/contracts/req789/terms`
 
