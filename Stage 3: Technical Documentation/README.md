@@ -135,20 +135,7 @@ Show a list of completed requests in the artisan profile. No ratings or reviews.
 2. When the contract is closed  
 3. Then the system adds this request to the artisan’s profile under “Completed Work.”  
 
----
-
-## Future Features
-
-### 1. Payment Integration
-- As a **client**, I want to pay securely through the platform, so that I can complete transactions without external tools.  
-
-### 2. User Reviews & Ratings
-- As a **client**, I want to leave reviews and ratings on artisan profiles, so that I can share my experience with others.  
-- As an **artisan**, I want to receive feedback, so that I can improve my services and gain more credibility.  
-
-### 3. Service Verification
-- As a **platform admin**, I want to verify artisan identities and award badges, so that clients can trust the legitimacy of services.  
-
+  
 ---
 
 ## Notes
