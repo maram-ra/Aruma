@@ -260,7 +260,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 ### 2. Clients 
 | Field |
-|-------|------|-------------|-------------|
+|-------|
 | _id | ObjectId | Primary Key | Unique client identifier |
 | name | String | Required | Client's full name |
 | email | String | Unique, Required | Client's email address |
