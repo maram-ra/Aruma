@@ -265,7 +265,7 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <p align="center"><img  alt="Request to contract" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Request%20to%20Contract%20Flow.png" /></p>
 
 # 5. API Specifications
-# 4. Document External and Internal APIs
+
 
 ##  External APIs  
 
