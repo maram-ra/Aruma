@@ -267,6 +267,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 # 5. API Specifications
 ### 5.1 List of external APIs
 ### 5.2 Table of internal API endpoints
+
+
 # 6. SCM and QA Plans
 ### 6.1 SCM strategy
 ### 6.2 QA strategy
