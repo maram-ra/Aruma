@@ -255,13 +255,13 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 <img alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" /></p>
 
 # 4. Sequence Diagrams
-## 4.2 Artisan Registration
+### 4.2 Artisan Registration
 <p align="center"><img  alt="Artisan Registration" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Artisan%20Registration%20Process.png" /></p>
 
-## 4.2 Send a request 
+### 4.2 Send a request 
 <p align="center"><img  alt="Send a request" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Client%20Sends%20Request%20to%20Artisan.png" /></p>
 
-## 4.3 Request to contract
+### 4.3 Request to contract
 <p align="center"><img  alt="Request to contract" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Request%20to%20Contract%20Flow.png" /></p>
 
 # 5. API Specifications
