@@ -264,8 +264,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ### 4.3 Request to contract
 <p align="center"><img  alt="Request to contract" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Request%20to%20Contract%20Flow.png" /></p>
 
+# S1 
 # 5. API Specifications
-
 
 ##  External APIs  
 
@@ -438,3 +438,495 @@ Response:
   - Tools: Jest, Postman.  
   - Deployment pipeline with staging and production environments.  
 
+# S2 
+
+# API Documentation - Aruma Platform
+## 1. External APIs
+### MVP Status
+**No external APIs required for MVP implementation.** The platform will function as a self-contained system during the initial release.
+### Future Integration Plan (Post-MVP)
+| API Service | Purpose | Integration Phase | Rationale |
+|-------------|---------|-------------------|-----------|
+| **Stripe API** | Payment processing | Phase 2 | Industry standard for secure transactions |
+| **Cloudinary API** | Image storage & optimization | Phase 2 | Free tier available, easy integration |
+| **Twilio API** | SMS notifications | Phase 3 | Reliable delivery, competitive pricing |
+| **Google Maps API** | Location-based services | Phase 3 | Comprehensive mapping features |
+---
+## 2. Internal API Endpoints
+### Base Information
+- **Base URL:** `https://api.aruma.com/v1`
+- **Authentication:** JWT Bearer Token
+- **Content-Type:** `application/json`
+- **Response Format:** Standard JSON structure
+### Standard Response Structure
+```json
+{
+  "success": boolean,
+  "message": "string",
+  "data": { ... },
+  "timestamp": "ISO8601"
+}
+```
+### Standard Error Response
+```json
+{
+  "success": false,
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human readable message",
+    "details": { ... }
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+---
+## Authentication Endpoints
+### 1. Register Artisan
+- **URL:** `POST /api/artisans/register`
+- **Purpose:** Create new artisan account
+- **Authentication:** None required
+- **Input:**
+```json
+{
+  "name": "Ahmed Al-Farsi",
+  "email": "ahmed@pottery.com",
+  "password": "SecurePass123!",
+  "craftType": "pottery",
+  "bio": "Traditional Saudi pottery artist with 15 years experience",
+  "offersWorkshop": true,
+  "offersLiveShow": false
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Artisan registered successfully",
+  "data": {
+    "artisan": {
+      "_id": "65a1b2c3d4e5f67890123456",
+      "name": "Ahmed Al-Farsi",
+      "email": "ahmed@pottery.com",
+      "craftType": "pottery",
+      "offersWorkshop": true,
+      "offersLiveShow": false
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### 2. Register Client
+- **URL:** `POST /api/clients/register`
+- **Purpose:** Create new client account
+- **Authentication:** None required
+- **Input:**
+```json
+{
+  "name": "Fatima Al-Rashid",
+  "email": "fatima@client.com",
+  "password": "ClientPass123!"
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Client registered successfully",
+  "data": {
+    "client": {
+      "_id": "65a1b2c3d4e5f67890123457",
+      "name": "Fatima Al-Rashid",
+      "email": "fatima@client.com"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### 3. User Login
+- **URL:** `POST /api/auth/login`
+- **Purpose:** Authenticate user (artisan or client)
+- **Authentication:** None required
+- **Input:**
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "userType": "artisan",
+    "user": {
+      "_id": "65a1b2c3d4e5f67890123456",
+      "name": "Ahmed Al-Farsi",
+      "email": "ahmed@pottery.com"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+---
+## Artisan Endpoints
+### 4. Get All Artisans (Marketplace)
+- **URL:** `GET /api/artisans`
+- **Purpose:** Browse artisans for marketplace
+- **Authentication:** Optional (for enhanced features)
+- **Query Parameters:**
+  - `page` (number, default: 1)
+  - `limit` (number, default: 12)
+  - `craftType` (string, optional)
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Artisans retrieved successfully",
+  "data": {
+    "artisans": [
+      {
+        "_id": "65a1b2c3d4e5f67890123456",
+        "name": "Ahmed Al-Farsi",
+        "craftType": "pottery",
+        "bio": "Traditional Saudi pottery artist...",
+        "images": ["pottery1.jpg", "pottery2.jpg"],
+        "offersWorkshop": true,
+        "offersLiveShow": false,
+        "completedWorkCount": 23
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 12,
+      "total": 45,
+      "pages": 4
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### 5. Get Artisan Profile
+- **URL:** `GET /api/artisans/:artisanId`
+- **Purpose:** View detailed artisan profile
+- **Authentication:** None required
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Artisan profile retrieved",
+  "data": {
+    "artisan": {
+      "_id": "65a1b2c3d4e5f67890123456",
+      "name": "Ahmed Al-Farsi",
+      "email": "ahmed@pottery.com",
+      "craftType": "pottery",
+      "bio": "Traditional Saudi pottery artist with 15 years experience...",
+      "images": ["pottery1.jpg", "pottery2.jpg", "pottery3.jpg"],
+      "offersWorkshop": true,
+      "offersLiveShow": false,
+      "completedWorkCount": 23,
+      "createdAt": "2024-01-10T08:00:00Z",
+      "updatedAt": "2024-01-15T09:00:00Z"
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### 6. Update Artisan Profile
+- **URL:** `PUT /api/artisans/:artisanId`
+- **Purpose:** Update artisan profile information
+- **Authentication:** Required (Artisan only)
+- **Input:**
+```json
+{
+  "bio": "Updated biography with new achievements...",
+  "craftType": "ceramic pottery",
+  "images": ["new-image1.jpg", "new-image2.jpg"],
+  "offersWorkshop": true,
+  "offersLiveShow": true
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Profile updated successfully",
+  "data": {
+    "artisan": {
+      "_id": "65a1b2c3d4e5f67890123456",
+      "name": "Ahmed Al-Farsi",
+      "craftType": "ceramic pottery",
+      "bio": "Updated biography...",
+      "offersWorkshop": true,
+      "offersLiveShow": true,
+      "updatedAt": "2024-01-15T10:35:00Z"
+    }
+  },
+  "timestamp": "2024-01-15T10:35:00Z"
+}
+```
+---
+## Request Management Endpoints
+### 7. Create Collaboration Request
+- **URL:** `POST /api/requests`
+- **Purpose:** Client sends request to artisan
+- **Authentication:** Required (Client only)
+- **Input:**
+```json
+{
+  "artisanId": "65a1b2c3d4e5f67890123456",
+  "requestType": "workshop",
+  "message": "I would like to book a pottery workshop for my family. We are beginners and would prefer weekend timing."
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Request sent successfully",
+  "data": {
+    "request": {
+      "_id": "65b2c3d4e5f6789012345678",
+      "clientId": "65a1b2c3d4e5f67890123457",
+      "artisanId": "65a1b2c3d4e5f67890123456",
+      "requestType": "workshop",
+      "message": "I would like to book a pottery workshop...",
+      "status": "pending",
+      "createdAt": "2024-01-15T10:40:00Z",
+      "updatedAt": "2024-01-15T10:40:00Z"
+    }
+  },
+  "timestamp": "2024-01-15T10:40:00Z"
+}
+```
+### 8. Get Artisan's Requests
+- **URL:** `GET /api/artisans/requests`
+- **Purpose:** Artisan views incoming requests
+- **Authentication:** Required (Artisan only)
+- **Query Parameters:**
+  - `status` (string: pending/accepted/rejected/completed)
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Requests retrieved successfully",
+  "data": {
+    "requests": [
+      {
+        "_id": "65b2c3d4e5f6789012345678",
+        "clientId": "65a1b2c3d4e5f67890123457",
+        "clientName": "Fatima Al-Rashid",
+        "requestType": "workshop",
+        "message": "I would like to book a pottery workshop...",
+        "status": "pending",
+        "createdAt": "2024-01-15T10:40:00Z"
+      }
+    ]
+  },
+  "timestamp": "2024-01-15T10:45:00Z"
+}
+```
+### 9. Accept Request
+- **URL:** `PUT /api/requests/:requestId/accept`
+- **Purpose:** Artisan accepts request and sets terms
+- **Authentication:** Required (Artisan only)
+- **Input:**
+```json
+{
+  "cost": 500.00,
+  "timeframe": "2 weeks",
+  "additionalNotes": "Materials included in the price"
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Request accepted successfully",
+  "data": {
+    "request": {
+      "_id": "65b2c3d4e5f6789012345678",
+      "status": "accepted",
+      "cost": 500.00,
+      "timeframe": "2 weeks",
+      "updatedAt": "2024-01-15T10:50:00Z"
+    },
+    "contract": {
+      "_id": "65c3d4e5f678901234567890",
+      "requestId": "65b2c3d4e5f6789012345678",
+      "status": "confirmed",
+      "cost": 500.00,
+      "timeframe": "2 weeks",
+      "createdAt": "2024-01-15T10:50:00Z"
+    }
+  },
+  "timestamp": "2024-01-15T10:50:00Z"
+}
+```
+### 10. Reject Request
+- **URL:** `PUT /api/requests/:requestId/reject`
+- **Purpose:** Artisan rejects request
+- **Authentication:** Required (Artisan only)
+- **Input:**
+```json
+{
+  "reason": "Fully booked for the requested timeframe"
+}
+```
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Request rejected successfully",
+  "data": {
+    "request": {
+      "_id": "65b2c3d4e5f6789012345678",
+      "status": "rejected",
+      "updatedAt": "2024-01-15T10:55:00Z"
+    }
+  },
+  "timestamp": "2024-01-15T10:55:00Z"
+}
+```
+---
+## Contract Management Endpoints
+### 11. Get User Contracts
+- **URL:** `GET /api/contracts`
+- **Purpose:** User views their contracts
+- **Authentication:** Required
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Contracts retrieved successfully",
+  "data": {
+    "contracts": [
+      {
+        "_id": "65c3d4e5f678901234567890",
+        "requestId": "65b2c3d4e5f6789012345678",
+        "artisanName": "Ahmed Al-Farsi",
+        "clientName": "Fatima Al-Rashid",
+        "requestType": "workshop",
+        "cost": 500.00,
+        "timeframe": "2 weeks",
+        "status": "confirmed",
+        "createdAt": "2024-01-15T10:50:00Z"
+      }
+    ]
+  },
+  "timestamp": "2024-01-15T11:00:00Z"
+}
+```
+### 12. Complete Contract
+- **URL:** `PUT /api/contracts/:contractId/complete`
+- **Purpose:** Mark contract as completed
+- **Authentication:** Required (Artisan only)
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Contract completed successfully",
+  "data": {
+    "contract": {
+      "_id": "65c3d4e5f678901234567890",
+      "status": "completed",
+      "completedAt": "2024-01-15T11:05:00Z"
+    },
+    "artisan": {
+      "_id": "65a1b2c3d4e5f67890123456",
+      "completedWorkCount": 24
+    }
+  },
+  "timestamp": "2024-01-15T11:05:00Z"
+}
+```
+---
+## Client-Specific Endpoints
+### 13. Get Client's Requests
+- **URL:** `GET /api/clients/requests`
+- **Purpose:** Client views their sent requests
+- **Authentication:** Required (Client only)
+- **Output:**
+```json
+{
+  "success": true,
+  "message": "Client requests retrieved",
+  "data": {
+    "requests": [
+      {
+        "_id": "65b2c3d4e5f6789012345678",
+        "artisanId": "65a1b2c3d4e5f67890123456",
+        "artisanName": "Ahmed Al-Farsi",
+        "requestType": "workshop",
+        "message": "I would like to book a pottery workshop...",
+        "status": "accepted",
+        "cost": 500.00,
+        "timeframe": "2 weeks",
+        "createdAt": "2024-01-15T10:40:00Z"
+      }
+    ]
+  },
+  "timestamp": "2024-01-15T11:10:00Z"
+}
+```
+---
+## HTTP Status Codes Summary
+| Code | Meaning | Usage |
+|------|---------|-------|
+| `200` | OK | Successful GET requests |
+| `201` | Created | Successful resource creation |
+| `400` | Bad Request | Validation errors, invalid input |
+| `401` | Unauthorized | Missing or invalid authentication |
+| `403` | Forbidden | Authenticated but insufficient permissions |
+| `404` | Not Found | Resource doesn't exist |
+| `409` | Conflict | Resource conflict (e.g., duplicate email) |
+| `500` | Internal Server Error | Server-side errors |
+---
+## Error Code Examples
+### Validation Error
+```json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Input validation failed",
+    "details": {
+      "email": "Invalid email format",
+      "password": "Password must be at least 8 characters"
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### Authentication Error
+```json
+{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Authentication required",
+    "details": null
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+### Resource Not Found
+```json
+{
+  "success": false,
+  "error": {
+    "code": "RESOURCE_NOT_FOUND", 
+    "message": "Artisan not found",
+    "details": {
+      "artisanId": "65a1b2c3d4e5f67890123456"
+    }
+  },
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+This API documentation fully aligns with our MongoDB database structure, MVP requirements, and provides comprehensive details for implementation.
