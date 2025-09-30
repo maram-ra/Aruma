@@ -243,21 +243,20 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 - `complete_contract()`
 
 ## 3.2 ER diagrams 
-<p align="center"><img  alt="ERD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/ER%20diagram-Aruma.png" /></p>
+<img width="2601" height="1458" alt="ER diagram-Aruma" src="https://github.com/user-attachments/assets/38451cfe-9eb2-4db4-ac0f-2a4a8fae7aa1" />
 
 ## 3.3 database schema
-<p align="center">
-<img alt="database schema" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/DATABASE_digram.png" /></p>
+<img width="830" height="899" alt="DATABASE_digram" src="https://github.com/user-attachments/assets/cd73a1b4-b2e7-48f9-963d-c0988e413c03" />
 
 # 4. Sequence Diagrams
 ### 4.2 Artisan Registration
-<p align="center"><img  alt="Artisan Registration" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Artisan%20Registration%20Process.png" /></p>
+<img width="1219" height="838" alt="Artisan Registration Process" src="https://github.com/user-attachments/assets/a3186c1e-4fb3-4844-9497-b058b7734bf0" />
 
 ### 4.2 Send a request 
-<p align="center"><img  alt="Send a request" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Client%20Sends%20Request%20to%20Artisan.png" /></p>
+<img width="1219" height="737" alt="Client Sends Request to Artisan" src="https://github.com/user-attachments/assets/8c1b23d7-7a9e-41f5-9d0d-da8c49070497" />
 
 ### 4.3 Request to contract
-<p align="center"><img  alt="Request to contract" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/Request%20to%20Contract%20Flow.png" /></p>
+<img width="1219" height="1246" alt="Request to Contract Flow" src="https://github.com/user-attachments/assets/aefd1925-39b9-4fa3-a475-07c662f16b6c" />
 
 # S1 
 # 5. API Specifications
