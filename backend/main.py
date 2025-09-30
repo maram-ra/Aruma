@@ -1,30 +1,32 @@
+import json
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from core.config import settings
-from routers import auth, artisans, clients  # requests.py and contracts.py will be added later
+from pydantic import BaseModel
 
-# Create FastAPI application instance
-app = FastAPI(title=settings.APP_NAME)
+app = FastAPI()
 
-# Enable CORS so the frontend can communicate with the backend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],        # Allow all origins (can be restricted later to specific domains)
-    allow_credentials=True,
-    allow_methods=["*"],        # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],        # Allow all headers
-)
-
-# Health check endpoint (useful for testing if the server is running)
+# Root endpoint
 @app.get("/")
-def health_check():
-    return {
-        "name": settings.APP_NAME,
-        "env": settings.APP_ENV,
-        "ok": True
-    }
+def read_root():
+    return {"Hello": "World"}
 
-# Register API routers (authentication, artisan, client, etc.)
-app.include_router(auth.router)
-app.include_router(artisans.router)
-app.include_router(clients.router)
+# Model for input data
+class Item(BaseModel):
+    name: str
+    age: int
+
+# Endpoint to update db.json
+@app.post("/change")
+def read_item(item: Item):
+    file_path = "C:/Users/osatt/OneDrive/المستندات/Aruma/Aruma/backend/db.json"
+
+    # فتح الملف للقراءة والكتابة
+    with open(file_path, "r+", encoding="utf-8") as f:
+        data = json.load(f)   # قراءة البيانات
+        data["name"] = item.name
+        data["age"] = item.age
+
+        f.seek(0)  # رجع المؤشر لأول الملف
+        json.dump(data, f, indent=4, ensure_ascii=False)  # اكتب البيانات الجديدة
+        f.truncate()  # احذف أي بيانات قديمة زائدة
+
+    return item
