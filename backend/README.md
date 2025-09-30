@@ -1,4 +1,4 @@
-# Backend — Aruma (FastAPI)
+# Backend 
 
 ## Overview
 This folder contains the **backend** of the **Aruma** project — a platform that connects artisans with clients to send requests and manage contracts.  
