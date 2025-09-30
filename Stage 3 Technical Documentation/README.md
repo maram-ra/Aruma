@@ -161,9 +161,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ---
 
 ## High-Level diagrams
-<p align="center">
-<img alt="High-Level Architecture" src="https://github.com/user-attachments/assets/bb5a2676-9f47-4604-98b8-3e86b5089c66" />
-</p>
+<img width="5796" height="621" alt="Blank diagram - Page 1 High-Level System Architecture Diagram" src="https://github.com/user-attachments/assets/155945ca-7d8b-4db5-afb7-db3b4202ff5e" />
+
 
 ## Flow diagrams 
 <p align="center"><img alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
