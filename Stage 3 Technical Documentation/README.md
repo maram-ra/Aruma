@@ -68,9 +68,9 @@ Profile includes name, bio, craft type, and images. No advanced customization or
 3. Then the system saves the changes and updates their public profile.  
 
 **Artisan Profile page (for artisan):**
-<p align="center"><img width="800" alt="Artisan Profile page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/profilePage.png" /></p>
 
----
+---<img width="1452" height="1430" alt="profilePage" src="https://github.com/user-attachments/assets/a5760a58-c251-44c4-a935-958a5b1811c8" />
+
 
 ### 3. Marketplace Browsing
 - As a **client**, I want to browse artisans in a marketplace, so that I can discover products, workshops, and live shows.    
