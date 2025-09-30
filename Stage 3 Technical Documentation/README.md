@@ -157,7 +157,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 ---
 
 ## High-Level diagrams
-<img width="5796" height="621" alt="Blank diagram - Page 1 High-Level System Architecture Diagram" src="https://github.com/user-attachments/assets/155945ca-7d8b-4db5-afb7-db3b4202ff5e" />
+
+<img width="5796" height="533" alt="Blank diagram - Page 1 High-Level System Architecture Diagram" src="https://github.com/user-attachments/assets/702a87af-1bc4-4f29-b39a-f8db5cd68dcd" />
 
 
 ## Flow diagrams 
