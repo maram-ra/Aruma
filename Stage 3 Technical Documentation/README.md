@@ -44,21 +44,16 @@ Basic authentication with email and password. No social logins or advanced secur
 3. Then the system saves their account and redirects them to login.  
 
 **User type page:** 
-<p align="center">
-<img width="800" alt="User type page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/user%20type.png" />
-</p>
+
+<img width="1452" height="748" alt="user type" src="https://github.com/user-attachments/assets/1501c507-6763-4648-b8ba-b515d507116a" />
 
 **Register and Login pages for artisan:** 
-<p align="center">
-<img width="800" alt="Register page for artisan" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/Register%20Page%20for%20artisans.png" />
-<img width="800" alt="Login page for artisan" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/Login%20Page.png" />
-</p>
+
+<img width="1452" height="654" alt="Register Page for artisans (1)" src="https://github.com/user-attachments/assets/deddb6f6-4572-4676-b303-82fd8adae036" />
 
 **Register and Login pages for client:**  
-<p align="center">
-<img width="800" alt="Register page for client" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/Register%20Page%20for%20client.png" />
-<img width="800" alt="Login page for client" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/Login%20Page.png" />
-</p>
+
+<img width="1452" height="554" alt="Register Page for client" src="https://github.com/user-attachments/assets/06ea80d3-0c11-420e-9c00-f48da5515d98" />
 
 ### 2. Artisan Profile
 - As an **artisan**, I want to create and update my profile with details and images, so that clients can view my work.  
@@ -106,7 +101,8 @@ Request form includes type (product/workshop/live show) and a message. Artisans 
 3. Then they can accept or reject the request with one click.  
 
 **Requests page (for artisan):**
-<p align="center"><img width="800" alt="Requests page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/artisan/RequestsPage.png" /></p>
+<img width="1452" height="654" alt="Register Page for artisans" src="https://github.com/user-attachments/assets/44bb706f-5991-4c5f-bfc5-41d9929f3407" />
+
 ---
 
 ### 5. Basic Contract Flow
@@ -165,8 +161,8 @@ To illustrate how the MVP components (frontend, backend, database, and external 
 
 
 ## Flow diagrams 
-<p align="center"><img alt="FlowD" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Diagrams/flow%20digram.png" /></p>
 
+<img width="571" height="1024" alt="flow digram" src="https://github.com/user-attachments/assets/56ec240e-808b-41fe-8c6a-5be9a701c215" />
 
 ## 3. Classes, and Database Design:
 
