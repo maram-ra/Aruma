@@ -84,9 +84,9 @@ Simple list/grid of artisans with name, short bio, and one featured image. No fi
 3. Then I can view artisan profiles with minimal details.  
 
 **Marketplace Browsing page (for client):**
-<p align="center"><img width="800" alt="Marketplace Browsing page" src="https://github.com/maram-ra/Aruma/blob/main/Stage%203%3A%20Technical%20Documentation/Mockups/client/landing%20page.png" /></p>
 
----
+---<img width="1453" height="1751" alt="landing page" src="https://github.com/user-attachments/assets/a495729f-a79b-42b7-b8b9-ba182ce3beb0" />
+
 
 ### 4. Requests
 - As a **client**, I want to send a request to an artisan, so that I can collaborate with them.  
