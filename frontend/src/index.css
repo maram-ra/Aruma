@@ -1,7 +1,72 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  @apply bg-background min-h-screen flex items-center justify-center;
+/* Main page layout */
+.user-type-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f8f1;
+  position: relative;
 }
+
+/* Logo positioning */
+.logo-container {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.aruma-logo {
+  width: 66px;
+  height: 76px;
+  object-fit: contain;
+}
+
+/* Buttons + heading positioning */
+.buttons-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-20%);
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  text-align: center;
+}
+
+/* Heading above buttons */
+.user-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #471A1A;
+  margin-bottom: 40px;
+}
+
+/* Button group container */
+.d-flex {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* Button style */
+.user-btn {
+  width: 270px;
+  height: 90px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #4b1e1e;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.user-btn:hover {
+  background-color: transparent;
+  color: #471A1A;
+  border: 2px solid #471A1A;
+}
+ 
+
