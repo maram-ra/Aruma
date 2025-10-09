@@ -8,7 +8,7 @@ import { UserProvider } from "./context/UserContext";
 
 import UserType from "./pages/UserType";
 import Login from "./pages/Login";
-import Marketplace from "./pages/Marketplace";
+import Marketplace from "./pages/client/Marketplace";
 import Register from "./pages/Register"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
