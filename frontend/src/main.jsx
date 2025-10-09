@@ -10,6 +10,9 @@ import UserType from "./pages/UserType";
 import Login from "./pages/Login";
 import Marketplace from "./pages/Marketplace";
 import Register from "./pages/Register"; 
+import ArtisanProfile from "./pages/client/ArtisanProfile";
+
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,6 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/artisan/profile" element={<ArtisanProfile />} />
+
         </Routes>
       </UserProvider>
     </BrowserRouter>

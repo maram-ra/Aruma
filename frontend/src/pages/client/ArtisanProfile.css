@@ -1,0 +1,31 @@
+.artisan-profile {
+  background-color: #f5f5ee;
+  color: #3a0b0b; /* يجعل كل النصوص باللون البني الغامق */
+  font-family: "Inter", sans-serif;
+}
+
+.artisan-profile a,
+.artisan-profile p,
+.artisan-profile span,
+.artisan-profile h1,
+.artisan-profile h2,
+.artisan-profile h3,
+.artisan-profile h4,
+.artisan-profile h5,
+.artisan-profile h6,
+.artisan-profile small {
+  color: #3a0b0b !important; /* يتأكد أن البوستراب ما يرجعها للأسود */
+}
+/* لون النص الأساسي للعناوين */
+.text-brown {
+  color: #3a0b0b;
+}
+
+/* تحسين المظهر العام للكروت */
+section .border {
+  border-color: #eee !important;
+}
+
+section .bg-light {
+  background-color: #f3f0ef !important;
+}
