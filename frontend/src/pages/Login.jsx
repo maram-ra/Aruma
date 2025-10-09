@@ -23,7 +23,7 @@ export default function Login() {
       <header className="login-header">
         <a href="/UserType" className="Home-link">Home</a>
         <img src="/logo.png" alt="Aruma Logo" className="login-logo" />
-        <a href="/login" className="login-link">Login</a>
+        <a href="/Marketplace" className="Marketplace-link">Login</a>
       </header>
 
       <div className="login-content">

@@ -16,6 +16,12 @@ const Marketplace = () => {
 
   return (
     <div className="marketplace">
+      
+      {/* Logo section */}
+      <div className="logo-container">
+        <img src="./logo.png" alt="Aruma Logo" className="aruma-logo" />
+      </div>
+
       {/* Navigation Bar */}
       <nav className="navbar">
         <div className="nav-left">
@@ -35,9 +41,9 @@ const Marketplace = () => {
         <p className="hero-subtitle">
           book workshops, and connect directly with talented makers - all in one place.
         </p>
-        <button className="explore-btn" onClick={handleExploreClick}>
-          Explore
-        </button>
+        <section className="explore-section">
+        <h2 className="explore-title">Explore</h2>
+      </section>
       </section>
 
       {/* Products/Items Grid */}
