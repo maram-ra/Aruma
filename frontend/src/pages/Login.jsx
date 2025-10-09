@@ -21,9 +21,9 @@ export default function Login() {
   return (
     <div className={`login-page ${userType === "artisan" ? "artisan-bg" : "client-bg"}`}>
       <header className="login-header">
-        <span className="home-text">Home</span>
+        <a href="/UserType" className="Home-link">Home</a>
         <img src="/logo.png" alt="Aruma Logo" className="login-logo" />
-        <a href="/login" className="login-link">Login</a>
+        <a href="/Marketplace" className="Marketplace-link">Login</a>
       </header>
 
       <div className="login-content">

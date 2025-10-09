@@ -27,7 +27,7 @@ export default function Register() {
   return (
     <div className="register-page">
       <header className="login-header">
-        <span className="home-text">Home</span>
+        <a href="/UserType" className="Home-link">Home</a>
         <img src="/logo.png" alt="Aruma Logo" className="login-logo" />
         <a href={`/login?type=${userType}`} className="login-link">Login</a>
       </header>

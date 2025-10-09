@@ -8,7 +8,7 @@ import { UserProvider } from "./context/UserContext";
 
 import UserType from "./pages/UserType";
 import Login from "./pages/Login";
-import Marketplace from "./pages/Marketplace";
+import Marketplace from "./pages/client/Marketplace";
 import Register from "./pages/Register"; 
 import ArtisanProfile from "./pages/client/ArtisanProfile";
 
@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <UserProvider>
         <Routes>
           <Route path="/" element={<UserType />} />
+          <Route path="/usertype" element={<UserType />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />

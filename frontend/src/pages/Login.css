@@ -25,10 +25,11 @@
   align-items: center;
 }
 
-.home-text {
+.Home-link {
   color: #471A1A;
   font-weight: 500;
   font-size: 16px;
+  text-decoration: none;
 }
 
 .login-logo {
