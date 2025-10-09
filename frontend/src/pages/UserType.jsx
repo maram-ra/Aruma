@@ -19,13 +19,13 @@ export default function UserType() {
         <div className="d-flex gap-4 justify-content-center">
           <button
             className="user-btn"
-            onClick={() => navigate("/client/register")}
+            onClick={() => navigate("/login?type=client")}
           >
             Client
           </button>
           <button
             className="user-btn"
-            onClick={() => navigate("/artisan/register")}
+            onClick={() => navigate("/login?type=artisan")}
           >
             Artisan
           </button>

@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./index.css";
 import { UserProvider } from "./context/UserContext";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 
 import UserType from "./pages/UserType";
 import Login from "./pages/Login";
 import Marketplace from "./pages/Marketplace";
+import Register from "./pages/Register"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<UserType />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />
         </Routes>
       </UserProvider>
