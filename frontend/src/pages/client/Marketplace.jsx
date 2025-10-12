@@ -24,7 +24,7 @@ export default function Marketplace() {
               Home
             </Link>
           
-          <a href="/Requests" className="Requests-link">Profile</a>
+          <a href="/client/Requests" className="Requests-link">Profile</a>
 
           </div>
 
