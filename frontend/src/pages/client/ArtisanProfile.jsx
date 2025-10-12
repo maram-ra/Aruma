@@ -1,6 +1,8 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ArtisanProfile.css";
+import WorkGallery from "../../components/WorkGallery";
+
 
 export default function ArtisanProfile() {
   return (
@@ -34,108 +36,56 @@ export default function ArtisanProfile() {
       </nav>
 
       {/* ===== Profile Section ===== */}
-      <section className="container py-5 ">
-        <div className="row align-items-center justify-content-between">
-          <div className="col-md-8 d-flex align-items-center gap-4">
-            <div
-              className="rounded-circle bg-secondary"
-              style={{ width: "70px", height: "70px", opacity: "0.2" }}
-            ></div>
-
-            <div>
-              <h6
-                className="fw-bold mb-1 text-lowercase"
-                style={{ color: "#3a0b0b" }}
-              >
-                sara
-              </h6>
-
-              <div className="gap-2 mb-2">
-                <span className="badge border text-secondary small fw-normal">
-                  Products
-                </span>
-                <span className="badge border text-secondary small fw-normal">
-                  Workshops
-                </span>
-                <span className="badge border text-secondary small fw-normal">
-                  Live Show
-                  
-                </span>
-              </div>
-
-              <p className="text-muted small m-0">
-                Crafting unique, handmade jewelry pieces with a sustainable
-                touch.
-              </p>
-            </div>
-          </div>
-
-          <div className="col-md-4 text-md-end mt-4 mt-md-0">
-            <button
-              className="btn px-4 py-2"
-              style={{
-                backgroundColor: "#4b1e1e",
-                color: "white",
-                borderRadius: "10px",
-                fontSize: "0.9rem",
-              }}
-            >
-              Send Request
-            </button>
-          </div>
-        </div>
-      </section>
-{/* ===== My Work ===== */}
-<section className="container py-5 text-center">
-  <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
-    My Work
-  </h5>
-
-  <div
-    className="row justify-content-center"
-    style={{
-      columnGap: "20px",
-      rowGap: "25px", 
-    }}
-  >
-    {[
-      { img: "/images/work1.jpg", title: "Lapis Stud" },
-      { img: "/images/work2.jpg", title: "Vintage Fetish Bear Necklace" },
-      { img: "/images/work3.jpg", title: "Lapis Stud" },
-      { img: "/images/work4.jpg", title: "Vintage Turquoise Ring" },
-      { img: "/images/work5.jpg", title: "Misawa Mini Hoop Earrings - Pair" },
-      { img: "/images/work6.jpg", title: "Bonnie Bracelet" },
-    ].map((work, index) => (
+<section className="container py-5">
+  <div className="row align-items-center justify-content-between">
+    {/* Left side */}
+    <div className="col-md-8 d-flex align-items-center" style={{ gap: "1.2rem" }}>
+      {/* Avatar */}
       <div
-        className="col-12 col-sm-4 col-md-3 d-flex justify-content-center"
-        key={index}
-      >
-        <div className="d-flex flex-column align-items-center">
-          <img
-            src={work.img}
-            alt={work.title}
-            className="img-fluid mb-2"
-            style={{
-              width: "90%", 
-              borderRadius: "0px",
-              objectFit: "cover",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-              transition: "transform 0.2s ease",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          />
-          <small
-            className="fst-italic mt-1"
-            style={{ color: "#3a0b0b", fontSize: "0.7rem" }}
-          >
-            {work.title}
-          </small>
-        </div>
+        className="rounded-circle bg-secondary flex-shrink-0"
+        style={{ width: "70px", height: "70px", opacity: "0.2" }}
+      ></div>
+
+      {/* Text section */}
+      <div>
+        <h6 className="fw-bold mb-2 text-lowercase" style={{ color: "#3a0b0b" }}>
+          sara
+        </h6>
+
+              <p className="mb-2">
+          <span className="badge small fw-normal me-2" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Products</span>
+          <span className="badge small fw-normal me-2" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Workshops</span>
+          <span className="badge small fw-normal" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Live Show</span>
+        </p>
+
+
+        <p className="small mb-0" style={{ color: "#3a0b0b", lineHeight: "1.6" }}>
+          Crafting unique, handmade jewelry pieces with a sustainable touch.
+        </p>
       </div>
-    ))}
+    </div>
+
+    {/* Right side button */}
+    <div className="col-md-4 text-md-end mt-4 mt-md-0">
+      <button
+        className="btn fw-semibold px-4 py-2"
+        style={{
+          backgroundColor: "#4b1e1e",
+          color: "white",
+          borderRadius: "12px",
+          fontSize: "0.9rem",
+        }}
+      >
+        Send Request
+      </button>
+    </div>
   </div>
 </section>
+
+{/* ===== My Work ===== */}
+
+<WorkGallery />
+
 
 
 
