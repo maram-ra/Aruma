@@ -23,12 +23,9 @@ export default function Marketplace() {
             >
               Home
             </Link>
-            <Link
-              to="/profile"
-              className="text-decoration-none text-dark fw-normal"
-            >
-              Profile
-            </Link>
+          
+          <a href="/Requests" className="Requests-link">Profile</a>
+
           </div>
 
           {/* Logo Center */}

@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Marketplace from "./pages/client/Marketplace";
 import Register from "./pages/Register"; 
 import ArtisanProfile from "./pages/client/ArtisanProfile";
+import Requests from './pages/client/Requests';
 
 
 
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/artisan/profile" element={<ArtisanProfile />} />
+          <Route path="/Requests" element={<Requests />} />
 
         </Routes>
       </UserProvider>
