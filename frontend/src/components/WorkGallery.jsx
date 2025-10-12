@@ -9,18 +9,27 @@ export default function WorkGallery() {
     { img: "/images/work5.jpg", title: "Misawa Mini Hoop Earrings - Pair" },
     { img: "/images/work6.jpg", title: "Bonnie Bracelet" },
   ];
+
   return (
-    <section className="container py-5 text-center">
+    <section className="container py-5 text-md-start">
       {/* ===== Section Title ===== */}
-      <h5 className="mb-4" style={{ color: "#3a0b0b" }}>
+      <h5
+        className="mb-4 fw-bold"
+        style={{
+          color: "#3a0b0b",
+        }}
+      >
         My Work
       </h5>
 
       {/* ===== Image Grid ===== */}
-      <div className="row justify-content-center" style={{ rowGap: "40px" }}>
+      <div
+        className="row justify-content-start"
+        style={{ rowGap: "40px" }}
+      >
         {works.map((work, index) => (
           <div
-            className="col-12 col-md-4 d-flex flex-column align-items-center"
+            className="col-12 col-md-4 d-flex flex-column align-items-start"
             key={index}
           >
             {/* الصورة */}
@@ -35,20 +44,19 @@ export default function WorkGallery() {
                 borderRadius: "0",
               }}
             />
-            {/* النص تحت الصورة */}
-                      <p
-            className="mb-0"
-            style={{
-              color: "#3a0b0b",
-              fontSize: "0.9rem",
-              fontWeight: "600",
-              textAlign: "center",
-             
-            }}
-          >
-            {work.title}
-          </p>
 
+            {/* النص تحت الصورة */}
+            <p
+              className="mb-0 mt-2 fw-medium"
+              style={{
+                color: "#3a0b0b",
+                fontSize: "0.9rem",
+                fontWeight: "600",
+                textAlign: "left",
+              }}
+            >
+              {work.title}
+            </p>
           </div>
         ))}
       </div>

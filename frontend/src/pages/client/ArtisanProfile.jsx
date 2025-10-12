@@ -1,39 +1,15 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./ArtisanProfile.css";
 import WorkGallery from "../../components/WorkGallery";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar"; // Navbar استدعاء
 
 
 export default function ArtisanProfile() {
   return (
     <div className="artisan-profile" style={{ backgroundColor: "#f5f5ee" }}>
       {/* ===== Navbar ===== */}
-      <nav
-        className="navbar navbar-expand-lg py-3"
-        style={{ backgroundColor: "#f5f5ee" }}
-      >
-        <div className="container d-flex justify-content-between align-items-center">
-          <div className="d-flex gap-3">
-            <a href="#" className="text-decoration-none text-dark small">
-              Home
-            </a>
-            <a href="#" className="text-decoration-none text-dark small">
-              Account
-            </a>
-          </div>
-
-          <a href="#" className="navbar-brand m-0">
-            <img src="/logo.png" alt="Aruma Logo" width="50" />
-          </a>
-
-          <a
-            href="#"
-            className="text-decoration-none fw-semibold small text-dark"
-          >
-            Login
-          </a>
-        </div>
-      </nav>
+            <Navbar />
 
       {/* ===== Profile Section ===== */}
 <section className="container py-5">
@@ -148,26 +124,8 @@ export default function ArtisanProfile() {
 </section>
 
 
-      {/* ===== Footer ===== */}
-      <footer
-        style={{ backgroundColor: "#7d769c" }}
-        className="text-white py-4 mt-5"
-      >
-        <div className="container d-flex justify-content-center gap-4 flex-wrap small">
-          <a href="#" className="text-white text-decoration-none">
-            About Us
-          </a>
-          <a href="#" className="text-white text-decoration-none">
-            Terms of Service
-          </a>
-          <a href="#" className="text-white text-decoration-none">
-            Privacy Policy
-          </a>
-          <a href="#" className="text-white text-decoration-none">
-            Contact
-          </a>
-        </div>
-      </footer>
+     {/* ===== Footer ===== */}
+<Footer />
     </div>
   );
 }
