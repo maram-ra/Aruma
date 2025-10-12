@@ -61,7 +61,10 @@ const Requests = () => {
       {/* الهيدر */}
       <header className="requests-header">
         <div className="header-content">
-          <h1 className="page-title">Requests</h1>
+          {/* Logo Center */}
+          <a href="#" className="navbar-brand m-0">
+            <img src="../logo.png" alt="Aruma Logo" width="65" />
+          </a>
           <div className="header-actions">
             <span className="welcome-text">Welcome back, Fatima.A</span>
             <button className="logout-btn">Logout</button>

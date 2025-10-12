@@ -23,7 +23,7 @@
 .page-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #333;
+  color: #3a0b0b;
   margin: 0;
 }
 
@@ -34,13 +34,12 @@
 }
 
 .welcome-text {
-  color: #666;
+  color: #3a0b0b;
   font-weight: 500;
 }
 
 .logout-btn {
-  background: #DC3545;
-  color: white;
+  color: #3a0b0b;
   border: none;
   padding: 10px 20px;
   border-radius: 6px;
@@ -49,9 +48,6 @@
   transition: background 0.3s ease;
 }
 
-.logout-btn:hover {
-  background: #C82333;
-}
 
 /* المحتوى الرئيسي */
 .requests-main {
@@ -68,14 +64,14 @@
 
 .welcome-section h2 {
   font-size: 2.5rem;
-  color: #333;
+  color: #3a0b0b;
   margin-bottom: 15px;
   font-weight: 600;
 }
 
 .welcome-description {
   font-size: 1.2rem;
-  color: #666;
+  color: #3a0b0b;
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
@@ -84,7 +80,7 @@
 /* قسم الطلبات */
 .section-title {
   font-size: 1.8rem;
-  color: #333;
+  color: #3a0b0b;
   margin-bottom: 30px;
   font-weight: 600;
 }
@@ -212,7 +208,7 @@
 
 /* الفوتر */
 .requests-footer {
-  background: #333;
+  background: #8484A6;
   color: white;
   padding: 40px 20px;
   margin-top: 60px;
