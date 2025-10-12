@@ -1,6 +1,6 @@
 .artisan-profile {
   background-color: #f5f5ee;
-  color: #3a0b0b; /* يجعل كل النصوص باللون البني الغامق */
+  color: #3a0b0b; 
   font-family: "Inter", sans-serif;
 }
 
@@ -14,14 +14,11 @@
 .artisan-profile h5,
 .artisan-profile h6,
 .artisan-profile small {
-  color: #3a0b0b !important; /* يتأكد أن البوستراب ما يرجعها للأسود */
-}
-/* لون النص الأساسي للعناوين */
+  color: #3a0b0b !important; 
 .text-brown {
   color: #3a0b0b;
 }
 
-/* تحسين المظهر العام للكروت */
 section .border {
   border-color: #eee !important;
 }
