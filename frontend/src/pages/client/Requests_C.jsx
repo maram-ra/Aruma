@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import './Requests.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import './Requests_C.css';
 
 const Requests = () => {
   const [requests, setRequests] = useState([
@@ -57,31 +60,33 @@ const Requests = () => {
   };
 
   return (
-    <div className="requests-page">
-      {/* الهيدر */}
-      <header className="requests-header">
-        <div className="header-content">
-          {/* Logo Center */}
-          <a href="#" className="navbar-brand m-0">
-            <img src="../logo.png" alt="Aruma Logo" width="65" />
-          </a>
-          <div className="header-actions">
-            <span className="welcome-text">Welcome back, Fatima.A</span>
-            <button className="logout-btn">Logout</button>
-            <a href="/Marketplace" className="Marketplace-link">Marketplace</a>
-          </div>
-        </div>
-      </header>
+    <div>
+    {/* ===== Navbar ===== */}
+    <Navbar />
+
 
       {/* المحتوى الرئيسي */}
-      <main className="requests-main">
+      <main className="container py-5">
         {/* قسم الترحيب */}
-        <section className="welcome-section">
-          <h2>Welcome back, Fatima.A</h2>
-          <p className="welcome-description">
-            Here you can track your requests, view contract updates, and send new requests to artisans.
+        <section className="row align-items-center justify-content-between">
+          
+          <h6>Welcome back, Fatima.A</h6>
+          <p className="small mb-0" style={{ color: "#3a0b0b", lineHeight: "1.6" }}>
+          Here you can track your requests, view contract updates, and send new requests to artisans.
           </p>
         </section>
+
+
+        <section className="container py-5 text-md-start">
+      {/* ===== Section Title ===== */}
+      <h5
+        className="mb-4 fw-bold"
+        style={{
+        color: "#3a0b0b",
+        }}
+      >
+      Your Requests
+      </h5></section>
 
         {/* قائمة الطلبات */}
         <section className="requests-section">
@@ -161,15 +166,8 @@ const Requests = () => {
         </section>
       </main>
 
-      {/* الفوتر */}
-      <footer className="requests-footer">
-        <div className="footer-content">
-          <a href="/about" className="footer-link">About Us</a>
-          <a href="/terms" className="footer-link">Terms of Service</a>
-          <a href="/privacy" className="footer-link">Privacy Policy</a>
-          <a href="/contact" className="footer-link">Contact</a>
-        </div>
-      </footer>
+      {/* ===== Footer ===== */}
+      <Footer />
     </div>
   );
 };

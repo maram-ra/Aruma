@@ -12,7 +12,10 @@ import Login from "./pages/Login";
 import Marketplace from "./pages/client/Marketplace";
 import Register from "./pages/Register"; 
 import ArtisanProfile from "./pages/client/ArtisanProfile";
-import Requests from './pages/client/Requests';
+import Requests_A from "./pages/artisan/Requests_A";
+import Requests_C from "./pages/client/Requests_C";
+
+
 
 
 
@@ -28,7 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/register" element={<Register />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/artisan/profile" element={<ArtisanProfile />} />
-          <Route path="/client/Requests" element={<Requests />} />
+          <Route path="/client/Requests_C" element={<Requests_C />} />
+          <Route path="/artisan/Requests_A" element={<Requests_A />} />
+
 
         </Routes>
       </UserProvider>
