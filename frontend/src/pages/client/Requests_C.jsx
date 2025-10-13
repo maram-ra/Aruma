@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import './Requests_C.css';
+import '../../components/RequestCard.css';
 
 const Requests = () => {
   const [requests, setRequests] = useState([
@@ -90,7 +90,7 @@ const Requests = () => {
 
         {/* قائمة الطلبات */}
         <section className="requests-section">
-          <h3 className="section-title">Your Requests</h3>
+          <h6 className="section-title">Your Requests</h6>
           
           <div className="requests-grid">
             {requests.map((request) => (
