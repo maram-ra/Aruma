@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
 export default function Register() {
   const location = useLocation();
   const navigate = useNavigate();
