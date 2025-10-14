@@ -35,23 +35,31 @@ export default function Navbar({
         </div>
 
         {/* ===== Logo ===== */}
-        <a href="#" className="navbar-brand m-0 d-flex justify-content-center w-100">
+        <a
+          href="#"
+          className="navbar-brand m-0 d-flex justify-content-center w-100"
+        >
           <img src="/logo.png" alt="Aruma Logo" width="50" />
         </a>
-{/* ===== Auth Link ===== */}
-{showLogin ? (
-  <a
-    href="/Login"
-    className="text-decoration-none fw-semibold small"
-    style={{ color: "#3a0b0b" }}
-  >
-    Login
-  </a>
-) : (
-  <a
-    href="/UserType"
-    className="text-decoration-none fw-semibold small text-dark"
-  >
-    Log out
-  </a>
-)}
+
+        {/* ===== Auth Link ===== */}
+        {showLogin ? (
+          <a
+            href="/Login"
+            className="text-decoration-none fw-semibold small"
+            style={{ color: "#3a0b0b" }}
+          >
+            Login
+          </a>
+        ) : (
+          <a
+            href="/UserType"
+            className="text-decoration-none fw-semibold small text-dark"
+          >
+            Log out
+          </a>
+        )}
+      </div>
+    </nav>
+  );
+}
