@@ -24,10 +24,10 @@ export default function Navbar() {
 
         {/* زر تسجيل الدخول */}
         <a
-          href="#"
+          href="/UserType"
           className="text-decoration-none fw-semibold small text-dark"
         >
-          Login
+          Log out
         </a>
       </div>
     </nav>
