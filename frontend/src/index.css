@@ -1,108 +1,47 @@
-/* === Import Google Font: Roboto === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&family=Roboto:wght@300;400;500;700&display=swap');
-
-* {
-  font-family: 'Roboto', sans-serif !important;
-  color: #3a0b0b;
-  
-  box-sizing: border-box;
-}
-
-body {
-  background-color: #f5f5ee;
-  margin: 0;
-  padding: 0;
-}
-
-.hero-section h1,
-.hero-section h2,
-.hero-section h3,
-h1, h2, h3 {
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 700; /* Bold */
-  letter-spacing: -0.5px;
-  color: #3a0b0b;
-}
-
-.hero-section h1 {
-  font-size: 2.5rem; 
-  line-height: 1.2;
-}
-
-
-
-
-
-/* Main page layout */
-.user-type-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f9f8f1;
-  position: relative;
-}
-
-/* Logo positioning */
-.logo-container {
-  position: absolute;
-  top: 30px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.aruma-logo {
-  width: 66px;
-  height: 76px;
-  object-fit: contain;
-}
-
-/* Buttons + heading positioning */
-.buttons-container {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-20%);
-  display: flex;
-  flex-direction: column; 
-  align-items: center; 
-  text-align: center;
-}
-
-/* Heading above buttons */
-.user-heading {
-  font-size: 20px;
+/* ======= Global Button Styles ======= */
+.btn-main {
+  background-color: #4b1e1e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
   font-weight: 600;
-  color: #471A1A;
-  margin-bottom: 40px;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease;
 }
 
-/* Button group container */
-.d-flex {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
+.btn-main:hover {
+  opacity: 0.85;
 }
 
-/* Button style */
-.user-btn {
-  width: 270px;
-  height: 90px;
-  border-radius: 20px;
-  background-color: #ffffff;
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  color: #4b1e1e;
+  border: 1px solid #4b1e1e;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #4b1e1e;
+  color: #fff;
+}
+
+/* Text button (optional for links like "Forgot Password?") */
+.btn-text {
+  background: none;
+  border: none;
   color: #4b1e1e;
   font-weight: 600;
-  font-size: 16px;
-  border: none;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-.user-btn:hover {
-  background-color: transparent;
-  color: #471A1A;
-  border: 2px solid #471A1A;
+.btn-text:hover {
+  opacity: 0.7;
 }
- 
-
-

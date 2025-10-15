@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import HeroSection from "../../components/HeroSection";
 
+
 export default function Marketplace() {
   const navigate = useNavigate();
 
@@ -22,62 +23,98 @@ export default function Marketplace() {
       {/* ===== Hero Section ===== */}
       <HeroSection />
 
-      {/* ===== Explore Section ===== */}
-      <section className="container text-center" style={sectionStyle}>
-        <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
-          Explore
-        </h5>
+    {/* ===== Artisans Section ===== */}
+<section className="container text-center" style={sectionStyle}>
+  <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
+    Meet the Artisans
+  </h5>
 
-        <div
-          className="row justify-content-center"
-          style={{ rowGap: "40px" }}
+  <div className="row justify-content-center" style={{ rowGap: "40px" }}>
+    {[
+      {
+        img: "/images/artisan1.jpg",
+        name: "Mariam Al-Sulami",
+        craft: "Ceramic Artist",
+      },
+      {
+        img: "/images/artisan2.jpg",
+        name: "Faisal Al-Harbi",
+        craft: "Woodworker",
+      },
+      {
+        img: "/images/artisan3.jpg",
+        name: "Laila Al-Yami",
+        craft: "Textile Weaver",
+      },
+      {
+        img: "/images/artisan4.jpg",
+        name: "sara Al-Qahtani",
+        craft: "Jewelry Maker",
+      },
+      {
+        img: "/images/artisan5.jpg",
+        name: "Noura Al-Mutairi",
+        craft: "Calligrapher",
+      },
+      {
+        img: "/images/artisan6.jpg",
+        name: "Salem Al-Hazmi",
+        craft: "Leather Crafter",
+      },
+    ].map((artisan, index) => (
+      <div
+        className="col-12 col-md-4 d-flex flex-column align-items-center"
+        key={index}
+      >
+        <img
+          src={artisan.img}
+          alt={artisan.name}
+          style={{
+            width: "100%",
+            maxWidth: "340px",
+            height: "430px",
+            objectFit: "cover",
+            borderRadius: "12px",
+            boxShadow: "0 1px 6px rgba(0,0,0,0.12)",
+            transition: "transform 0.3s ease",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.transform = "scale(1.03)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.transform = "scale(1)")
+          }
+        />
+        <h6
+          className="mb-0 mt-3 fw-bold"
+          style={{ color: "#3a0b0b", fontSize: "1rem" }}
         >
-          {[
-            { img: "/images/work1.jpg", title: "Lapis Stud" },
-            { img: "/images/work2.jpg", title: "Vintage Fetish Bear Necklace" },
-            { img: "/images/work3.jpg", title: "Lapis Stud" },
-            { img: "/images/work4.jpg", title: "Vintage Turquoise Ring" },
-            { img: "/images/work5.jpg", title: "Misawa Mini Hoop Earrings - Pair" },
-            { img: "/images/work6.jpg", title: "Bonnie Bracelet" },
-          ].map((work, index) => (
-            <div
-              className="col-12 col-md-4 d-flex flex-column align-items-center"
-              key={index}
-            >
-              <img
-                src={work.img}
-                alt={work.title}
-                style={{
-                  width: "100%",
-                  maxWidth: "340px",
-                  height: "430px",
-                  objectFit: "cover",
-                  borderRadius: "0",
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-                  transition: "transform 0.2s ease",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.03)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
-              />
-              <p
-                className="mb-0 mt-1 fw-medium"
-                style={{
-                  color: "#3a0b0b",
-                  fontSize: "0.9rem",
-                  fontWeight: "600",
-                  textAlign: "center",
-                }}
+          {artisan.name}
+        </h6>
+        <p
+          className="mb-2"
+          style={{
+            color: "#6f4e37",
+            fontSize: "0.9rem",
+            fontWeight: "500",
+          }}
+        >
+          {artisan.craft}
+        </p>
+          <button
+                className="btn-main"
+                onClick={() => navigate(`/artisan/${artisan.id}`)}
               >
-                {work.title}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
+                View Profile
+              </button>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
+
 
       {/* ===== Footer ===== */}
       <Footer />
