@@ -2,80 +2,154 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WorkGallery from "../../components/WorkGallery";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar"; // Navbar استدعاء
-
+import Navbar from "../../components/Navbar";
 
 export default function ArtisanProfile() {
   return (
     <div className="artisan-profile" style={{ backgroundColor: "#f5f5ee" }}>
       {/* ===== Navbar ===== */}
-            <Navbar />
+      <Navbar />
 
       {/* ===== Profile Section ===== */}
-<section className="container py-5">
-  <div className="row align-items-center justify-content-between">
-    {/* Left side */}
-    <div className="col-md-8 d-flex align-items-center" style={{ gap: "1.2rem" }}>
-      {/* Avatar */}
-      <div
-        className="rounded-circle bg-secondary flex-shrink-0"
-        style={{ width: "70px", height: "70px", opacity: "0.2" }}
-      ></div>
+      <section className="container py-5 mt-5">
+        <div className="row align-items-center justify-content-between">
+          {/* Left side */}
+          <div
+            className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center"
+            style={{ gap: "1.5rem" }}
+          >
+            {/* Avatar */}
+            <div
+              className="rounded-circle flex-shrink-0"
+              style={{
+                width: "90px",
+                height: "90px",
+                border: "1px solid #d3d3d3",
+                backgroundColor: "#e7e7e7",
+              }}
+            ></div>
 
-      {/* Text section */}
-      <div>
-        <h6 className="fw-bold mb-2 text-lowercase" style={{ color: "#3a0b0b" }}>
-          sara
-        </h6>
+            {/* Text section */}
+            <div>
+              <h6
+                className="fw-bold mb-2 text-lowercase"
+                style={{
+                  color: "#3a0b0b",
+                  fontSize: "1.1rem",
+                  letterSpacing: "0.3px",
+                }}
+              >
+                sara
+              </h6>
 
               <p className="mb-2">
-          <span className="badge small fw-normal me-2" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Products</span>
-          <span className="badge small fw-normal me-2" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Workshops</span>
-          <span className="badge small fw-normal" style={{ backgroundColor: "#e3e4e1", color: "#3a0b0b" }}>Live Show</span>
-        </p>
+                <span
+                  className="badge small fw-normal me-2"
+                  style={{
+                    backgroundColor: "#e3e4e1",
+                    color: "#3a0b0b",
+                  }}
+                >
+                  Products
+                </span>
+                <span
+                  className="badge small fw-normal me-2"
+                  style={{
+                    backgroundColor: "#e3e4e1",
+                    color: "#3a0b0b",
+                  }}
+                >
+                  Workshops
+                </span>
+                <span
+                  className="badge small fw-normal"
+                  style={{
+                    backgroundColor: "#e3e4e1",
+                    color: "#3a0b0b",
+                  }}
+                >
+                  Live Show
+                </span>
+              </p>
 
+              <p
+                className="small mb-0"
+                style={{
+                  color: "#5c4b45",
+                  lineHeight: "1.8",
+                  maxWidth: "420px",
+                  fontSize: "0.95rem",
+                }}
+              >
+                Crafting unique, handmade jewelry pieces with a sustainable touch
+                that blends natural textures with modern design.
+              </p>
+            </div>
+          </div>
 
-        <p className="small mb-0" style={{ color: "#3a0b0b", lineHeight: "1.6" }}>
-          Crafting unique, handmade jewelry pieces with a sustainable touch.
-        </p>
-      </div>
-    </div>
+          {/* Right side button */}
+          <div className="col-md-4 mt-4 mt-md-0 d-flex justify-content-md-end align-items-center justify-content-center">
+            <button className="btn-outline">Send Request</button>
+          </div>
+        </div>
+      </section>
 
-    {/* Right side button */}
-    <div className="col-md-4 text-md-end mt-4 mt-md-0">
-      <button
-        className="btn fw-semibold px-4 py-2"
+      {/* ===== Divider ===== */}
+      <div
+        className="container"
         style={{
-          backgroundColor: "#4b1e1e",
-          color: "white",
-          borderRadius: "12px",
-          fontSize: "0.9rem",
+          borderBottom: "1px solid #cbbeb3",
+          opacity: "0.5",
+          marginBottom: "2rem",
         }}
-      >
-        Send Request
-      </button>
-    </div>
-  </div>
-</section>
+      ></div>
 
-{/* ===== My Work ===== */}
+      {/* ===== My Work ===== */}
+      <section className="container text-center py-5">
 
-<WorkGallery />
+        <WorkGallery />
+      </section>
 
-
-
-
-{/* ===== Completed Requests ===== */}
+      
+{/* ===== Completed Works ===== */}
 <section className="container py-5 text-center">
-  <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
-    Completed Requests
+  <h5
+    className="fw-bold mb-5"
+    style={{
+      color: "#3a0b0b",
+      fontSize: "1.25rem",
+      letterSpacing: "0.5px",
+      position: "relative",
+    }}
+  >
+    Completed Works
+    <div
+      style={{
+        width: "50px",
+        height: "2px",
+        backgroundColor: "#cbbeb3",
+        margin: "10px auto 0",
+      }}
+    ></div>
   </h5>
 
   <div className="row justify-content-center">
     {[
-      { title: "Necklace Order", date: "Completed August 2025" },
-      { title: "Jewelry Workshop", date: "Completed July 2025" },
-      { title: "Silver Rings", date: "Completed June 2025" },
+      {
+        title: "Necklace Order",
+        date: "Completed August 2025",
+        icon: "bi-gem",
+      },
+      {
+        title: "Jewelry Workshop",
+        date: "Completed July 2025",
+        icon: "bi-tools",
+      },
+      {
+        title: "Silver Rings",
+        date: "Completed June 2025",
+        icon: "bi-brilliance",
+      },
     ].map((item, index) => (
       <div
         key={index}
@@ -100,7 +174,7 @@ export default function ArtisanProfile() {
             }}
           >
             <i
-              className="bi bi-person"
+              className={`bi ${item.icon}`}
               style={{ color: "#3a0b0b", fontSize: "1.6rem" }}
             ></i>
           </div>
@@ -109,11 +183,18 @@ export default function ArtisanProfile() {
           <div className="text-start">
             <h6
               className="fw-semibold mb-1"
-              style={{ color: "#3a0b0b", fontSize: "1rem" }}
+              style={{
+                color: "#3a0b0b",
+                fontSize: "1rem",
+                letterSpacing: "0.3px",
+              }}
             >
               {item.title}
             </h6>
-            <small className="text-muted" style={{ fontSize: "0.9rem" }}>
+            <small
+              className="text-muted"
+              style={{ fontSize: "0.9rem" }}
+            >
               {item.date}
             </small>
           </div>
@@ -124,8 +205,8 @@ export default function ArtisanProfile() {
 </section>
 
 
-     {/* ===== Footer ===== */}
-<Footer />
+      {/* ===== Footer ===== */}
+      <Footer />
     </div>
   );
 }
