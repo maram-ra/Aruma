@@ -23,7 +23,7 @@ export default function Login() {
     if (userType === "client") {
       navigate("/Marketplace");
     } else if (userType === "artisan") {
-      navigate("/Dashboard");
+      navigate("/artisan/Profile");
     }
   };
 

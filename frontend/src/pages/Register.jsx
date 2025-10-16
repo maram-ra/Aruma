@@ -41,7 +41,7 @@ export default function Register() {
     if (userType === "client") {
       navigate("/Marketplace");
     } else {
-      navigate("/Dashboard");
+      navigate("/artisan/Profile");
     }
   };
 
