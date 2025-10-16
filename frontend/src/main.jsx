@@ -16,6 +16,7 @@ import ArtisanProfile from "./pages/client/ArtisanProfile";
 import Requests_A from "./pages/artisan/Requests_A";
 import Requests_C from "./pages/client/Requests_C";
 import Profile from "./pages/artisan/Profile";
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 
@@ -37,6 +38,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/client/Requests_C" element={<Requests_C />} />
           <Route path="/artisan/Requests_A" element={<Requests_A />} />
           <Route path="/artisan/Profile" element={<Profile />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
+
 
 
 
