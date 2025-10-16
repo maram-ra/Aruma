@@ -10,18 +10,6 @@ export default function UserType() {
     navigate(`/login?type=${type}`);
   };
 
-  const baseButtonStyle = {
-    backgroundColor: "transparent",
-    color: "#3a0b0b",
-    border: "2px solid #3a0b0b",
-    borderRadius: "10px",
-    padding: "14px 36px",
-    fontSize: "1.2rem",
-    fontWeight: "600",
-    letterSpacing: "0.5px",
-    transition: "all 0.3s ease",
-  };
-
   return (
     <section
       style={{
@@ -42,7 +30,7 @@ export default function UserType() {
               className="fw-bold mb-4"
               style={{
                 color: "#3a0b0b",
-                fontSize: "4rem", // 🔹 كبير وملفت
+                fontSize: "4rem",
                 lineHeight: "1.15",
                 letterSpacing: "0.5px",
                 maxWidth: "580px",
@@ -81,47 +69,28 @@ export default function UserType() {
 
             {/* ===== Buttons ===== */}
             <div className="d-flex flex-column flex-md-row gap-4 justify-content-md-start align-items-md-start">
-              {/* Client Button */}
-              <button
-                onClick={() => handleSelect("client")}
-                className="btn fw-semibold"
-                style={baseButtonStyle}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#3a0b0b";
-                  e.target.style.color = "#f5f5ee";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "transparent";
-                  e.target.style.color = "#3a0b0b";
-                }}
-              >
-                Client
-              </button>
+  <button
+    onClick={() => handleSelect("client")}
+    className="btn btn-outline"
+  >
+    Client
+  </button>
 
-              {/* Artisan Button */}
-              <button
-                onClick={() => handleSelect("artisan")}
-                className="btn fw-semibold"
-                style={baseButtonStyle}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#3a0b0b";
-                  e.target.style.color = "#f5f5ee";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "transparent";
-                  e.target.style.color = "#3a0b0b";
-                }}
-              >
-                Artisan
-              </button>
-            </div>
+  <button
+    onClick={() => handleSelect("artisan")}
+    className="btn btn-outline"
+  >
+    Artisan
+  </button>
+</div>
+
           </div>
 
           {/* ===== Right: Image ===== */}
           <div className="col-12 col-md-6 d-flex justify-content-center">
             <img
               src={heroImg}
-              alt="Aruma visual"
+              alt="Craftsman working in a handmade studio"
               className="img-fluid"
               style={{
                 maxWidth: "85%",
@@ -130,6 +99,8 @@ export default function UserType() {
                 boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
                 filter: "brightness(0.97) contrast(0.98)",
               }}
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -157,7 +128,7 @@ export default function UserType() {
             p {
               font-size: 1.05rem !important;
             }
-            button {
+            .btn {
               font-size: 1rem !important;
               padding: 12px 28px !important;
             }
