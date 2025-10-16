@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 export default function Register() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +36,6 @@ export default function Register() {
     e.preventDefault();
     console.log(`Registering as ${userType}`, formData);
 
-    // بعد التسجيل الناجح
     if (userType === "client") {
       navigate("/Marketplace");
     } else {
@@ -54,11 +52,8 @@ export default function Register() {
         flexDirection: "column",
       }}
     >
-      {/* ===== Header (Logo Only) ===== */}
-      <header
-        className="d-flex justify-content-center align-items-center py-4"
-        style={{ backgroundColor: "#f5f5ee" }}
-      >
+      {/* ===== Header (Logo) ===== */}
+      <header className="d-flex justify-content-center align-items-center py-4">
         <Link to="/UserType">
           <img
             src="/logo.png"
@@ -68,9 +63,9 @@ export default function Register() {
         </Link>
       </header>
 
-      {/* ===== Register Content ===== */}
+      {/* ===== Register Section ===== */}
       <div className="container d-flex flex-column flex-md-row align-items-center justify-content-center flex-grow-1 py-5">
-        {/* ===== Left Text ===== */}
+        {/* ===== Left Intro Text ===== */}
         <div className="col-12 col-md-6 mb-5 mb-md-0 text-md-start text-center px-4">
           <h2
             className="fw-bold mb-3"
@@ -88,7 +83,7 @@ export default function Register() {
           </p>
         </div>
 
-        {/* ===== Form Box ===== */}
+        {/* ===== Register Form ===== */}
         <div
           className="col-12 col-md-5 p-5 shadow-sm"
           style={{
@@ -152,123 +147,68 @@ export default function Register() {
                 style={{ borderRadius: "8px" }}
               />
             </div>
-{/* ===== Only for Artisan ===== */}
-{userType === "artisan" && (
-  <>
-    {/* Craft Type */}
-    <div className="mb-4 text-start">
-      <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-        Craft Type
-      </label>
-      <div className="d-flex flex-wrap gap-2 justify-content-start">
-        {["Pottery", "Jewelry", "Woodwork"].map((craft) => (
-          <button
-            key={craft}
-            type="button"
-            className="btn fw-medium px-3 py-1"
-            style={{
-              backgroundColor: formData.craftTypes.includes(craft)
-                ? "#3a0b0b"
-                : "#f1eee7", // بيج فاتح ناعم
-              color: formData.craftTypes.includes(craft)
-                ? "#f5f5ee"
-                : "#3a0b0b",
-              border: "none",
-              borderRadius: "8px",
-              transition: "all 0.3s ease",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-            }}
-            onClick={() => toggleSelection("craftTypes", craft)}
-            onMouseEnter={(e) => {
-              if (!formData.craftTypes.includes(craft)) {
-                e.target.style.backgroundColor = "#e7e3da";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!formData.craftTypes.includes(craft)) {
-                e.target.style.backgroundColor = "#f1eee7";
-              }
-            }}
-          >
-            {craft}
-          </button>
-        ))}
-      </div>
-    </div>
 
-    {/* Services Offered */}
-    <div className="mb-4 text-start">
-      <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-        Services Offered
-      </label>
-      <div className="d-flex flex-wrap gap-2 justify-content-start">
-        {["Products", "Workshops", "Live Show"].map((service) => (
-          <button
-            key={service}
-            type="button"
-            className="btn fw-medium px-3 py-1"
-            style={{
-              backgroundColor: formData.services.includes(service)
-                ? "#3a0b0b"
-                : "#f1eee7",
-              color: formData.services.includes(service)
-                ? "#f5f5ee"
-                : "#3a0b0b",
-              border: "none",
-              borderRadius: "8px",
-              transition: "all 0.3s ease",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-            }}
-            onClick={() => toggleSelection("services", service)}
-            onMouseEnter={(e) => {
-              if (!formData.services.includes(service)) {
-                e.target.style.backgroundColor = "#e7e3da";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!formData.services.includes(service)) {
-                e.target.style.backgroundColor = "#f1eee7";
-              }
-            }}
-          >
-            {service}
-          </button>
-        ))}
-      </div>
-    </div>
-  </>
-)}
+            {/* ===== Only for Artisan ===== */}
+            {userType === "artisan" && (
+              <>
+                {/* Craft Type */}
+                <div className="mb-4 text-start">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Craft Type
+                  </label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {["Pottery", "Jewelry", "Woodwork"].map((craft) => (
+                      <button
+                        key={craft}
+                        type="button"
+                        className={`btn-outline ${
+                          formData.craftTypes.includes(craft) ? "btn-main" : ""
+                        } btn-small`}
+                        onClick={() => toggleSelection("craftTypes", craft)}
+                      >
+                        {craft}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-{/* Register Button */}
-<div className="mb-4 text-start">
-  <button
-    type="submit"
-    className="btn fw-semibold py-2"
-    style={{
-      backgroundColor: "#3a0b0b",
-      color: "#f5f5ee",
-      borderRadius: "8px",
-      width: "100%", // ← الزر عريض بنفس الحاوية
-      transition: "all 0.3s ease",
-    }}
-    onMouseEnter={(e) => {
-      e.target.style.backgroundColor = "#5b2a2a";
-    }}
-    onMouseLeave={(e) => {
-      e.target.style.backgroundColor = "#3a0b0b";
-    }}
-  >
-    Register
-  </button>
-</div>
+                {/* Services Offered */}
+                <div className="mb-4 text-start">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Services Offered
+                  </label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {["Products", "Workshops", "Live Show"].map((service) => (
+                      <button
+                        key={service}
+                        type="button"
+                        className={`btn-outline ${
+                          formData.services.includes(service) ? "btn-main" : ""
+                        } btn-small`}
+                        onClick={() => toggleSelection("services", service)}
+                      >
+                        {service}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Register Button */}
+            <div className="mb-4 text-start">
+              <button type="submit" className="btn-main w-100">
+                Register
+              </button>
+            </div>
 
             {/* Already Have Account */}
             <p className="text-center" style={{ color: "#4a4a4a" }}>
               Already have an account?{" "}
               <Link
                 to={`/login?type=${userType}`}
-                className="fw-semibold"
-                style={{ color: "#3a0b0b", textDecoration: "underline" }}
+                className="btn-text fw-semibold"
+                style={{ textDecoration: "underline" }}
               >
                 Login
               </Link>

@@ -19,7 +19,6 @@ export default function Login() {
     e.preventDefault();
     console.log(`Logging in as ${userType}`, formData);
 
-    //  توجيه بعد تسجيل الدخول
     if (userType === "client") {
       navigate("/Marketplace");
     } else if (userType === "artisan") {
@@ -36,7 +35,7 @@ export default function Login() {
         flexDirection: "column",
       }}
     >
-      {/* ===== Header (Logo Only) ===== */}
+      {/* ===== Header (Logo) ===== */}
       <header
         className="d-flex justify-content-center align-items-center py-4"
         style={{ backgroundColor: "#f5f5ee" }}
@@ -50,9 +49,9 @@ export default function Login() {
         </Link>
       </header>
 
-      {/* ===== Login Content ===== */}
+      {/* ===== Login Section ===== */}
       <div className="container d-flex flex-column flex-md-row align-items-center justify-content-center flex-grow-1 py-5">
-        {/* ===== Left Text ===== */}
+        {/* ===== Left Intro Text ===== */}
         <div className="col-12 col-md-6 mb-5 mb-md-0 text-md-start text-center px-4">
           <h2
             className="fw-bold mb-3"
@@ -65,11 +64,12 @@ export default function Login() {
             Welcome back
           </h2>
           <p className="lead" style={{ color: "#4a4a4a", maxWidth: "420px" }}>
-            Log in to continue your creative journey and connect with the Aruma community.
+            Log in to continue your creative journey and connect with the Aruma
+            community.
           </p>
         </div>
 
-        {/* ===== Form Box ===== */}
+        {/* ===== Login Form ===== */}
         <div
           className="col-12 col-md-5 p-5 shadow-sm"
           style={{
@@ -119,40 +119,25 @@ export default function Login() {
 
             {/* Actions */}
             <div className="d-flex justify-content-between align-items-center mb-4">
-            <Link
-              to={`/forgotPassword?type=${userType}`}
-              className="btn btn-link p-0"
-              style={{ color: "#3a0b0b", textDecoration: "none" }}
-            >
-            Forgot Password?
-            </Link>
-              <button
-                type="submit"
-                className="btn fw-semibold px-4 py-2"
-                style={{
-                  backgroundColor: "#3a0b0b",
-                  color: "#f5f5ee",
-                  borderRadius: "8px",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = "#5b2a2a";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = "#3a0b0b";
-                }}
+              <Link
+                to={`/forgotPassword?type=${userType}`}
+                className="btn-text"
               >
+                Forgot Password?
+              </Link>
+
+              <button type="submit" className="btn-main">
                 Login
               </button>
             </div>
 
-            {/* Create Account Link */}
+            {/* Register link */}
             <p className="text-center" style={{ color: "#4a4a4a" }}>
               Don’t have an account?{" "}
               <Link
                 to={`/register?type=${userType}`}
-                className="fw-semibold"
-                style={{ color: "#3a0b0b", textDecoration: "underline" }}
+                className="btn-text fw-semibold"
+                style={{ textDecoration: "underline" }}
               >
                 Create one
               </Link>
