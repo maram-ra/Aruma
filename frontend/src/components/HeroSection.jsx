@@ -23,7 +23,7 @@ export default function HeroSection() {
               className="fw-bold mb-4"
               style={{
                 color: "#3a0b0b",
-                fontSize: "4.2rem", // ⬆️ تكبير العنوان
+                fontSize: "4.2rem", 
                 lineHeight: "1.15",
                 letterSpacing: "0.5px",
                 maxWidth: "580px",
@@ -47,7 +47,7 @@ export default function HeroSection() {
               style={{
                 color: "#5c4b45",
                 maxWidth: "520px",
-                fontSize: "1.3rem", // ⬆️ تكبير الفقرة أيضًا لتوازن البصر
+                fontSize: "1.3rem", 
                 lineHeight: "1.9",
                 fontWeight: "400",
                 letterSpacing: "0.2px",
