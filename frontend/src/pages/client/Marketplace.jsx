@@ -138,7 +138,7 @@ export default function Marketplace() {
               {/* زر عرض البروفايل */}
               <button
                 className="btn-outline"
-                onClick={() => navigate(`/artisan/${artisan.id}`)}
+                onClick={() => navigate("/client/ArtisanProfile")}
                 style={{
                   padding: "8px 24px",
                   fontSize: "0.9rem",
