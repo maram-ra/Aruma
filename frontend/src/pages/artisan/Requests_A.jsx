@@ -32,7 +32,7 @@ export default function Requests_A() {
       message:
         "We’d love to feature you in our craft show during Riyadh Art Week. Are you available on November 2nd?",
       date: "Sep 30, 2025",
-      status: "progress",
+      status: "in progress",
     },
     {
       id: 4,
@@ -62,7 +62,7 @@ export default function Requests_A() {
         return "#d4a017";
       case "accepted":
         return "#3c7c59";
-      case "progress":
+      case "in progress":
         return "#29648a";
       case "completed":
         return "#6c757d";
@@ -114,7 +114,7 @@ export default function Requests_A() {
     e.preventDefault();
     showAlert(`Contract sent to ${selectedClient} successfully!`);
     setShowContract(false);
-    window.updateRequestStatus(selectedClient, "progress");
+    window.updateRequestStatus(selectedClient, "in progress");
     setFormData({ price: "", message: "", timeframe: "" });
   };
 
@@ -202,7 +202,7 @@ export default function Requests_A() {
       {/* ===== Filters ===== */}
       <section className="container text-center mb-4">
         <div className="d-flex flex-wrap justify-content-center gap-3">
-          {["all", "new", "accepted", "progress", "completed", "rejected"].map(
+          {["all", "new", "accepted", "in progress", "completed", "rejected"].map(
             (state) => (
               <button
                 key={state}
@@ -252,9 +252,14 @@ export default function Requests_A() {
 
         {/* حالة فارغة */}
         {filteredRequests.length === 0 && (
-          <p className="text-muted mt-4">
-            No requests yet. You’ll see new ones here once clients contact you.
-          </p>
+        <p className="text-muted mt-4">
+        {filter === "all" && "No requests yet. You'll see new ones here once clients contact you."}
+        {filter === "new" && "No new requests at the moment. New client inquiries will appear here."}
+        {filter === "accepted" && "No accepted requests. Accept some new requests to see them here."}
+        {filter === "in progress" && "No requests in progress. Send contracts to move accepted requests to this stage."}
+        {filter === "completed" && "No completed requests yet. Finish your ongoing projects to see them here."}
+        {filter === "rejected" && "No rejected requests. Requests you decline will appear here."}
+        </p>
         )}
 
         <div className="row justify-content-center">
@@ -268,7 +273,7 @@ export default function Requests_A() {
                 className="d-flex flex-column border rounded-3 p-4 bg-white shadow-sm w-100"
                 style={{
                   backgroundColor:
-                    req.status === "progress"
+                    req.status === "in progress"
                       ? "rgba(41,100,138,0.05)"
                       : "#f9f8f4",
                   borderColor: "#eee",
@@ -316,7 +321,7 @@ export default function Requests_A() {
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
                   {/* Status badges */}
                   <div className="d-flex gap-2 flex-wrap">
-                    {["new", "accepted", "progress", "completed", "rejected"].map(
+                    {["new", "accepted", "in progress", "completed", "rejected"].map(
                       (status) => (
                         <span
                           key={status}
