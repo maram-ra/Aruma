@@ -1,14 +1,12 @@
-import UserType from "./pages/UserType";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginRegister from "./pages/LoginRegister";
 
 export default function App() {
-  return <UserType />;
-}
-import Requests from './pages/client/Requests';
-
-function App() {
   return (
-    <div className="App">
-      <Requests />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/auth" element={<LoginRegister />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -8,6 +8,15 @@
       "role": "client",
       "craftTypes": [],
       "services": []
+    },
+    {
+      "id": "3ee6395b-7efa-4b78-a46f-fa11227e371d",
+      "name": "fares majed",
+      "email": "fares@example.com",
+      "password": "$2b$12$/iANCCbclCe.Np5NYTuF0ua03mnnf6wtUygMI/XPdzTo96x28Y16a",
+      "role": "client",
+      "craftTypes": [],
+      "services": []
     }
   ],
   "artisans": [
@@ -36,6 +45,22 @@
       ],
       "services": [
         "Workshops",
+        "Products"
+      ]
+    },
+    {
+      "id": "ad650b07-97e0-485d-b352-e98499d04972",
+      "name": "reem nawaf",
+      "email": "reem@example.com",
+      "password": "$2b$12$y6QJ608dcUFTDVD9q61lQOO0mhfk3WfclmkwY9e1A7aGRtZKxnlrq",
+      "role": "artisan",
+      "craftTypes": [
+        "Pottery",
+        "Woodwork"
+      ],
+      "services": [
+        "Workshops",
+        "Live Show",
         "Products"
       ]
     }
