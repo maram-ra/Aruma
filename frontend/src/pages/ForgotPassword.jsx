@@ -219,21 +219,6 @@ export default function ForgotPassword() {
                 >
                   Back to Login
                 </button>
-                
-                <button
-                  onClick={() => {
-                    setIsSubmitted(false);
-                    setFormData({ email: "" });
-                  }}
-                  className="btn btn-outline-secondary fw-semibold px-4 py-2"
-                  style={{
-                    borderRadius: "8px",
-                    borderColor: "#3a0b0b",
-                    color: "#3a0b0b",
-                  }}
-                >
-                  Try Another Email
-                </button>
               </div>
 
               <p className="mt-4 small" style={{ color: "#6c757d" }}>
