@@ -1,0 +1,43 @@
+{
+  "clients": [
+    {
+      "id": "37123314-e9ca-41db-901e-c5efc821a507",
+      "name": "jomana",
+      "email": "jojo@example.com",
+      "password": "$2b$12$ZSZlBKMbTufYJfSWng8lI.jqvrxmU5Srg4H516VPN77BxSH.ryHG6",
+      "role": "client",
+      "craftTypes": [],
+      "services": []
+    }
+  ],
+  "artisans": [
+    {
+      "id": "b4bceb4c-28bd-423f-9309-d42608625731",
+      "name": "Sara",
+      "email": "sara@example.com",
+      "password": "$2b$12$cT8OpGqqdNIGkABzL3PxHugh4I4p27EfvYkxbG8h9coY23y7n0KJO",
+      "role": "artisan",
+      "craftTypes": [
+        "Pottery"
+      ],
+      "services": [
+        "Workshops",
+        "Products"
+      ]
+    },
+    {
+      "id": "7f835194-8fa5-4535-9d1b-7f337b81276f",
+      "name": "osama ahmad",
+      "email": "osama@example.com",
+      "password": "$2b$12$b7.e8ENWM7ps3hoIQCPjje.E9Sj5z.mtmI276u7PZEREwOlvXgVJu",
+      "role": "artisan",
+      "craftTypes": [
+        "Pottery"
+      ],
+      "services": [
+        "Workshops",
+        "Products"
+      ]
+    }
+  ]
+}
