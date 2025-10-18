@@ -65,7 +65,7 @@ export default function Requests_A() {
       case "in progress":
         return "#29648a";
       case "completed":
-        return "#6c757d";
+        return "#3a0b0b";
       case "rejected":
         return "#a13a3a";
       default:
@@ -116,6 +116,12 @@ export default function Requests_A() {
     setShowContract(false);
     window.updateRequestStatus(selectedClient, "in progress");
     setFormData({ price: "", message: "", timeframe: "" });
+  };
+
+  // ✅ Mark as Completed function
+  const markAsCompleted = (id, clientName) => {
+    updateStatus(id, "completed");
+    showAlert(`🎉 ${clientName}'s request marked as completed!`);
   };
 
   return (
@@ -354,8 +360,8 @@ export default function Requests_A() {
                         className="btn"
                         onClick={() => updateStatus(req.id, "accepted")}
                         style={{
-                          border: "1px solid #3a0b0b",
-                          color: "#3a0b0b",
+                          border: "1px solid #3c7c59",
+                          color: "#3c7c59",
                           borderRadius: "20px",
                           padding: "4px 12px",
                           fontSize: "0.85rem",
@@ -386,8 +392,8 @@ export default function Requests_A() {
                         setShowContract(true);
                       }}
                       style={{
-                        border: "1px solid #3c7c59",
-                        color: "#3c7c59",
+                        border: "1px solid #3a0b0b",
+                        color: "#3a0b0b",
                         borderRadius: "20px",
                         padding: "4px 12px",
                         fontSize: "0.85rem",
@@ -396,6 +402,33 @@ export default function Requests_A() {
                       Send Contract
                     </button>
                   )}
+                  {req.status === "in progress" && (
+                      <button
+                        className="btn"
+                        onClick={() => markAsCompleted(req.id, req.client)}
+                        style={{
+                          border: "1px solid #3a0b0b",
+                          color: "#3a0b0b",
+                          borderRadius: "20px",
+                          padding: "4px 12px",
+                          fontSize: "0.85rem",
+                        }}
+                      >
+                        Mark as Completed
+                      </button>
+                    )}
+                    {req.status === "completed" && (
+                      <span
+                        className="px-3 py-1 small fw-medium"
+                        style={{
+                          color: "#3c7c59",
+                          backgroundColor: "rgba(60, 124, 89, 0.1)",
+                          borderRadius: "20px",
+                        }}
+                      >
+                        ✓ Completed
+                      </span>
+                    )}
                 </div>
               </div>
             </div>
