@@ -43,6 +43,8 @@ export default function Requests_C() {
   ]);
 
   const [filter, setFilter] = useState("all");
+  const [showContractModal, setShowContractModal] = useState(false);
+  const [selectedContract, setSelectedContract] = useState(null);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -68,6 +70,24 @@ export default function Requests_C() {
     status === "all"
       ? requests.length
       : requests.filter((r) => r.status === status).length;
+
+  // Sample contract data - you can replace this with actual data from your backend
+  const contractData = {
+    artisan: "Aisha.ClayWorks",
+    type: "Workshop Registration",
+    price: "150 SAR",
+    timeframe: "2 weeks",
+    message: "Thank you for joining our weekend pottery workshop! The workshop will focus on glazing and shaping techniques. All materials will be provided. Please bring your creativity and enthusiasm!",
+  };
+
+  const handleViewContract = (request) => {
+    setSelectedContract({
+      ...contractData,
+      artisan: request.artisan,
+      type: request.type
+    });
+    setShowContractModal(true);
+  };
 
   return (
     <div className="requests-page" style={{ backgroundColor: "#f5f5ee" }}>
@@ -249,6 +269,7 @@ export default function Requests_C() {
                   {req.status === "approved" && (
                     <button
                       className="btn"
+                      onClick={() => handleViewContract(req)}
                       style={{
                         border: "1px solid #3a0b0b",
                         color: "#3a0b0b",
@@ -284,6 +305,145 @@ export default function Requests_C() {
 
       {/* ===== Footer ===== */}
       <Footer />
+
+      {/* ===== Contract Modal ===== */}
+      {showContractModal && selectedContract && (
+        <div
+          className="modal show d-block"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+          tabIndex="-1"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div
+              className="modal-content shadow"
+              style={{
+                borderRadius: "12px",
+                border: "none"
+              }}
+            >
+              {/* Modal Header */}
+              <div
+                className="modal-header border-0"
+                style={{
+                  backgroundColor: "#f5f5ee",
+                  borderTopLeftRadius: "12px",
+                  borderTopRightRadius: "12px"
+                }}
+              >
+                <h5
+                  className="modal-title fw-bold"
+                  style={{ color: "#3a0b0b", fontSize: "1.5rem" }}
+                >
+                  Contract Details
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowContractModal(false)}
+                  aria-label="Close"
+                ></button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="modal-body p-4">
+                {/* Contract Overview */}
+                <div className="row mb-4">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                      Artisan
+                    </label>
+                    <div
+                      className="form-control"
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        border: "1px solid #dee2e6",
+                        borderRadius: "8px",
+                        color: "#4a4a4a"
+                      }}
+                    >
+                      {selectedContract.artisan}
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                      Service Type
+                    </label>
+                    <div
+                      className="form-control"
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        border: "1px solid #dee2e6",
+                        borderRadius: "8px",
+                        color: "#4a4a4a"
+                      }}
+                    >
+                      {selectedContract.type}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Price and Timeframe */}
+                <div className="row mb-4">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                      Price
+                    </label>
+                    <div
+                      className="form-control fw-bold"
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        border: "1px solid #dee2e6",
+                        borderRadius: "8px",
+                        color: "#3a0b0b",
+                        fontSize: "1rem"
+                      }}
+                    >
+                      {selectedContract.price}
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                      Timeframe
+                    </label>
+                    <div
+                      className="form-control"
+                      style={{
+                        backgroundColor: "#f8f9fa",
+                        border: "1px solid #dee2e6",
+                        borderRadius: "8px",
+                        color: "#4a4a4a"
+                      }}
+                    >
+                      {selectedContract.timeframe}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Artisan's Message
+                  </label>
+                  <div
+                    className="form-control"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      border: "1px solid #dee2e6",
+                      borderRadius: "8px",
+                      color: "#4a4a4a",
+                      minHeight: "100px",
+                      padding: "12px"
+                    }}
+                  >
+                    {selectedContract.message}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
