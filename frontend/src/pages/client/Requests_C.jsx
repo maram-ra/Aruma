@@ -53,7 +53,7 @@ export default function Requests_C() {
       case "rejected":
         return "#a13a3a";
       case "completed":
-        return "#6c757d";
+        return "#3a0b0b";
       default:
         return "#6c757d";
     }
