@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 export default function Requests_C() {
-  const [requests] = useState([
+  const [requests, setRequests] = useState([
     {
       id: 1,
       artisan: "Sara.Pottery",
@@ -30,7 +30,7 @@ export default function Requests_C() {
       message:
         "Applied to join a live artisan show session during Aruma Craft Week.",
       date: "Aug 30, 2025",
-      status: "rejected",
+      status: "in progress",
     },
     {
       id: 4,
@@ -40,11 +40,28 @@ export default function Requests_C() {
       date: "Jul 14, 2025",
       status: "completed",
     },
+    {
+      id: 5,
+      artisan: "Rawan.Ceramics",
+      type: "Product Order",
+      message: "Ordered a set of handmade espresso cups for my new kitchen.",
+      date: "Jul 14, 2025",
+      status: "rejected",
+    },
+    {
+      id: 6,
+      artisan: "Rawan.Ceramics",
+      type: "Product Order",
+      message: "Ordered a set of handmade espresso cups for my new kitchen.",
+      date: "Jul 14, 2025",
+      status: "canceled",
+    },
   ]);
 
   const [filter, setFilter] = useState("all");
   const [showContractModal, setShowContractModal] = useState(false);
   const [selectedContract, setSelectedContract] = useState(null);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -52,10 +69,14 @@ export default function Requests_C() {
         return "#d4a017";
       case "approved":
         return "#3c7c59";
+      case "in progress":
+        return "#29648a"; // Blue color for in progress
       case "rejected":
         return "#a13a3a";
       case "completed":
         return "#3a0b0b";
+      case "canceled":
+        return "#a13a3a";
       default:
         return "#6c757d";
     }
@@ -76,7 +97,7 @@ export default function Requests_C() {
     artisan: "Aisha.ClayWorks",
     type: "Workshop Registration",
     price: "150 SAR",
-    timeframe: "2 weeks",
+    date: "2025-10-15",
     message: "Thank you for joining our weekend pottery workshop! The workshop will focus on glazing and shaping techniques. All materials will be provided. Please bring your creativity and enthusiasm!",
   };
 
@@ -84,9 +105,41 @@ export default function Requests_C() {
     setSelectedContract({
       ...contractData,
       artisan: request.artisan,
-      type: request.type
+      type: request.type,
+      date: "2025-10-15"
     });
+    setSelectedRequestId(request.id);
     setShowContractModal(true);
+  };
+
+  const handleCancelOrder = () => {
+    if (selectedRequestId) {
+      setRequests(prev => 
+        prev.map(req => 
+          req.id === selectedRequestId 
+            ? { ...req, status: "canceled" }
+            : req
+        )
+      );
+      setShowContractModal(false);
+      setSelectedRequestId(null);
+      setSelectedContract(null);
+    }
+  };
+
+  const handleAcceptContract = () => {
+    if (selectedRequestId) {
+      setRequests(prev => 
+        prev.map(req => 
+          req.id === selectedRequestId 
+            ? { ...req, status: "in progress" }
+            : req
+        )
+      );
+      setShowContractModal(false);
+      setSelectedRequestId(null);
+      setSelectedContract(null);
+    }
   };
 
   return (
@@ -133,7 +186,7 @@ export default function Requests_C() {
       {/* ===== Filters ===== */}
       <section className="container text-center mb-4">
         <div className="d-flex flex-wrap justify-content-center gap-3">
-          {["all", "pending", "approved", "completed", "rejected"].map(
+          {["all", "pending", "approved", "in progress", "completed", "rejected", "canceled"].map(
             (state) => (
               <button
                 key={state}
@@ -180,6 +233,19 @@ export default function Requests_C() {
             }}
           ></div>
         </h5>
+
+        {/* Empty State */}
+        {filteredRequests.length === 0 && (
+          <p className="text-muted mt-4">
+            {filter === "all" && "No requests yet. You'll see new ones here once you contact artisans."}
+            {filter === "pending" && "No pending requests. Your requests will appear here once sent."}
+            {filter === "approved" && "No approved requests. Artisan-approved requests will appear here."}
+            {filter === "in progress" && "No requests in progress. Accepted contracts will appear here."}
+            {filter === "completed" && "No completed requests yet. Finished projects will appear here."}
+            {filter === "rejected" && "No rejected requests. Artisan-rejected requests will appear here."}
+            {filter === "canceled" && "No canceled orders. Orders you cancel will appear here."}
+          </p>
+        )}
 
         <div className="row justify-content-center">
           {filteredRequests.map((req) => (
@@ -237,9 +303,10 @@ export default function Requests_C() {
                 </p>
 
                 {/* Status */}
-                <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                  <div className="d-flex gap-2 flex-wrap">
-                    {["pending", "approved", "rejected", "completed"].map(
+                <div className="d-flex flex-column gap-3">
+                {/* Status badges - Now on its own line */}
+                <div className="d-flex gap-2 flex-wrap justify-content-start">
+                    {["pending", "approved", "in progress", "completed",  "rejected", "canceled"].map(
                       (status) => (
                         <span
                           key={status}
@@ -266,6 +333,7 @@ export default function Requests_C() {
                   </div>
 
                   {/* Actions for client */}
+                  <div className="d-flex justify-content-end">
                   {req.status === "approved" && (
                     <button
                       className="btn"
@@ -296,6 +364,7 @@ export default function Requests_C() {
                       Add Review
                     </button>
                   )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -346,80 +415,62 @@ export default function Requests_C() {
 
               {/* Modal Body */}
               <div className="modal-body p-4">
-                {/* Contract Overview */}
-                <div className="row mb-4">
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-                      Artisan
-                    </label>
-                    <div
-                      className="form-control"
-                      style={{
-                        backgroundColor: "#f8f9fa",
-                        border: "1px solid #dee2e6",
-                        borderRadius: "8px",
-                        color: "#4a4a4a"
-                      }}
-                    >
-                      {selectedContract.artisan}
-                    </div>
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-                      Service Type
-                    </label>
-                    <div
-                      className="form-control"
-                      style={{
-                        backgroundColor: "#f8f9fa",
-                        border: "1px solid #dee2e6",
-                        borderRadius: "8px",
-                        color: "#4a4a4a"
-                      }}
-                    >
-                      {selectedContract.type}
-                    </div>
+                {/* Artisan Field */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Artisan
+                  </label>
+                  <div
+                    className="form-control"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      border: "1px solid #dee2e6",
+                      borderRadius: "8px",
+                      color: "#4a4a4a"
+                    }}
+                  >
+                    {selectedContract.artisan}
                   </div>
                 </div>
 
-                {/* Price and Timeframe */}
-                <div className="row mb-4">
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-                      Price
-                    </label>
-                    <div
-                      className="form-control fw-bold"
-                      style={{
-                        backgroundColor: "#f8f9fa",
-                        border: "1px solid #dee2e6",
-                        borderRadius: "8px",
-                        color: "#3a0b0b",
-                        fontSize: "1rem"
-                      }}
-                    >
-                      {selectedContract.price}
-                    </div>
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-                      Timeframe
-                    </label>
-                    <div
-                      className="form-control"
-                      style={{
-                        backgroundColor: "#f8f9fa",
-                        border: "1px solid #dee2e6",
-                        borderRadius: "8px",
-                        color: "#4a4a4a"
-                      }}
-                    >
-                      {selectedContract.timeframe}
-                    </div>
+                {/* Service Type */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Service Type
+                  </label>
+                  <div
+                    className="form-control"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      border: "1px solid #dee2e6",
+                      borderRadius: "8px",
+                      color: "#4a4a4a"
+                    }}
+                  >
+                    {selectedContract.type}
                   </div>
                 </div>
 
-                {/* Message */}
+                {/* Price Field */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Price
+                  </label>
+                  <div
+                    className="form-control fw-bold"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      border: "1px solid #dee2e6",
+                      borderRadius: "8px",
+                      color: "#3a0b0b",
+                      fontSize: "1.1rem"
+                    }}
+                  >
+                    {selectedContract.price}
+                  </div>
+                </div>
+
+                {/* Message Field */}
                 <div className="mb-4">
                   <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
                     Artisan's Message
@@ -431,7 +482,7 @@ export default function Requests_C() {
                       border: "1px solid #dee2e6",
                       borderRadius: "8px",
                       color: "#4a4a4a",
-                      minHeight: "100px",
+                      minHeight: "120px",
                       padding: "12px"
                     }}
                   >
@@ -439,6 +490,56 @@ export default function Requests_C() {
                   </div>
                 </div>
 
+                {/* Date Field - From Send Contract Form */}
+                <div className="mb-4">
+                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
+                    Completion Date
+                  </label>
+                  <div
+                    className="form-control"
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      border: "1px solid #dee2e6",
+                      borderRadius: "8px",
+                      color: "#4a4a4a"
+                    }}
+                  >
+                    {selectedContract.date ? new Date(selectedContract.date).toLocaleDateString('en-CA') : "To be determined"}
+                  </div>
+                  <div className="form-text" style={{ color: "#6c757d" }}>
+                    Expected completion date for this project
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="d-flex justify-content-end gap-3 pt-3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary px-4 py-2 fw-semibold"
+                    onClick={handleCancelOrder}
+                    style={{
+                      borderRadius: "8px",
+                      borderColor: "#a13a3a",
+                      color: "#a13a3a",
+                      minWidth: "120px"
+                    }}
+                  >
+                    Cancel Order
+                  </button>
+                  <button
+                    type="button"
+                    className="btn px-4 py-2 fw-semibold"
+                    onClick={handleAcceptContract}
+                    style={{
+                      backgroundColor: "#3a0b0b",
+                      color: "#f5f5ee",
+                      borderRadius: "8px",
+                      minWidth: "140px"
+                    }}
+                  >
+                    Accept Contract
+                  </button>
+                </div>
               </div>
             </div>
           </div>
