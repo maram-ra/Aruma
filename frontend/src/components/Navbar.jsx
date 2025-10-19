@@ -1,11 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Navbar({
-  showHome = true,
-  showAccount = true,
-  showLogin = true,
-}) {
+export default function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const name = localStorage.getItem("userName");
+    const role = localStorage.getItem("userRole");
+    setIsLoggedIn(!!token);
+    setUserName(name || "");
+    setUserRole(role || "");
+
+    // تحديث الحالة عند أي تغيير في localStorage
+    const checkLogin = () => {
+      const token = localStorage.getItem("token");
+      const name = localStorage.getItem("userName");
+      const role = localStorage.getItem("userRole");
+      setIsLoggedIn(!!token);
+      setUserName(name || "");
+      setUserRole(role || "");
+    };
+
+    window.addEventListener("storage", checkLogin);
+    return () => window.removeEventListener("storage", checkLogin);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
+    setIsLoggedIn(false);
+    navigate("/UserType"); // إعادة التوجيه بعد تسجيل الخروج
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg py-3 shadow-0"
@@ -17,10 +49,11 @@ export default function Navbar({
       <div className="container d-flex justify-content-between align-items-center">
         {/* ===== Left Links ===== */}
         <div className="d-flex gap-4 align-items-center">
-          {showHome && (
-            <a
-              href="/"
-              className="text-decoration-none fw-semibold small nav-link-custom"
+          {/* قبل تسجيل الدخول */}
+          {!isLoggedIn && (
+            <Link
+              to="/"
+              className="text-decoration-none fw-semibold small"
               style={{
                 color: "#3a0b0b",
                 letterSpacing: "0.3px",
@@ -30,12 +63,47 @@ export default function Navbar({
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
               Home
-            </a>
+            </Link>
           )}
-          {showAccount && (
-            <a
-              href="#"
-              className="text-decoration-none fw-semibold small nav-link-custom"
+
+          {/* بعد تسجيل الدخول كـ Client */}
+          {isLoggedIn && userRole === "client" && (
+            <>
+              <Link
+                to="/client/Requests_C"
+                className="text-decoration-none fw-semibold small"
+                style={{
+                  color: "#3a0b0b",
+                  letterSpacing: "0.3px",
+                  transition: "opacity 0.2s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              >
+                My Requests
+              </Link>
+
+              <Link
+                to="/marketplace"
+                className="text-decoration-none fw-semibold small"
+                style={{
+                  color: "#3a0b0b",
+                  letterSpacing: "0.3px",
+                  transition: "opacity 0.2s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              >
+                Marketplace
+              </Link>
+            </>
+          )}
+
+          {/* بعد تسجيل الدخول كـ Artisan */}
+          {isLoggedIn && userRole === "artisan" && (
+            <Link
+              to="/artisan/Profile"
+              className="text-decoration-none fw-semibold small"
               style={{
                 color: "#3a0b0b",
                 letterSpacing: "0.3px",
@@ -44,33 +112,64 @@ export default function Navbar({
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              Account
-            </a>
+              My Profile
+            </Link>
           )}
         </div>
 
         {/* ===== Logo (Centered) ===== */}
-        <a
-          href="/"
-          className="navbar-brand m-0 d-flex justify-content-center align-items-center w-100 position-absolute start-50 translate-middle-x"
-        >
-          <img
-            src="/logo.png"
-            alt="Aruma Logo"
-            width="52"
-            style={{
-              filter: "contrast(90%) brightness(95%)",
-              opacity: "0.95",
-            }}
-          />
-        </a>
+        <Link
+  to="/"
+  className="navbar-brand m-0 d-flex justify-content-center align-items-center w-100 position-absolute start-50 translate-middle-x"
+  style={{ pointerEvents: "none" }}   
+>
+  <img
+    src="/logo.png"
+    alt="Aruma Logo"
+    width="52"
+    style={{
+      filter: "contrast(90%) brightness(95%)",
+      opacity: "0.95",
+    }}
+  />
+</Link>
 
-        {/* ===== Auth Link (Right Side) ===== */}
-        <div className="d-flex justify-content-end align-items-center" style={{ minWidth: "100px" }}>
-          {showLogin ? (
-            <a
-              href="/login"
-              className="text-decoration-none fw-semibold small nav-link-custom"
+        {/* ===== Auth Section ===== */}
+        <div
+          className="d-flex justify-content-end align-items-center gap-3"
+          style={{ minWidth: "100px" }}
+        >
+          {isLoggedIn ? (
+            <>
+              <span
+                className="fw-semibold small"
+                style={{
+                  color: "#3a0b0b",
+                  opacity: 0.85,
+                  letterSpacing: "0.3px",
+                }}
+              >
+                Hi, {userName || "User"}
+              </span>
+
+              <button
+                onClick={handleLogout}
+                className="btn btn-link text-decoration-none fw-semibold small"
+                style={{
+                  color: "#3a0b0b",
+                  letterSpacing: "0.3px",
+                  transition: "opacity 0.2s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="text-decoration-none fw-semibold small"
               style={{
                 color: "#3a0b0b",
                 letterSpacing: "0.3px",
@@ -80,21 +179,7 @@ export default function Navbar({
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
               Login
-            </a>
-          ) : (
-            <a
-              href="/usertype"
-              className="text-decoration-none fw-semibold small nav-link-custom"
-              style={{
-                color: "#3a0b0b",
-                letterSpacing: "0.3px",
-                transition: "opacity 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-            >
-              Log out
-            </a>
+            </Link>
           )}
         </div>
       </div>

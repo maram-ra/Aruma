@@ -63,6 +63,21 @@
         "Live Show",
         "Products"
       ]
+    },
+    {
+      "id": "28f061ee-6d8d-4b2b-90c1-4ee2491862de",
+      "name": "ahmad",
+      "email": "ahmad@example.com",
+      "password": "$2b$12$QfGZVPRZXGKC1u4LWCD.Yu3umQs3dfH/J0NFEy1FxuadPi1otgXOe",
+      "role": "artisan",
+      "craftTypes": [
+        "Woodwork"
+      ],
+      "services": [
+        "Workshops",
+        "Products",
+        "Live Shows"
+      ]
     }
   ]
 }

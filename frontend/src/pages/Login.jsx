@@ -13,32 +13,40 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const form = new FormData();
-    form.append("email", formData.email);
-    form.append("password", formData.password);
-    form.append("role", userType);
+  const form = new FormData();
+  form.append("email", formData.email);
+  form.append("password", formData.password);
+  form.append("role", userType);
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/auth/login", {
-        method: "POST",
-        body: form,
-      });
-      const data = await response.json();
+  try {
+    const response = await fetch("http://127.0.0.1:8000/auth/login", {
+      method: "POST",
+      body: form,
+    });
 
-      if (response.ok) {
-        localStorage.setItem("token", data.access_token);
-        localStorage.setItem("userRole", data.user.role);
-        localStorage.setItem("userName", data.user.name);
-        navigate(
-          data.user.role === "client" ? "/Marketplace" : "/artisan/Profile"
-        );
-      } else alert(data.detail || "Login failed");
-    } catch {
-      alert("Network error");
+    const data = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("userRole", data.user.role.toLowerCase().trim());
+      localStorage.setItem("userName", data.user.name);
+
+      navigate(
+        data.user.role.toLowerCase().trim() === "client"
+          ? "/marketplace"
+          : "/artisan/Profile"
+      );
+    } else {
+      alert(data.detail || "Login failed");
     }
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Network error");
+  }
+};
+
 
   const handleSlide = () => {
     setSlide(true);

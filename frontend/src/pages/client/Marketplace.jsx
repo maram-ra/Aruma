@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
@@ -8,6 +8,7 @@ import HeroSection from "../../components/HeroSection";
 export default function Marketplace() {
   const navigate = useNavigate();
 
+  
   return (
     <div style={{ backgroundColor: "#f5f5ee", color: "#3a0b0b" }}>
       {/* ===== Navbar ===== */}
@@ -17,7 +18,10 @@ export default function Marketplace() {
       <HeroSection />
 
       {/* ===== Artisans Section ===== */}
-      <section className="container text-center py-5" style={{ padding: "10rem 0 8rem" }}>
+      <section
+        className="container text-center py-5"
+        style={{ padding: "10rem 0 8rem" }}
+      >
         <h5
           className="fw-bold mb-5"
           style={{
@@ -85,7 +89,7 @@ export default function Marketplace() {
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
               }}
             >
-              {/* صورة الحرفي */}
+              {/* ===== صورة الحرفي ===== */}
               <div
                 className="overflow-hidden"
                 style={{
@@ -113,7 +117,7 @@ export default function Marketplace() {
                 />
               </div>
 
-              {/* الاسم والحرفة */}
+              {/* ===== الاسم والحرفة ===== */}
               <h6
                 className="fw-bold mt-3 mb-1"
                 style={{
@@ -135,7 +139,7 @@ export default function Marketplace() {
                 {artisan.craft}
               </p>
 
-              {/* زر عرض البروفايل */}
+              {/* ===== زر عرض البروفايل ===== */}
               <button
                 className="btn-outline"
                 onClick={() => navigate("/client/ArtisanProfile")}

@@ -12,24 +12,51 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
+    craftType: "",
+    services: [],
   });
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const addService = (value) => {
+    if (value && !formData.services.includes(value)) {
+      setFormData({ ...formData, services: [...formData.services, value] });
+    }
+  };
+
+  const removeService = (value) => {
+    setFormData({
+      ...formData,
+      services: formData.services.filter((item) => item !== value),
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const payload =
+      userType === "artisan"
+        ? {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            role: userType,
+            craftTypes: [formData.craftType],
+            services: formData.services,
+          }
+        : {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            role: userType,
+          };
+
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          
-          role: userType,
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -46,6 +73,18 @@ export default function Register() {
     setSlide(true);
     setTimeout(() => navigate(`/login?type=${userType}`), 800);
   };
+
+  // الخيارات المحدثة
+  const craftOptions = [
+    "Pottery",
+    "Woodwork",
+    "Textiles",
+    "Jewelry",
+    "Calligraphy",
+    "Leatherwork",
+  ];
+
+  const serviceOptions = ["Workshops", "Products", "Live Shows"];
 
   return (
     <div
@@ -71,6 +110,7 @@ export default function Register() {
           >
             Create Account
           </h1>
+
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -99,6 +139,76 @@ export default function Register() {
               className="form-control bg-light mb-4"
               required
             />
+
+            {/* ===== الحقول الخاصة بالحرفي ===== */}
+            {userType === "artisan" && (
+              <>
+                {/* Craft Type - اختيار واحد */}
+                <label
+                  className="form-label fw-semibold small"
+                  style={{ color: "#3a0b0b" }}
+                >
+                  Craft Type
+                </label>
+                <select
+                  name="craftType"
+                  value={formData.craftType}
+                  onChange={handleChange}
+                  className="form-select bg-light mb-3"
+                  required
+                >
+                  <option value="">Select a craft type</option>
+                  {craftOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Services Offered - متعددة */}
+                <label
+                  className="form-label fw-semibold small"
+                  style={{ color: "#3a0b0b" }}
+                >
+                  Services Offered
+                </label>
+                <div className="mb-4">
+                  <select
+                    className="form-select bg-light"
+                    onChange={(e) => addService(e.target.value)}
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      Select a service
+                    </option>
+                    {serviceOptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* عرض الاختيارات كـ badges */}
+                  <div className="mt-2 d-flex flex-wrap gap-2">
+                    {formData.services.map((srv) => (
+                      <span
+                        key={srv}
+                        className="badge rounded-pill px-3 py-2"
+                        style={{
+                          backgroundColor: "#6f4e37",
+                          color: "#f5f5ee",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => removeService(srv)}
+                      >
+                        {srv} ✕
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
             <button type="submit" className="btn-main w-100">
               Sign Up
             </button>
@@ -109,7 +219,7 @@ export default function Register() {
       {/* ===== Purple Overlay ===== */}
       <div className="overlay d-flex flex-column justify-content-center align-items-center text-white p-5">
         <h1 className="fw-bold mb-3" style={{ fontSize: "2.2rem" }}>
-          Welcome Back! 
+          Welcome Back!
         </h1>
         <p
           className="mb-4 text-center"
@@ -171,7 +281,7 @@ export default function Register() {
         .slide-left .form-section {
           transform: translateX(-100%);
         }
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
           box-shadow: 0 0 0 3px rgba(132, 132, 166, 0.25);
           border-color: #8484A6;
         }
