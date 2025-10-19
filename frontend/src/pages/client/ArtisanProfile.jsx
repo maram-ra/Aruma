@@ -151,9 +151,6 @@ function RequestModal({ show, onClose, artisanName = "sara" }) {
 
             {/* Buttons */}
             <div className="d-flex justify-content-end gap-3 pt-3">
-              <button type="button" className="btn-outline btn-small" onClick={onClose}>
-                Cancel
-              </button>
               <button type="submit" className="btn-main btn-small">
                 Send Request
               </button>
