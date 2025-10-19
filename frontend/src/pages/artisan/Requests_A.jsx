@@ -410,7 +410,7 @@ export default function Requests_A() {
                   {/* Actions */}
                 <div className="d-flex justify-content-end">
                   {req.status === "new" && (
-                      <div className="d-flex justify-content-end">
+                      <div className="d-flex gap-2">
                       <button
                         className="btn"
                         onClick={() => updateStatus(req.id, "accepted")}
