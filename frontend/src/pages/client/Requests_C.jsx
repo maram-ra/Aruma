@@ -70,7 +70,7 @@ export default function Requests_C() {
       case "approved":
         return "#3c7c59";
       case "in progress":
-        return "#29648a"; // Blue color for in progress
+        return "#29648a";
       case "rejected":
         return "#a13a3a";
       case "completed":
