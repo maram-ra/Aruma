@@ -350,20 +350,6 @@ export default function Requests_C() {
                     </button>
                   )}
 
-                  {req.status === "completed" && (
-                    <button
-                      className="btn"
-                      style={{
-                        border: "1px solid #3c7c59",
-                        color: "#3c7c59",
-                        borderRadius: "20px",
-                        padding: "4px 12px",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      Add Review
-                    </button>
-                  )}
                   </div>
                 </div>
               </div>
