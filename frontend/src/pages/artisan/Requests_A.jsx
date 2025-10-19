@@ -52,8 +52,9 @@ export default function Requests_A() {
   const [formData, setFormData] = useState({
     price: "",
     message: "",
-    timeframe: "",
+    date: "",
   });
+
 
   // 🎨 ألوان الحالات
   const getStatusColor = (status) => {
@@ -112,10 +113,17 @@ export default function Requests_A() {
   // 📨 إرسال العقد
   const handleContractSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate all fields are filled
+    if (!formData.price || !formData.message || !formData.date) {
+      showAlert("Please fill all required fields");
+      return;
+    }
+  
     showAlert(`Contract sent to ${selectedClient} successfully!`);
     setShowContract(false);
     window.updateRequestStatus(selectedClient, "in progress");
-    setFormData({ price: "", message: "", timeframe: "" });
+    setFormData({ price: "", message: "", date: "" });
   };
 
   // ✅ Mark as Completed function
@@ -439,115 +447,161 @@ export default function Requests_A() {
       {/* ===== Footer ===== */}
       <Footer />
 
-      {/* ===== Contract Modal ===== */}
+      {/* ===== Contract Modal ===== */}  
       {showContract && (
-        <div
-          className="modal show d-block"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div
-              className="modal-content border-0 shadow"
-              style={{
-                backgroundColor: "#f5f5ee",
-                borderRadius: "16px",
-                padding: "2rem 1.5rem",
-              }}
-            >
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
-                  Contract Details
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowContract(false)}
-                ></button>
-              </div>
-
-              <form onSubmit={handleContractSubmit}>
-                <div className="mb-3 text-start">
-                  <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                    Client
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={selectedClient}
-                    disabled
-                    style={{ borderRadius: "8px", backgroundColor: "#eeeae3" }}
-                  />
-                </div>
-
-                <div className="mb-3 text-start">
-                  <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                    Price
-                  </label>
-                  <input
-                    type="text"
-                    name="price"
-                    className="form-control"
-                    placeholder="Set your price"
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
-                    }
-                    style={{ borderRadius: "8px", borderColor: "#cbbeb3" }}
-                  />
-                </div>
-
-                <div className="mb-3 text-start">
-                  <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                    Message
-                  </label>
-                  <textarea
-                    name="message"
-                    className="form-control"
-                    placeholder="Write extra details for the client"
-                    rows="4"
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    style={{ borderRadius: "8px", borderColor: "#cbbeb3" }}
-                  ></textarea>
-                </div>
-
-                <div className="mb-4 text-start">
-                  <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                    Timeframe
-                  </label>
-                  <input
-                    type="text"
-                    name="timeframe"
-                    className="form-control"
-                    placeholder="How long will it take?"
-                    value={formData.timeframe}
-                    onChange={(e) =>
-                      setFormData({ ...formData, timeframe: e.target.value })
-                    }
-                    style={{ borderRadius: "8px", borderColor: "#cbbeb3" }}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-end">
-                  <button
-                    type="submit"
-                    className="btn fw-semibold px-4"
-                    style={{
-                      backgroundColor: "#3a0b0b",
-                      color: "#f5f5ee",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    Send
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+      <div
+      className="modal show d-block"
+      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+      >
+      <div className="modal-dialog modal-dialog-centered">
+      <div
+        className="modal-content border-0 shadow"
+        style={{
+          backgroundColor: "#f5f5ee",
+          borderRadius: "16px",
+          padding: "2rem 1.5rem",
+        }}
+      >
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
+            Contract Details
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => {
+              setShowContract(false);
+              setFormData({ price: "", message: "", date: "" });
+            }}
+          ></button>
         </div>
-      )}
+
+        <form onSubmit={handleContractSubmit}>
+          {/* Client Field */}
+          <div className="mb-4 text-start">
+            <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+              Client *
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={selectedClient}
+              disabled
+              style={{ 
+                borderRadius: "8px", 
+                backgroundColor: "#eeeae3",
+                border: "1px solid #cbbeb3"
+              }}
+            />
+          </div>
+
+          {/* Price Field */}
+          <div className="mb-4 text-start">
+            <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+              Price *
+            </label>
+            <input
+              type="text"
+              name="price"
+              className="form-control"
+              placeholder="Set your price"
+              value={formData.price}
+              onChange={(e) =>
+                setFormData({ ...formData, price: e.target.value })
+              }
+              required
+              style={{ 
+                borderRadius: "8px", 
+                border: "1px solid #cbbeb3",
+                backgroundColor: formData.price ? "#ffffff" : "#f8f9fa"
+              }}
+            />
+            {!formData.price && (
+              <div className="form-text" style={{ color: "#6c757d" }}>
+                Enter the price for this service
+              </div>
+            )}
+          </div>
+
+          {/* Message Field */}
+          <div className="mb-4 text-start">
+            <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+              Message *
+            </label>
+            <textarea
+              name="message"
+              className="form-control"
+              placeholder="Write extra details for the client"
+              rows="4"
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+              required
+              style={{ 
+                borderRadius: "8px", 
+                border: "1px solid #cbbeb3",
+                backgroundColor: formData.message ? "#ffffff" : "#f8f9fa",
+                resize: "vertical"
+              }}
+            ></textarea>
+            {!formData.message && (
+              <div className="form-text" style={{ color: "#6c757d" }}>
+                Provide details about the contract terms and conditions
+              </div>
+            )}
+          </div>
+
+          {/* Date Field (Replaced Timeframe) */}
+          <div className="mb-4 text-start">
+            <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+              Preferred Date *
+            </label>
+            <input
+              type="date"
+              name="date"
+              className="form-control"
+              value={formData.date}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
+              required
+              min={new Date().toISOString().split('T')[0]}
+              style={{ 
+                borderRadius: "8px", 
+                border: "1px solid #cbbeb3",
+                backgroundColor: formData.date ? "#ffffff" : "#f8f9fa"
+              }}
+            />
+            {!formData.date && (
+              <div className="form-text" style={{ color: "#6c757d" }}>
+                Select the expected completion date (YYYY/MM/DD format)
+              </div>
+            )}
+          </div>
+
+          <div className="d-flex justify-content-end">
+            <button
+              type="submit"
+              className="btn fw-semibold px-4"
+              style={{
+                backgroundColor: "#3a0b0b",
+                color: "#f5f5ee",
+                borderRadius: "8px",
+                padding: "8px 24px",
+                fontSize: "0.9rem"
+              }}
+              disabled={!formData.price || !formData.message || !formData.date}
+            >
+              Send Contract
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+)}
+      
     </div>
   );
 }
