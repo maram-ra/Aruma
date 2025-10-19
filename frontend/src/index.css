@@ -1,0 +1,137 @@
+body {
+  background-color: #f5f5ee;
+}
+
+/* ========== Global Button Styles (Unified Aruma Theme) ========== */
+
+/* زر أساسي (Primary) */
+.btn-main {
+  background-color: #3a0b0b;
+  color: #f5f5ee;
+  border: 1.5px solid #3a0b0b;
+  border-radius: 25px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-main:hover {
+  background-color: #5b2a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.15);
+}
+
+/* زر بإطار فقط (Outline) */
+.btn-outline {
+  background-color: transparent;
+  color: #3a0b0b;
+  border: 1.5px solid #3a0b0b;
+  border-radius: 25px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: #3a0b0b;
+  color: #f5f5ee;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.15);
+}
+
+/* زر خاص بالصفحة الرئيسية */
+.btn-client {
+  border-color: #6b6078;
+  color: #6b6078;
+}
+
+.btn-client:hover {
+  background-color: #6b6078;
+  color: #f5f5ee;
+  box-shadow: 0 4px 10px rgba(107, 96, 120, 0.2);
+}
+
+.btn-artisan {
+  border-color: #3a0b0b;
+  color: #3a0b0b;
+}
+
+.btn-artisan:hover {
+  background-color: #3a0b0b;
+  color: #f5f5ee;
+  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.2);
+}
+
+/* زر نجاح (أخضر) */
+.btn-success {
+  background-color: #3c7c59;
+  color: #fff;
+  border: 1.5px solid #3c7c59;
+  border-radius: 25px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+}
+
+.btn-success:hover {
+  background-color: #356d50;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(60, 124, 89, 0.2);
+}
+
+/* زر رفض (أحمر ناعم) */
+.btn-danger {
+  background-color: transparent;
+  color: #a13a3a;
+  border: 1.5px solid #a13a3a;
+  border-radius: 25px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  transition: all 0.25s ease;
+}
+
+.btn-danger:hover {
+  background-color: #a13a3a;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(161, 58, 58, 0.2);
+}
+
+/* زر نصي (لروابط مثل Forgot Password) */
+.btn-text {
+  background: none;
+  border: none;
+  color: #3a0b0b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-text:hover {
+  opacity: 0.7;
+}
+
+/* زر صغير */
+.btn-small {
+  padding: 5px 16px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+}
+
+/* مجموعة الأزرار في الصفحة الرئيسية */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}

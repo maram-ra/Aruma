@@ -1,0 +1,107 @@
+{
+  "counters": {
+    "artisan": 2,
+    "client": 1,
+    "request": 1,
+    "contract": 3
+  },
+  "artisans": [
+    {
+      "name": "Razan",
+      "email": "razan@example.com",
+      "password": "$2b$12$r0HODms44BK32IL6Yqmir.4yThZRAwmZ3sYMCRiVmEWERGKFKMBVW",
+      "bio": "",
+      "craftType": "Pottery",
+      "images": [
+        "/images/1ff12cfa-26a5-4103-956d-7219824afa0b.avif",
+        "/images/935fabc5-f597-4d5c-a954-fc986bf3ceb5.png",
+        "/images/75ef8efc-efd9-4ccb-bffb-b4761814b40f.png",
+        "/images/d519ecdc-c6b7-4e82-91ac-2bc4064e1a8b.png",
+        "/images/62b8bc6f-a420-4762-bc44-773a9fa31af3.png",
+        "/images/147f9a3e-b006-4446-b30f-81615e3054cf.png",
+        "/images/6eda4e87-4b2b-4189-876f-0f0b697945fe.png"
+      ],
+      "offersWorkshop": true,
+      "offersLiveShow": false,
+      "completedWorkCount": 0,
+      "_id": "art000001",
+      "createdAt": "2025-10-19T16:58:35.846995",
+      "updatedAt": "2025-10-19T18:17:37.031296"
+    },
+    {
+      "name": "Maram raddad",
+      "email": "maram@example.com",
+      "password": "$2b$12$9PQ0uRTJv6vcnXmQG5QCw.A6yIM/.aJ03.uO3oxf6ByuqMXJ5Dvfi",
+      "bio": "",
+      "craftType": "Pottery",
+      "images": [
+        ""
+      ],
+      "offersWorkshop": true,
+      "offersLiveShow": true,
+      "completedWorkCount": 0,
+      "_id": "art000002",
+      "createdAt": "2025-10-19T16:58:48.598858",
+      "updatedAt": "2025-10-19T17:43:29.379320"
+    }
+  ],
+  "clients": [
+    {
+      "name": "jojo",
+      "email": "jojo@example.com",
+      "password": "$2b$12$AQH24P2266cjQlrJs32NQOU5PUW.kTUxTTxXohqq//wDCTR4Ya8Um",
+      "_id": "cli000001",
+      "createdAt": "2025-10-19T16:59:37.818170",
+      "updatedAt": "2025-10-19T16:59:37.818170"
+    }
+  ],
+  "requests": [
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000002",
+      "requestType": "workshop",
+      "message": "hi",
+      "status": "accepted",
+      "cost": 0.0,
+      "timeframe": "TBD",
+      "_id": "req000001",
+      "createdAt": "2025-10-19T17:00:06.610450",
+      "updatedAt": "2025-10-19T17:16:59.173952"
+    }
+  ],
+  "contracts": [
+    {
+      "requestId": "req000001",
+      "artisanId": "art000002",
+      "clientId": "cli000001",
+      "status": "pending",
+      "cost": 0.0,
+      "timeframe": "TBD",
+      "_id": "con000001",
+      "createdAt": "2025-10-19T17:16:59.273216",
+      "updatedAt": "2025-10-19T17:16:59.273216"
+    },
+    {
+      "requestId": "req000001",
+      "artisanId": "art000002",
+      "clientId": "cli000001",
+      "status": "pending",
+      "cost": 55,
+      "timeframe": "1 week",
+      "_id": "con000002",
+      "createdAt": "2025-10-19T17:29:44.176978",
+      "updatedAt": "2025-10-19T17:29:44.176978"
+    },
+    {
+      "requestId": "req000001",
+      "artisanId": "art000002",
+      "clientId": "cli000001",
+      "status": "pending",
+      "cost": 55,
+      "timeframe": "1 week",
+      "_id": "con000003",
+      "createdAt": "2025-10-19T17:29:59.061650",
+      "updatedAt": "2025-10-19T17:29:59.061650"
+    }
+  ]
+}
