@@ -23,7 +23,7 @@ export default function Requests_A() {
       message:
         "Looking for a custom vase set in beige tones. Could you make 3 pieces with a matte finish?",
       date: "Oct 5, 2025",
-      status: "accepted",
+      status: "Pending",
     },
     {
       id: 3,
@@ -32,19 +32,10 @@ export default function Requests_A() {
       message:
         "We'd love to feature you in our craft show during Riyadh Art Week. Are you available on November 2nd?",
       date: "Sep 30, 2025",
-      status: "Pending", // New status
-    },
-    {
-      id: 4,
-      client: "Huda.A",
-      type: "Product Collaboration",
-      message:
-        "Interested in collaborating on a limited ceramic collection. Let's discuss design ideas.",
-      date: "Sep 15, 2025",
       status: "in progress",
     },
     {
-      id: 5,
+      id: 4,
       client: "Mona.K",
       type: "Custom Order",
       message: "Want to order a custom ceramic dinnerware set.",
@@ -52,7 +43,7 @@ export default function Requests_A() {
       status: "completed",
     },
     {
-      id: 6,
+      id: 5,
       client: "Huda.A",
       type: "Product Collaboration",
       message:
@@ -61,7 +52,7 @@ export default function Requests_A() {
       status: "rejected",
     },
     {
-      id: 7,
+      id: 6,
       client: "Mona.K",
       type: "Custom Order",
       message: "Want to order a custom ceramic dinnerware set.",
@@ -87,14 +78,12 @@ export default function Requests_A() {
     switch (status) {
       case "new":
         return "#d4a017";
-      case "accepted":
-        return "#3c7c59";
       case "Pending":
         return "#9370DB";
       case "in progress":
         return "#29648a";
       case "completed":
-        return "#3a0b0b";
+        return "#3c7c59";
       case "rejected":
         return "#a13a3a";
       case "canceled":
@@ -260,7 +249,7 @@ export default function Requests_A() {
       {/* ===== Filters ===== */}
       <section className="container text-center mb-4">
         <div className="d-flex flex-wrap justify-content-center gap-3">
-          {["all", "new", "accepted", "Pending", "in progress", "completed", "rejected", "canceled"].map(
+          {["all", "new", "Pending", "in progress", "completed", "rejected", "canceled"].map(
             (state) => (
               <button
                 key={state}
@@ -313,8 +302,7 @@ export default function Requests_A() {
           <p className="text-muted mt-4">
             {filter === "all" && "No requests yet. You'll see new ones here once clients contact you."}
             {filter === "new" && "No new requests at the moment. New client inquiries will appear here."}
-            {filter === "accepted" && "No accepted requests. Accept some new requests to see them here."}
-            {filter === "Pending" && "No Pending orders. Send contracts to see them here."}
+            {filter === "Pending" && "No Pending requests. Accept & Send contracts to new requests see them here."}
             {filter === "in progress" && "No requests in progress. Client-accepted contracts will appear here."}
             {filter === "completed" && "No completed requests yet. Finish your ongoing projects to see them here."}
             {filter === "rejected" && "No rejected requests. Requests you decline will appear here."}
@@ -378,14 +366,14 @@ export default function Requests_A() {
                 </p>
 
                 {/* Status + Actions */}
-                <div className="d-flex flex-column gap-3">
+                <div className="d-flex flex-column gap-3 ">
                   {/* Status badges */}
-                  <div className="d-flex gap-2 flex-wrap justify-content-start">
-                    {["new", "accepted", "Pending", "in progress", "completed", "rejected", "canceled"].map(
+                  <div className="d-flex gap-2  flex-wrap justify-content-start">
+                    {["new", "Pending", "in progress", "completed", "rejected", "canceled"].map(
                       (status) => (
                         <span
                           key={status}
-                          className="px-3 py-1 border rounded-pill small fw-medium"
+                          className="px-3 py-1 border rounded-pill small fw-medium "
                           style={{
                             color:
                               req.status === status
@@ -413,7 +401,10 @@ export default function Requests_A() {
                       <div className="d-flex gap-2">
                       <button
                         className="btn"
-                        onClick={() => updateStatus(req.id, "accepted")}
+                        onClick={() => {
+                              setSelectedClient(req.client);
+                                setShowContract(true);
+                      }}
                         style={{
                           border: "1px solid #3c7c59",
                           color: "#3c7c59",
@@ -422,7 +413,7 @@ export default function Requests_A() {
                           fontSize: "0.85rem",
                         }}
                       >
-                        Accept
+                        Accept & Send Contract
                       </button>
                       <button
                         className="btn"
@@ -439,24 +430,7 @@ export default function Requests_A() {
                       </button>
                     </div>
                   )}
-                  {req.status === "accepted" && (
-                    <button
-                      className="btn"
-                      onClick={() => {
-                        setSelectedClient(req.client);
-                        setShowContract(true);
-                      }}
-                      style={{
-                        border: "1px solid #3a0b0b",
-                        color: "#3a0b0b",
-                        borderRadius: "20px",
-                        padding: "4px 12px",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      Send Contract
-                    </button>
-                  )}
+                  
                   {req.status === "Pending" && (
                     <div className="d-flex gap-2">
                       <button
@@ -488,9 +462,10 @@ export default function Requests_A() {
                     </div>
                   )}
                   {req.status === "in progress" && (
+                    <div className="d-flex gap-2">
                     <button
                       className="btn"
-                      onClick={() => markAsCompleted(req.id, req.client)}
+                      onClick={() => handleViewContract(req)}
                       style={{
                         border: "1px solid #3a0b0b",
                         color: "#3a0b0b",
@@ -499,8 +474,22 @@ export default function Requests_A() {
                         fontSize: "0.85rem",
                       }}
                     >
+                      View Contract
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => markAsCompleted(req.id, req.client)}
+                      style={{
+                        border: "1px solid #3c7c59",
+                        color: "#3c7c59",
+                        borderRadius: "20px",
+                        padding: "4px 12px",
+                        fontSize: "0.85rem",
+                      }}
+                    >
                       Mark as Completed
                     </button>
+                    </div>
                   )}
                 </div>
                 </div>
@@ -802,24 +791,7 @@ export default function Requests_A() {
                   <div className="form-text" style={{ color: "#6c757d" }}>
                     Expected completion date for this project
                   </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="d-flex justify-content-end gap-3 pt-3">
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary px-4 py-2 fw-semibold"
-                    onClick={() => setShowViewContract(false)}
-                    style={{
-                      borderRadius: "8px",
-                      borderColor: "#3a0b0b",
-                      color: "#3a0b0b",
-                      minWidth: "100px"
-                    }}
-                  >
-                    Close
-                  </button>
-                </div>
+                </div>                
               </div>
             </div>
           </div>
