@@ -1,8 +1,8 @@
 {
   "counters": {
     "artisan": 2,
-    "client": 1,
-    "request": 1,
+    "client": 3,
+    "request": 2,
     "contract": 3
   },
   "artisans": [
@@ -53,6 +53,22 @@
       "_id": "cli000001",
       "createdAt": "2025-10-19T16:59:37.818170",
       "updatedAt": "2025-10-19T16:59:37.818170"
+    },
+    {
+      "name": "rakan  ",
+      "email": "rakan@example.com",
+      "password": "$2b$12$3Yc7nnOX5KOf0IxazZ8n8OvYtKwUHeI2n5uk9OlKVGt9RajJq1FZe",
+      "_id": "cli000002",
+      "createdAt": "2025-10-20T09:21:33.364438",
+      "updatedAt": "2025-10-20T09:21:33.364438"
+    },
+    {
+      "name": "rakan  ",
+      "email": "rakan@example.com",
+      "password": "$2b$12$bWqpkpPAx9OrcqKsN.2AgOnXgFmeIx27IdqfOBejLG2CTxHJIvh2K",
+      "_id": "cli000003",
+      "createdAt": "2025-10-20T09:21:33.961880",
+      "updatedAt": "2025-10-20T09:21:33.961880"
     }
   ],
   "requests": [
@@ -67,6 +83,18 @@
       "_id": "req000001",
       "createdAt": "2025-10-19T17:00:06.610450",
       "updatedAt": "2025-10-19T17:16:59.173952"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000002",
+      "requestType": "product",
+      "message": "hh",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000002",
+      "createdAt": "2025-10-20T10:12:47.548654",
+      "updatedAt": "2025-10-20T10:12:47.548654"
     }
   ],
   "contracts": [
