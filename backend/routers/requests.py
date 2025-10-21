@@ -4,6 +4,8 @@ from storage.json_repo import JSONRepository
 from schemas.requests import RequestCreate
 from schemas.contracts import SetTermsRequest
 from ._deps import get_current_user
+from pydantic import BaseModel
+
 
 router = APIRouter(prefix="/requests", tags=["requests"])
 repo = JSONRepository()
@@ -37,10 +39,16 @@ def get_request(request_id: str, user=Depends(get_current_user)):
         raise HTTPException(status_code=403, detail="Forbidden")
     return r
 
+class ExtendedTermsRequest(BaseModel):
+    cost: float
+    message: str
+    date: str  # بصيغة YYYY-MM-DD
+
 @router.put("/{request_id}/accept")
-def accept_request(request_id: str, terms: SetTermsRequest, user=Depends(get_current_user)):
+def accept_request(request_id: str, terms: ExtendedTermsRequest, user=Depends(get_current_user)):
     if user["user_type"] != "artisan":
         raise HTTPException(status_code=403, detail="Artisans only")
+
     r = repo.get_request(request_id)
     if not r:
         raise HTTPException(status_code=404, detail="Request not found")
@@ -48,17 +56,31 @@ def accept_request(request_id: str, terms: SetTermsRequest, user=Depends(get_cur
         raise HTTPException(status_code=403, detail="Forbidden")
     if r["status"] != "pending":
         raise HTTPException(status_code=400, detail="Request not pending")
-    r = repo.update_request(request_id, {"status":"accepted", "cost": terms.cost, "timeframe": terms.timeframe})
-    # create contract in pending status
-    contract = repo.create_contract({
-        "requestId": request_id,
-        "artisanId": r["artisanId"],
-        "clientId": r["clientId"],
-        "status": "pending",
-        "cost": terms.cost,
-        "timeframe": terms.timeframe
-    })
+
+    r = repo.update_request(
+        request_id,
+        {
+            "status": "accepted",
+            "cost": terms.cost,
+            "message": terms.message,
+            "date": terms.date,
+        },
+    )
+
+    contract = repo.create_contract(
+        {
+            "requestId": request_id,
+            "artisanId": r["artisanId"],
+            "clientId": r["clientId"],
+            "status": "pending",
+            "cost": terms.cost,
+            "message": terms.message,
+            "date": terms.date,
+        }
+    )
+
     return {"request": r, "contract": contract}
+
 
 @router.put("/{request_id}/reject")
 def reject_request(request_id: str, user=Depends(get_current_user)):

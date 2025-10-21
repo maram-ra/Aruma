@@ -31,15 +31,16 @@ export default function Login() {
     const data = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("userRole", data.user_type);
-      localStorage.setItem("userId", data.user_id);
+  localStorage.setItem("token", data.access_token);
+  localStorage.setItem("userRole", data.user_type);
+  localStorage.setItem("userId", data.user_id);  
+  localStorage.setItem("userName", data.name || "User");
 
-      navigate(
-        data.user_type === "client"
-          ? "/marketplace"
-          : "/artisan/Profile"
-      );
+  navigate(
+    data.user_type === "client"
+      ? "/marketplace"
+      : "/artisan/Profile"
+  );
     } else {
       alert(data.detail || "Login failed");
     }

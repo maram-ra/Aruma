@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, HTTPException
 from fastapi import Depends
 from pydantic import BaseModel
@@ -28,6 +27,7 @@ def register_artisan(payload: ArtisanCreate):
     created.pop("password", None)
     return created
 
+
 @router.post("/client/register", response_model=ClientPublic, status_code=201)
 def register_client(payload: ClientCreate):
     if repo.find_user_by_email("client", payload.email):
@@ -41,18 +41,30 @@ def register_client(payload: ClientCreate):
     created.pop("password", None)
     return created
 
-@router.post("/artisan/login", response_model=Token)
+
+@router.post("/artisan/login")
 def login_artisan(payload: LoginRequest):
     user = repo.find_user_by_email("artisan", payload.email)
     if not user or not verify_password(payload.password, user["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": user["_id"], "user_type": "artisan"})
-    return {"access_token": token, "user_type": "artisan", "user_id": user["_id"]}
+    return {
+        "access_token": token,
+        "user_type": "artisan",
+        "user_id": user["_id"],
+        "name": user["name"]
+    }
 
-@router.post("/client/login", response_model=Token)
+
+@router.post("/client/login")
 def login_client(payload: LoginRequest):
     user = repo.find_user_by_email("client", payload.email)
     if not user or not verify_password(payload.password, user["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": user["_id"], "user_type": "client"})
-    return {"access_token": token, "user_type": "client", "user_id": user["_id"]}
+    return {
+        "access_token": token,
+        "user_type": "client",
+        "user_id": user["_id"],
+        "name": user["name"]
+    }

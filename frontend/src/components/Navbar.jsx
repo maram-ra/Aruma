@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Navbar() {
@@ -7,6 +7,7 @@ export default function Navbar() {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ لتحديد المسار الحالي
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -83,56 +84,46 @@ export default function Navbar() {
                 My Requests
               </Link>
 
-              <Link
-                to="/marketplace"
-                className="text-decoration-none fw-semibold small"
-                style={{
-                  color: "#3a0b0b",
-                  letterSpacing: "0.3px",
-                  transition: "opacity 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-              >
-                Marketplace
-              </Link>
+              {/* ✅ يظهر فقط إذا لم نكن في صفحة /marketplace */}
+              {location.pathname !== "/marketplace" && (
+                <Link
+                  to="/marketplace"
+                  className="text-decoration-none fw-semibold small"
+                  style={{
+                    color: "#3a0b0b",
+                    letterSpacing: "0.3px",
+                    transition: "opacity 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.opacity = "0.7")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.opacity = "1")
+                  }
+                >
+                  Marketplace
+                </Link>
+              )}
             </>
-          )}
-
-          {/* بعد تسجيل الدخول كـ Artisan */}
-          {isLoggedIn && userRole === "artisan" && (
-            <Link
-              to="/artisan/Profile"
-              className="text-decoration-none fw-semibold small"
-              style={{
-                color: "#3a0b0b",
-                letterSpacing: "0.3px",
-                transition: "opacity 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-            >
-              My Profile
-            </Link>
           )}
         </div>
 
         {/* ===== Logo (Centered) ===== */}
         <Link
-  to="/"
-  className="navbar-brand m-0 d-flex justify-content-center align-items-center w-100 position-absolute start-50 translate-middle-x"
-  style={{ pointerEvents: "none" }}   
->
-  <img
-    src="/logo.png"
-    alt="Aruma Logo"
-    width="52"
-    style={{
-      filter: "contrast(90%) brightness(95%)",
-      opacity: "0.95",
-    }}
-  />
-</Link>
+          to="/"
+          className="navbar-brand m-0 d-flex justify-content-center align-items-center w-100 position-absolute start-50 translate-middle-x"
+          style={{ pointerEvents: "none" }}
+        >
+          <img
+            src="/logo.png"
+            alt="Aruma Logo"
+            width="52"
+            style={{
+              filter: "contrast(90%) brightness(95%)",
+              opacity: "0.95",
+            }}
+          />
+        </Link>
 
         {/* ===== Auth Section ===== */}
         <div
@@ -149,7 +140,7 @@ export default function Navbar() {
                   letterSpacing: "0.3px",
                 }}
               >
-                Hi, {userName || "User"}
+                Hi, {userName || "there"}
               </span>
 
               <button
@@ -160,8 +151,12 @@ export default function Navbar() {
                   letterSpacing: "0.3px",
                   transition: "opacity 0.2s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.opacity = "0.7")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.opacity = "1")
+                }
               >
                 Log out
               </button>
@@ -175,8 +170,12 @@ export default function Navbar() {
                 letterSpacing: "0.3px",
                 transition: "opacity 0.2s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.opacity = "0.7")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.opacity = "1")
+              }
             >
               Login
             </Link>

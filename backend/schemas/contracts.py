@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel
 from typing import Optional, Literal
 
@@ -11,11 +10,13 @@ class ContractPublic(BaseModel):
     clientId: str
     status: ContractStatus
     cost: float
-    timeframe: str
+    message: Optional[str] = None
+    date: Optional[str] = None
     createdAt: str
     updatedAt: str
 
+
 class SetTermsRequest(BaseModel):
     cost: float
-    timeframe: str
-    additionalNotes: Optional[str] = None
+    message: str
+    date: str  # YYYY-MM-DD format

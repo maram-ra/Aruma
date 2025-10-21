@@ -7,6 +7,8 @@ export default function Register() {
   const location = useLocation();
   const userType = new URLSearchParams(location.search).get("type");
   const [slide, setSlide] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -62,12 +64,13 @@ export default function Register() {
 
     const data = await response.json();
 
-    if (response.ok) {
-      alert("Registration successful!");
-      navigate(`/login?type=${userType}`);
-    } else {
-      alert(data.detail || "Registration failed");
-    }
+   if (response.ok) {
+  setAlertMessage({ type: "success", text: "Registration successful! Redirecting..." });
+  setTimeout(() => navigate(`/login?type=${userType}`), 2000);
+} else {
+  setAlertMessage({ type: "danger", text: data.detail || "Registration failed" });
+}
+
   } catch (error) {
     console.error("Registration error:", error);
     alert("Network error");
@@ -115,6 +118,22 @@ export default function Register() {
           >
             Create Account
           </h1>
+          {alertMessage && (
+  <div
+    className={`alert alert-${alertMessage.type} text-center small`}
+    style={{
+      borderRadius: "8px",
+      color: alertMessage.type === "success" ? "#2e5c3a" : "#7a1a1a",
+      backgroundColor: alertMessage.type === "success" ? "#d8f0dc" : "#f8d7da",
+      border: "1px solid rgba(0,0,0,0.1)",
+      letterSpacing: "0.3px",
+      marginBottom: "1rem",
+    }}
+  >
+    {alertMessage.text}
+  </div>
+)}
+
 
           <form onSubmit={handleSubmit}>
             <input

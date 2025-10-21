@@ -1,54 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 export default function Requests_C() {
-  const [requests] = useState([
-    {
-      id: 1,
-      artisan: "Sara.Pottery",
-      type: "Custom Pottery Set",
-      message:
-        "Requested a handmade tea set with six cups and a teapot for my home collection.",
-      date: "Sep 28, 2025",
-      status: "pending",
-    },
-    {
-      id: 2,
-      artisan: "Aisha.ClayWorks",
-      type: "Workshop Registration",
-      message:
-        "Joined a weekend pottery workshop focusing on glazing and shaping techniques.",
-      date: "Sep 20, 2025",
-      status: "approved",
-    },
-    {
-      id: 3,
-      artisan: "Mona.Designs",
-      type: "Live Show Participation",
-      message:
-        "Applied to join a live artisan show session during Aruma Craft Week.",
-      date: "Aug 30, 2025",
-      status: "rejected",
-    },
-    {
-      id: 4,
-      artisan: "Rawan.Ceramics",
-      type: "Product Order",
-      message: "Ordered a set of handmade espresso cups for my new kitchen.",
-      date: "Jul 14, 2025",
-      status: "completed",
-    },
-  ]);
-
+  const [requests, setRequests] = useState([]);
   const [filter, setFilter] = useState("all");
+  const token = localStorage.getItem("token");
+  const clientId = localStorage.getItem("userId");
 
+  // جلب الطلبات من الباك إند
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/v1/clients/${clientId}/requests`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (!response.ok) throw new Error("Failed to load requests");
+        const data = await response.json();
+        setRequests(data.requests || []);
+      } catch (error) {
+        console.error("Error fetching client requests:", error);
+      }
+    };
+
+    if (clientId && token) fetchRequests();
+  }, [clientId, token]);
+
+  
+
+  const handleConfirmContract = async (contractId) => {
+    
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/v1/contracts/${contractId}/confirm`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) throw new Error("Failed to confirm contract");
+    const data = await response.json();
+    alert("Contract confirmed successfully!");
+    // Refresh requests
+    window.location.reload();
+  } catch (err) {
+    console.error(err);
+    alert("Error confirming contract");
+  }
+};
+
+
+  //  ألوان الحالات
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
         return "#d4a017";
-      case "approved":
+      case "accepted":
         return "#3c7c59";
       case "rejected":
         return "#a13a3a";
@@ -59,11 +72,13 @@ export default function Requests_C() {
     }
   };
 
+  //  فلترة الطلبات
   const filteredRequests =
     filter === "all"
       ? requests
       : requests.filter((req) => req.status === filter);
 
+  //  العدّاد
   const getCount = (status) =>
     status === "all"
       ? requests.length
@@ -113,7 +128,7 @@ export default function Requests_C() {
       {/* ===== Filters ===== */}
       <section className="container text-center mb-4">
         <div className="d-flex flex-wrap justify-content-center gap-3">
-          {["all", "pending", "approved", "completed", "rejected"].map(
+          {["all", "pending", "accepted", "completed", "rejected"].map(
             (state) => (
               <button
                 key={state}
@@ -161,10 +176,26 @@ export default function Requests_C() {
           ></div>
         </h5>
 
+        {/* حالة فارغة */}
+        {filteredRequests.length === 0 && (
+          <p className="text-muted mt-4">
+            {filter === "all" &&
+              "No requests yet. Your requests will appear here once submitted."}
+            {filter === "pending" &&
+              "No pending requests. Sent requests awaiting artisan approval will show here."}
+            {filter === "accepted" &&
+              "No accepted requests. Artisan-approved requests will appear here."}
+            {filter === "completed" &&
+              "No completed requests yet. Finished projects will appear here."}
+            {filter === "rejected" &&
+              "No rejected requests. Declined requests will appear here."}
+          </p>
+        )}
+
         <div className="row justify-content-center">
           {filteredRequests.map((req) => (
             <div
-              key={req.id}
+              key={req._id || req.id}
               className="col-12 col-sm-10 col-md-8 mb-4 d-flex justify-content-center"
             >
               {/* ===== Card ===== */}
@@ -187,20 +218,20 @@ export default function Requests_C() {
                         letterSpacing: "0.3px",
                       }}
                     >
-                      {req.type}
+                      {req.requestType || req.type}
                     </h6>
                     <small
                       className="text-muted"
                       style={{ fontSize: "0.9rem" }}
                     >
-                      Artisan: {req.artisan}
+                      Artisan: {req.artisanName || req.artisan || "Unknown"}
                     </small>
                   </div>
                   <small
                     className="text-muted"
                     style={{ fontSize: "0.9rem" }}
                   >
-                    {req.date}
+                    {req.date || "—"}
                   </small>
                 </div>
 
@@ -219,7 +250,7 @@ export default function Requests_C() {
                 {/* Status */}
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
                   <div className="d-flex gap-2 flex-wrap">
-                    {["pending", "approved", "rejected", "completed"].map(
+                    {["pending", "accepted", "rejected", "completed"].map(
                       (status) => (
                         <span
                           key={status}
@@ -246,20 +277,26 @@ export default function Requests_C() {
                   </div>
 
                   {/* Actions for client */}
-                  {req.status === "approved" && (
-                    <button
-                      className="btn"
-                      style={{
-                        border: "1px solid #3a0b0b",
-                        color: "#3a0b0b",
-                        borderRadius: "20px",
-                        padding: "4px 12px",
-                        fontSize: "0.85rem",
-                      }}
-                    >
-                      View Contract
-                    </button>
-                  )}
+                  {req.status === "accepted" && (
+  <button
+    className="btn"
+    onClick={() => {
+  console.log("Confirming contract:", contract);
+  handleConfirmContract(contract._id);
+}}
+
+    style={{
+      border: "1px solid #3a0b0b",
+      color: "#3a0b0b",
+      borderRadius: "20px",
+      padding: "4px 12px",
+      fontSize: "0.85rem",
+    }}
+  >
+    Confirm Contract
+  </button>
+)}
+
 
                   {req.status === "completed" && (
                     <button

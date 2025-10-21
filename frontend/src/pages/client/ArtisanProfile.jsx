@@ -230,9 +230,64 @@ export default function ArtisanProfile() {
 
       <div className="container" style={{ borderBottom: "1px solid #cbbeb3", opacity: "0.5", marginBottom: "2rem" }}></div>
 
-      <section className="container text-center py-5">
-        <WorkGallery />
-      </section>
+     {/* ===== Work Gallery (Dynamic) ===== */}
+<section className="container py-5 text-center">
+  <h5
+    className="fw-bold mb-5"
+    style={{
+      color: "#3a0b0b",
+      fontSize: "1.25rem",
+      letterSpacing: "0.5px",
+    }}
+  >
+    My Work
+    <div
+      style={{
+        width: "50px",
+        height: "2px",
+        backgroundColor: "#cbbeb3",
+        margin: "10px auto 0",
+        opacity: "0.8",
+      }}
+    ></div>
+  </h5>
+
+  {artisan.images && artisan.images.length > 1 ? (
+    <div className="row justify-content-center" style={{ rowGap: "60px" }}>
+      {artisan.images.slice(1).map((img, i) => (
+        <div
+          key={i}
+          className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center"
+        >
+          <div
+            className="overflow-hidden"
+            style={{
+              borderRadius: "10px",
+              boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
+            }}
+          >
+            <img
+              src={img}
+              alt={`Artwork ${i + 1}`}
+              style={{
+                width: "100%",
+                maxWidth: "340px",
+                height: "420px",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+          <h6 className="fw-semibold mt-3 mb-1" style={{ color: "#3a0b0b" }}>
+            {artisan.galleryTitles?.[i] || `Artwork ${i + 1}`}
+          </h6>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p className="text-muted">No work uploaded yet.</p>
+  )}
+</section>
+
 
       <Footer />
 
