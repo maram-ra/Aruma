@@ -1,6 +1,6 @@
 {
   "counters": {
-    "artisan": 3,
+    "artisan": 4,
     "client": 1,
     "request": 2,
     "contract": 2
@@ -46,7 +46,7 @@
       "bio": "Handcrafted pottery inspired by simplicity, texture, and the beauty of natural imperfection. Made slowly, with purpose and soul.",
       "craftType": "Pottery",
       "images": [
-        "/images/44e91f8b-b25e-4a98-8a17-2860aa3b5a93.png",
+        "/images/57b22b33-acc2-427c-9293-ef49d4083deb.jpg",
         "/images/800d4d5a-561a-4eca-93b4-5cdaa407adf4.jpg",
         "/images/1c49aa6e-3bf4-49d5-bd6f-0a870323459a.jpg",
         "/images/3c2d6f11-1749-4d96-88d3-00a4281cb4e4.jpg",
@@ -55,14 +55,31 @@
         "/images/481ac9fa-b4b3-41c9-868f-2032a3eea3b6.jpg",
         "/images/b61bcf64-05bb-40c1-8c82-3f849393f0f5.jpg",
         "/images/f6395572-f3e8-4ccf-ab67-06eecd33a285.jpg",
-        "/images/f92bbd50-6969-4d3f-8cf4-efb3309ac791.jpg"
+        "/images/f92bbd50-6969-4d3f-8cf4-efb3309ac791.jpg",
+        "/images/0b8b6525-95b6-4ed3-8db2-89a28c04ec5c.jpg",
+        "/images/d235c731-c242-4097-bb63-3203902ae01e.jpg",
+        "/images/a04cf800-51f5-450c-a585-b93a1413eb63.jpg"
       ],
       "offersWorkshop": true,
       "offersLiveShow": true,
       "completedWorkCount": 0,
       "_id": "art000003",
       "createdAt": "2025-10-21T19:48:59.462166",
-      "updatedAt": "2025-10-21T21:02:45.082508"
+      "updatedAt": "2025-10-23T12:29:01.968470"
+    },
+    {
+      "name": "nora",
+      "email": "nora@example.com",
+      "password": "$2b$12$6EO6wcKodfTv1f6h6VSAU.czFfaH1uThskgaamnoum8DrwiwGKmAO",
+      "bio": null,
+      "craftType": "Woodwork",
+      "images": [],
+      "offersWorkshop": false,
+      "offersLiveShow": false,
+      "completedWorkCount": 0,
+      "_id": "art000004",
+      "createdAt": "2025-10-22T12:07:46.113105",
+      "updatedAt": "2025-10-22T12:07:46.113105"
     }
   ],
   "clients": [
