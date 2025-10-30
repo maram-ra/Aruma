@@ -490,9 +490,7 @@ export default function Profile() {
                     }}
                   />
                 </div>
-                <h6 className="fw-semibold mt-3 mb-1" style={{ color: "#3a0b0b" }}>
-                  Artwork {i + 1}
-                </h6>
+               
               </div>
             ))}
           </div>

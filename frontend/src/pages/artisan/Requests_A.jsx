@@ -57,18 +57,18 @@ export default function Requests_A() {
         body = JSON.stringify({
           cost: parseFloat(formData.cost),
           date: formData.date,
-          message: "Accepted — ready to begin ",
+          
 
         });
       } else if (modalType === "reject") {
         url = `http://127.0.0.1:8000/api/v1/requests/${selectedRequestId}/reject`;
         body = JSON.stringify({
-          message: formData.message || "Unfortunately, I can’t take this one 🌿",
+          message: formData.message || "Unfortunately, I can’t take this one ",
         });
       } else if (modalType === "complete") {
         url = `http://127.0.0.1:8000/api/v1/requests/${selectedRequestId}/complete`;
         body = JSON.stringify({
-          message: formData.message || "Completed — thank you for the collaboration 🌿",
+          message: formData.message || "Completed — thank you for the collaboration ",
         });
       }
 
