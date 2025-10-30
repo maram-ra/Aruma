@@ -1,0 +1,100 @@
+{
+  "counters": {
+    "artisan": 6,
+    "client": 1,
+    "request": 3,
+    "contract": 2
+  },
+  "artisans": [
+    {
+      "name": "Salsala Studio",
+      "email": "reem@example.com",
+      "password": "$2b$12$RenPi6GH.eNUZ8PpS6rRguzvn9OXYF1bIEHVvETw10G52KnhAEVtm",
+      "phone": "0500000000",
+      "bio": "Handmade pottery rooted in simplicity\neach piece tells its own quiet story.\n",
+      "craftType": "Pottery",
+      "images": [
+        "/images/9293f6b0-c2ef-436f-a628-1e6881e807c2.jpg",
+        "/images/6856b967-4690-425d-9e35-f727974eb169.jpg",
+        "/images/af122f01-27a9-4392-a89f-380af6612972.jpg",
+        "/images/f0f43a0b-8975-44b8-bdf2-58a988ffb284.jpg",
+        "/images/703b4dff-6f17-4480-8cae-4daae270516a.jpg",
+        "/images/2cd41c1c-e4e6-4a17-887e-a0820ec93706.jpg",
+        "/images/dfc54a6d-d4ed-40e7-b5a3-02a75f27756f.jpg",
+        "/images/d7f11aa2-728e-4262-b4a1-9b31663bdf0d.jpg",
+        "/images/5245e8fe-7788-4fb6-80a8-69c661c5a3f4.jpg",
+        "/images/000de5f2-5027-43a1-942a-06851b62cc40.jpg"
+      ],
+      "offersWorkshop": true,
+      "offersLiveShow": true,
+      "completedWorkCount": 0,
+      "_id": "art000003",
+      "createdAt": "2025-10-21T19:48:59.462166",
+      "updatedAt": "2025-10-25T20:24:58.651976"
+    }
+  ],
+  "clients": [
+    {
+      "name": "sara ahmad",
+      "email": "sara@example.com",
+      "password": "$2b$12$RWDzTlhu0lH25daxtFAbzedNB945CG/rerrP8pGivC3LwdCcvDP.m",
+      "_id": "cli000001",
+      "createdAt": "2025-10-21T19:20:53.090268",
+      "updatedAt": "2025-10-21T19:20:53.090268"
+    }
+  ],
+  "requests": [
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "product",
+      "message": "Accepted — ready to begin ",
+      "status": "completed",
+      "cost": 4500.0,
+      "timeframe": null,
+      "_id": "req000002",
+      "createdAt": "2025-10-28T23:31:00.993495",
+      "updatedAt": "2025-10-28T23:53:11.790504",
+      "date": "2025-10-16"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "workshop",
+      "message": "Accepted — ready to begin ",
+      "status": "in progress",
+      "cost": 500.0,
+      "timeframe": null,
+      "_id": "req000003",
+      "createdAt": "2025-10-28T23:52:32.992319",
+      "updatedAt": "2025-10-28T23:53:47.691318",
+      "date": "2025-10-22"
+    }
+  ],
+  "contracts": [
+    {
+      "requestId": "req000002",
+      "artisanId": "art000003",
+      "clientId": "cli000001",
+      "status": "completed",
+      "cost": 4500.0,
+      "message": "Accepted — ready to begin ",
+      "date": "2025-10-16",
+      "_id": "con000001",
+      "createdAt": "2025-10-28T23:46:22.397797",
+      "updatedAt": "2025-10-28T23:53:11.801238"
+    },
+    {
+      "requestId": "req000003",
+      "artisanId": "art000003",
+      "clientId": "cli000001",
+      "status": "confirmed",
+      "cost": 500.0,
+      "message": "Accepted — ready to begin ",
+      "date": "2025-10-22",
+      "_id": "con000002",
+      "createdAt": "2025-10-28T23:53:01.950383",
+      "updatedAt": "2025-10-28T23:53:47.678471"
+    }
+  ]
+}
