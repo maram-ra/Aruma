@@ -34,7 +34,7 @@ export default function HeroSection() {
           left: 0,
           width: "100%",
           height: "100%",
-          background: "rgba(58, 11, 11, 0.35)", // ← تظليل بلون عنابي شفاف
+          background: "rgba(58, 11, 11, 0.35)", 
           zIndex: -1,
         }}
       ></div>
@@ -72,7 +72,7 @@ export default function HeroSection() {
             lineHeight: "1.6",
           }}
         >
-          Aruma is a space that celebrates the beauty of handmade creation —
+          Aruma is a space that celebrates the beauty of handmade creation 
           where every detail tells a story, and every maker finds their rhythm.
         </p>
       </div>
