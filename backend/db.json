@@ -2,7 +2,7 @@
   "counters": {
     "artisan": 3,
     "client": 1,
-    "request": 8,
+    "request": 9,
     "contract": 2
   },
   "artisans": [
@@ -141,6 +141,18 @@
       "_id": "req000008",
       "createdAt": "2025-11-01T13:32:29.772538",
       "updatedAt": "2025-11-01T13:32:29.772538"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "workshop",
+      "message": "ةت",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000009",
+      "createdAt": "2025-11-01T13:42:42.537412",
+      "updatedAt": "2025-11-01T13:42:42.537412"
     }
   ],
   "contracts": [
