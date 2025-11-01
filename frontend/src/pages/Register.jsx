@@ -206,7 +206,7 @@ export default function Register() {
     }
   };
 
-  const handleSlide = () => {
+  const goLogin = () => {
     setSlide(true);
     setTimeout(() => navigate(`/login?type=${userType}`), 800);
   };
@@ -394,27 +394,37 @@ export default function Register() {
             >
               Sign Up
             </button>
-            <div className="text-center mt-3">
-  <button
-    type="button"
-    onClick={() => navigate("/UserType")}
-    className="btn btn-link p-0"
-    style={{
-      color: "#3a0b0b",
-      textDecoration: "underline",
-      fontWeight: "600",
-    }}
-  >
-    ← Back to User Type
-  </button>
-</div>
 
+            {/* ===== Mobile-only helper under Sign Up ===== */}
+            <p className="text-center mt-3 d-md-none" style={{ color: "#5c4b45" }}>
+              Already have an account?{" "}
+              <button
+                type="button"
+                className="btn btn-link p-0 fw-semibold"
+                onClick={goLogin}
+                style={{ color: "#3a0b0b", textDecoration: "underline" }}
+              >
+                Sign In
+              </button>
+            </p>
+
+            {/* Back to User Type (optional) */}
+            <div className="text-center mt-2">
+              <button
+                type="button"
+                onClick={() => navigate("/UserType")}
+                className="btn btn-link p-0"
+                style={{ color: "#3a0b0b", textDecoration: "underline", fontWeight: 600 }}
+              >
+                ← Back to User Type
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      {/* ===== Overlay ===== */}
-      <div className="overlay d-flex flex-column justify-content-center align-items-center p-5">
+      {/* ===== Overlay (Large screens only) ===== */}
+      <div className="overlay d-none d-md-flex flex-column justify-content-center align-items-center p-5">
         <h1 className="fw-bold mb-3" style={{ fontSize: "2.2rem" }}>
           Welcome Back
         </h1>
@@ -423,7 +433,7 @@ export default function Register() {
         </p>
 
         <button
-          onClick={handleSlide}
+          onClick={goLogin}
           style={{
             backgroundColor: "#dcdcd0",
             color: "#3a0b0b",
@@ -471,11 +481,16 @@ export default function Register() {
         .slide-left .form-section {
           transform: translateX(-100%);
         }
+
+        /* ===== Mobile/Tablet: نخفي الـ overlay ونخلي النص تحت الزر ===== */
         @media (max-width: 768px) {
-          .overlay, .form-section {
+          .overlay { display: none; }
+          .form-section {
             width: 100%;
             position: relative;
             transform: none !important;
+            height: auto;
+            min-height: 100vh;
           }
         }
       `}</style>

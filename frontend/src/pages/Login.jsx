@@ -1,7 +1,137 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { alertSuccess, alertError } from "../components/ArumaAlert"; // ✅ استدعاء التنبيهات
+
+/* ===================== Elegant Alert Dialog (Aruma Style) ===================== */
+const theme = {
+  primary: "#3a0b0b",
+  beige: "#f9f7f2",
+  border: "#cbbeb3",
+  success: "#3c7c59",
+  error: "#a13a3a",
+  text: "#5c4b45",
+};
+
+function showAlert({ type = "info", title = "Message", message = "", confirmText = "OK" } = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.35)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+      backdropFilter: "blur(2px)",
+    });
+
+    const dialog = document.createElement("div");
+    Object.assign(dialog.style, {
+      backgroundColor: theme.beige,
+      borderRadius: "16px",
+      padding: "28px 26px 24px",
+      width: "90%",
+      maxWidth: "420px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+      border: `1px solid ${theme.border}`,
+      fontFamily: "inherit",
+      textAlign: "center",
+      opacity: 0,
+      transform: "scale(0.9)",
+      transition: "all 0.25s ease",
+    });
+
+    const icon = document.createElement("div");
+    icon.textContent =
+      type === "success" ? "✓" : type === "error" ? "✕" : "ℹ";
+    Object.assign(icon.style, {
+      fontSize: "28px",
+      color:
+        type === "success"
+          ? theme.success
+          : type === "error"
+          ? theme.error
+          : theme.primary,
+      marginBottom: "12px",
+    });
+
+    const titleEl = document.createElement("h4");
+    titleEl.textContent = title;
+    Object.assign(titleEl.style, {
+      color: theme.primary,
+      fontWeight: 700,
+      fontSize: "1.15rem",
+      margin: "0 0 8px",
+    });
+
+    const msgEl = document.createElement("p");
+    msgEl.textContent = message;
+    Object.assign(msgEl.style, {
+      color: theme.text,
+      lineHeight: 1.6,
+      fontSize: "0.95rem",
+      margin: "0 0 20px",
+      whiteSpace: "pre-wrap",
+    });
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.textContent = confirmText;
+    Object.assign(confirmBtn.style, {
+      borderRadius: "20px",
+      border: "none",
+      padding: "8px 16px",
+      fontWeight: 600,
+      backgroundColor:
+        type === "error"
+          ? theme.error
+          : type === "success"
+          ? theme.success
+          : theme.primary,
+      color: "#fff",
+      cursor: "pointer",
+      transition: "opacity 0.2s",
+    });
+    confirmBtn.onmouseover = () => (confirmBtn.style.opacity = "0.85");
+    confirmBtn.onmouseout = () => (confirmBtn.style.opacity = "1");
+
+    confirmBtn.onclick = () => {
+      dialog.style.opacity = "0";
+      dialog.style.transform = "scale(0.9)";
+      setTimeout(() => {
+        overlay.remove();
+        resolve(true);
+      }, 200);
+    };
+
+    dialog.appendChild(icon);
+    dialog.appendChild(titleEl);
+    dialog.appendChild(msgEl);
+    dialog.appendChild(confirmBtn);
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+      dialog.style.opacity = "1";
+      dialog.style.transform = "scale(1)";
+    }, 10);
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.remove();
+        resolve(false);
+      }
+    });
+    window.addEventListener("keydown", (e) => e.key === "Escape" && overlay.remove());
+  });
+}
+
+const alertSuccess = (msg, opts) => showAlert({ type: "success", message: msg, title: "Success", ...opts });
+const alertError = (msg, opts) => showAlert({ type: "error", message: msg, title: "Error", ...opts });
+/* ============================================================================ */
 
 export default function Login() {
   const navigate = useNavigate();
@@ -37,24 +167,22 @@ export default function Login() {
         localStorage.setItem("userId", data.user_id);
         localStorage.setItem("userName", data.name || "User");
 
-        alertSuccess("Login successful! 🌿");
-        setTimeout(() => {
-          navigate(
-            data.user_type === "client"
-              ? "/marketplace"
-              : "/artisan/Profile"
-          );
-        }, 1000);
+        await alertSuccess("Login successful! 🌿");
+        navigate(
+          data.user_type === "client"
+            ? "/marketplace"
+            : "/artisan/Profile"
+        );
       } else {
-        alertError(data.detail || "Invalid credentials");
+        await alertError(data.detail || "Invalid email or password");
       }
     } catch (error) {
       console.error("Login error:", error);
-      alertError("Network error. Please try again later.");
+      await alertError("Network error. Please try again later.");
     }
   };
 
-  const handleSlide = () => {
+  const goRegister = () => {
     setSlide(true);
     setTimeout(() => navigate(`/register?type=${userType}`), 800);
   };
@@ -65,8 +193,8 @@ export default function Login() {
         slide ? "slide-right" : ""
       }`}
     >
-      {/* ===== Overlay Section ===== */}
-      <div className="overlay d-flex flex-column justify-content-center align-items-center p-5">
+      {/* ===== Overlay (Large screens only) ===== */}
+      <div className="overlay d-none d-md-flex flex-column justify-content-center align-items-center p-5">
         <h1 className="fw-bold mb-3" style={{ fontSize: "2.2rem" }}>
           First time here?
         </h1>
@@ -78,7 +206,7 @@ export default function Login() {
         </p>
 
         <button
-          onClick={handleSlide}
+          onClick={goRegister}
           style={{
             backgroundColor: "#ede9e0",
             color: "#3a0b0b",
@@ -154,7 +282,7 @@ export default function Login() {
             </div>
 
             {/* Password */}
-            <div className="mb-4">
+            <div className="mb-2">
               <input
                 type="password"
                 name="password"
@@ -197,17 +325,26 @@ export default function Login() {
               Sign In
             </button>
 
-            {/* Back Button */}
-            <div className="text-center mt-3">
+            {/* ===== Mobile-only helper under Sign In ===== */}
+            <p className="text-center mt-3 d-md-none" style={{ color: "#5c4b45" }}>
+              Don’t have an account?{" "}
+              <button
+                type="button"
+                className="btn btn-link p-0 fw-semibold"
+                onClick={goRegister}
+                style={{ color: "#3a0b0b", textDecoration: "underline" }}
+              >
+                Sign Up
+              </button>
+            </p>
+
+            {/* Back to User Type (optional) */}
+            <div className="text-center mt-2">
               <button
                 type="button"
                 onClick={() => navigate("/UserType")}
                 className="btn btn-link p-0"
-                style={{
-                  color: "#3a0b0b",
-                  textDecoration: "underline",
-                  fontWeight: "600",
-                }}
+                style={{ color: "#3a0b0b", textDecoration: "underline", fontWeight: 600 }}
               >
                 ← Back to User Type
               </button>
@@ -216,7 +353,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ===== Animation & Responsive ===== */}
+      {/* ===== CSS ===== */}
       <style>{`
         .auth-container {
           height: 100vh;
@@ -246,12 +383,16 @@ export default function Login() {
         .slide-right .form-section {
           transform: translateX(100%);
         }
+
+        /* ===== Mobile/Tablet: keep layout clean, show sign-up line under sign-in ===== */
         @media (max-width: 768px) {
-          .overlay, .form-section {
+          .overlay { display: none; }      /* نخفي الـ overlay كليًا على الشاشات الصغيرة */
+          .form-section {
             width: 100%;
-            position: relative;
             margin: 0;
             transform: none !important;
+            height: auto;
+            min-height: 100vh;
           }
         }
       `}</style>

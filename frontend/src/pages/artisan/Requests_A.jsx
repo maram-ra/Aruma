@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { alertSuccess, alertError, alertInfo, alertConfirm } from "../../components/ArumaAlert"; 
+import { alertSuccess, alertError, alertInfo, alertConfirm } from "../../components/ArumaAlert";
 
 export default function Requests_A() {
   const [requests, setRequests] = useState([]);
@@ -153,10 +153,10 @@ export default function Requests_A() {
 
       {/* Header */}
       <section className="container py-5 mt-5">
-        <h6 className="fw-bold mb-2" style={{ color: "#3a0b0b", fontSize: "1.2rem" }}>
+        <h6 className="fw-bold mb-2 page-title" style={{ color: "#3a0b0b", fontSize: "1.2rem" }}>
           Welcome back{artisanName ? `, ${artisanName}` : ""}!
         </h6>
-        <p className="small" style={{ color: "#5c4b45", maxWidth: "480px" }}>
+        <p className="small page-sub" style={{ color: "#5c4b45", maxWidth: "480px" }}>
           Manage your incoming requests — review, accept, reject, and mark them as completed.
         </p>
       </section>
@@ -172,12 +172,12 @@ export default function Requests_A() {
 
       {/* Filters */}
       <section className="container text-center mb-4">
-        <div className="d-flex flex-wrap justify-content-center gap-3">
+        <div className="d-flex flex-wrap justify-content-center gap-3 filter-wrap">
           {["all", "pending", "accepted", "completed", "rejected"].map((state) => (
             <button
               key={state}
               onClick={() => setFilter(state)}
-              className={`btn ${filter === state ? "btn-dark" : "btn-outline-dark"}`}
+              className={`btn ${filter === state ? "btn-dark" : "btn-outline-dark"} filter-btn`}
               style={{
                 borderRadius: "20px",
                 padding: "6px 16px",
@@ -196,10 +196,7 @@ export default function Requests_A() {
 
       {/* Requests List */}
       <section className="container py-5 text-center">
-        <h5
-          className="fw-bold mb-5"
-          style={{ color: "#3a0b0b", fontSize: "1.25rem" }}
-        >
+        <h5 className="fw-bold mb-5" style={{ color: "#3a0b0b", fontSize: "1.25rem" }}>
           Incoming Requests
           <div
             style={{
@@ -222,15 +219,12 @@ export default function Requests_A() {
                 className="col-12 col-sm-10 col-md-8 mb-4 d-flex justify-content-center"
               >
                 <div
-                  className="border rounded-3 p-4 shadow-sm w-100"
+                  className="border rounded-3 p-4 shadow-sm w-100 request-card"
                   style={{ backgroundColor: "#f1efe8" }}
                 >
-                  <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div className="d-flex justify-content-between align-items-center mb-3 request-card-head">
                     <div className="text-start">
-                      <h6
-                        className="fw-semibold mb-1"
-                        style={{ color: "#3a0b0b" }}
-                      >
+                      <h6 className="fw-semibold mb-1" style={{ color: "#3a0b0b" }}>
                         {req.requestType || "Request"}
                       </h6>
                       <small className="text-muted">Client: {req.clientName || "Unknown"}</small>
@@ -238,10 +232,7 @@ export default function Requests_A() {
                     <small className="text-muted">{req.date || "—"}</small>
                   </div>
 
-                  <p
-                    className="small text-start"
-                    style={{ color: "#5c4b45", lineHeight: "1.6" }}
-                  >
+                  <p className="small text-start req-message" style={{ color: "#5c4b45", lineHeight: "1.6" }}>
                     {req.message}
                   </p>
 
@@ -258,7 +249,7 @@ export default function Requests_A() {
                     </span>
 
                     {req.status === "pending" && (
-                      <div className="d-flex gap-2">
+                      <div className="d-flex gap-2 action-wrap">
                         <button
                           className="btn"
                           onClick={() => {
@@ -341,13 +332,14 @@ export default function Requests_A() {
             justifyContent: "center",
             alignItems: "center",
             zIndex: 999,
+            padding: "1rem",
           }}
           onClick={(e) => {
             if (e.target.classList.contains("modal-overlay")) setShowModal(false);
           }}
         >
           <div
-            className="modal-content p-4 rounded-3 shadow"
+            className="modal-content p-4 rounded-3 shadow responsive-modal"
             style={{ backgroundColor: "#f9f7f2", width: "90%", maxWidth: "420px" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -453,6 +445,53 @@ export default function Requests_A() {
       )}
 
       <Footer />
+
+      {/* ===== Responsive styles (desktop unchanged) ===== */}
+      <style>{`
+        /* تحسين القراءة قليلاً على الديسكتوب دون تغيير التصميم */
+        @media (min-width: 992px){
+          .req-message{ max-width: 70ch; }
+        }
+
+        /* تابلت وما دون (≤ 991.98px) */
+        @media (max-width: 991.98px){
+          .page-title{ font-size: clamp(1.05rem, 2.2vw, 1.2rem) !important; }
+          .page-sub{ max-width: 60ch !important; font-size: clamp(.92rem, 1.9vw, 1rem) !important; }
+
+          .filter-wrap{ gap: .5rem !important; }
+          .filter-btn{ padding: 6px 14px !important; font-size: .9rem !important; }
+
+          .request-card{ padding: 1.25rem !important; }
+          .request-card-head{ gap: .75rem; }
+        }
+
+        /* جوال صغير (≤ 575.98px) */
+        @media (max-width: 575.98px){
+          .page-title{ font-size: 1.05rem !important; }
+          .page-sub{ padding-inline: .5rem; line-height: 1.6; }
+
+          /* البطاقات بعرض مناسب وهوامش داخلية مريحة */
+          .request-card{ padding: 1rem !important; }
+          .req-message{ font-size: .95rem; }
+
+          /* الأزرار أكبر قليلًا للمس */
+          .action-wrap .btn{ padding: 6px 14px !important; font-size: .9rem !important; }
+
+          /* المودال فل-سكرين عملي */
+          .responsive-modal{
+            width: 100% !important;
+            max-width: none !important;
+            height: auto;
+            margin: 0;
+            border-radius: 0 !important;
+          }
+        }
+
+        /* احترام تقليل الحركة */
+        @media (prefers-reduced-motion: reduce){
+          *{ transition: none !important; animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
