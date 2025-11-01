@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import { alertSuccess, alertError, alertInfo, alertConfirm } from "../../components/ArumaAlert";
 
-/* =======================
-   Edit Account Modal
-   ======================= */
+/* ======================= Edit Account Modal ======================= */
 function EditAccountModal({ show, onClose, artisan, setArtisan }) {
   const [formData, setFormData] = useState({
     name: artisan?.name || "",
@@ -16,10 +15,12 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
     offersLiveShow: artisan?.offersLiveShow || false,
     offersProduct: artisan?.offersProduct || false,
     profileImage: artisan?.images?.[0] || "",
-    gallery: artisan?.images?.slice(1) || [],
+    gallery:
+      artisan?.gallery ||
+      artisan?.images?.slice(1)?.map((url) => ({ url, title: "" })) ||
+      [],
   });
 
-  // تحديث بيانات الفورم عند تغيير بيانات الحرفي
   useEffect(() => {
     if (artisan) {
       setFormData({
@@ -30,7 +31,13 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
         offersLiveShow: artisan.offersLiveShow || false,
         offersProduct: artisan.offersProduct || false,
         profileImage: artisan.images?.[0] || "",
-        gallery: artisan.images?.slice(1) || [],
+        gallery:
+          artisan.gallery ||
+          artisan.images?.slice(1)?.map((url, i) => ({
+            url,
+            title: artisan.galleryTitles?.[i] || "",
+          })) ||
+          [],
       });
     }
   }, [artisan]);
@@ -45,7 +52,6 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
     });
   };
 
-  // رفع الصور (بروفايل أو معرض أعمال)
   const handleImageUpload = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -66,58 +72,60 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
         } else {
           setFormData((prev) => ({
             ...prev,
-            gallery: [...prev.gallery, data.url],
+            gallery: [...prev.gallery, { url: data.url, title: "" }],
           }));
         }
-      } else alert("Upload failed");
+        await alertSuccess("Image uploaded successfully!");
+      } else {
+        await alertError(data.detail || "Upload failed");
+      }
     } catch {
-      alert("Network error while uploading image");
+      await alertError("Network error while uploading image.");
     }
   };
 
-  // حفظ التغييرات
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
-  const artisanId = localStorage.getItem("userId");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    const artisanId = localStorage.getItem("userId");
 
-  try {
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          bio: formData.bio,
-          craftType: formData.craftType,
-          offersWorkshop: formData.offersWorkshop,
-          offersLiveShow: formData.offersLiveShow,
-          offersProduct: formData.offersProduct,
-          images: [formData.profileImage, ...formData.gallery],
-        }),
-      }
-    );
+    try {
+      const res = await fetch(
+        `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            bio: formData.bio,
+            craftType: formData.craftType,
+            offersWorkshop: formData.offersWorkshop,
+            offersLiveShow: formData.offersLiveShow,
+            offersProduct: formData.offersProduct,
+            images: [formData.profileImage, ...formData.gallery.map((g) => g.url)],
+            galleryTitles: formData.gallery.map((g) => g.title),
+          }),
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
       if (res.ok) {
-        alert("Profile updated successfully!");
+        await alertSuccess("Profile updated successfully!");
         setArtisan({ ...artisan, ...data });
         onClose();
-      } else alert(data.detail || "Update failed");
+      } else {
+        await alertError(data.detail || "Update failed.");
+      }
     } catch {
-      alert("Network error");
+      await alertError("Network error while saving changes.");
     }
   };
 
   return (
-    <div
-      className="modal show d-block"
-      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-    >
+    <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div
           className="modal-content border-0 shadow"
@@ -127,23 +135,27 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
             padding: "2rem 1.5rem",
           }}
         >
-          {/* ===== Header ===== */}
           <div className="d-flex justify-content-between align-items-center ">
-  <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
-    Edit Account
-  </h5>
-  <button type="button" className="btn-close" onClick={onClose}></button>
-</div>
+            <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
+              Edit Account
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={async () => {
+                const ok = await alertConfirm("Cancel editing?", {
+                  title: "Confirm",
+                  confirmText: "Yes",
+                  cancelText: "No",
+                });
+                if (ok) onClose();
+              }}
+            ></button>
+          </div>
 
-
-          {/* ===== Form ===== */}
           <form onSubmit={handleSubmit}>
-            {/* Name */}
             <div className="mb-3">
-              <label
-                className="form-label fw-semibold small"
-                style={{ color: "#3a0b0b" }}
-              >
+              <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Name
               </label>
               <input
@@ -156,12 +168,8 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
               />
             </div>
 
-            {/* Bio */}
             <div className="mb-3">
-              <label
-                className="form-label fw-semibold small"
-                style={{ color: "#3a0b0b" }}
-              >
+              <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Bio
               </label>
               <textarea
@@ -176,138 +184,118 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
             </div>
 
             {/* Profile Image */}
-<div className="mb-4">
- 
-  <label
-    htmlFor="profileUpload"
-    className="btn d-inline-flex align-items-center gap-2"
-    style={{
-      backgroundColor: "#eae4de",
-      color: "#3a0b0b",
-      borderRadius: "8px",
-      padding: "8px 16px",
-      cursor: "pointer",
-      fontWeight: 500,
-    }}
-  >
-    <i className="bi bi-camera-fill"></i> 
-    {formData.profileImage ? "Change Image" : "Upload Image"}
-  </label>
-  <input
-    id="profileUpload"
-    type="file"
-    accept="image/*"
-    onChange={(e) => handleImageUpload(e, "profile")}
-    style={{ display: "none" }}
-  />
+            <div className="mb-4">
+              <label
+                htmlFor="profileUpload"
+                className="btn d-inline-flex align-items-center gap-2"
+                style={{
+                  backgroundColor: "#eae4de",
+                  color: "#3a0b0b",
+                  borderRadius: "8px",
+                  padding: "8px 16px",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                }}
+              >
+                <i className="bi bi-camera-fill"></i>
+                {formData.profileImage ? "Change Image" : "Upload Image"}
+              </label>
+              <input
+                id="profileUpload"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e, "profile")}
+                style={{ display: "none" }}
+              />
+              {formData.profileImage && (
+                <img
+                  src={formData.profileImage}
+                  alt="Profile"
+                  className="mt-3 rounded-circle border"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                    borderColor: "#cbbeb3",
+                  }}
+                />
+              )}
+            </div>
 
-  {formData.profileImage && (
-    <>
-      <div
-        className="mt-2 small text-muted"
-        style={{ color: "#6c757d", fontSize: "0.85rem" }}
-      >
-        {formData.profileImage.split("/").pop()}
-      </div>
-      <img
-        src={formData.profileImage}
-        alt="Profile"
-        className="mt-2 rounded-circle border"
-        style={{
-          width: "100px",
-          height: "100px",
-          objectFit: "cover",
-          borderColor: "#cbbeb3",
-        }}
-      />
-    </>
-  )}
-</div>
+            {/* Gallery */}
+            <div className="mb-4">
+              <label
+                htmlFor="galleryUpload"
+                className="btn d-inline-flex align-items-center gap-2"
+                style={{
+                  backgroundColor: "#eae4de",
+                  color: "#3a0b0b",
+                  borderRadius: "8px",
+                  padding: "8px 16px",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                }}
+              >
+                <i className="bi bi-images"></i> Add Images
+              </label>
+              <input
+                id="galleryUpload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e, "gallery")}
+                style={{ display: "none" }}
+              />
 
-{/* Work Gallery */}
-<div className="mb-4">
-  
-  <label
-    htmlFor="galleryUpload"
-    className="btn d-inline-flex align-items-center gap-2"
-    style={{
-      backgroundColor: "#eae4de",
-      color: "#3a0b0b",
-      borderRadius: "8px",
-      padding: "8px 16px",
-      cursor: "pointer",
-      fontWeight: 500,
-    }}
-  >
-    <i className="bi bi-images"></i> {/* ← أيقونة معرض الصور */}
-    Add Images
-  </label>
-  <input
-    id="galleryUpload"
-    type="file"
-    multiple
-    accept="image/*"
-    onChange={(e) => handleImageUpload(e, "gallery")}
-    style={{ display: "none" }}
-  />
+              <div className="d-flex flex-wrap mt-3" style={{ gap: "10px" }}>
+                {formData.gallery.map((item, i) => (
+                  <div key={i} style={{ width: "120px" }}>
+                    <img
+                      src={item.url}
+                      alt={`Work ${i}`}
+                      style={{
+                        width: "100%",
+                        height: "100px",
+                        borderRadius: "8px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Work title"
+                      value={item.title}
+                      onChange={(e) =>
+                        setFormData((prev) => {
+                          const updated = [...prev.gallery];
+                          updated[i].title = e.target.value;
+                          return { ...prev, gallery: updated };
+                        })
+                      }
+                      className="form-control mt-2"
+                      style={{
+                        borderRadius: "6px",
+                        borderColor: "#cbbeb3",
+                        fontSize: "0.8rem",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
 
-  <div className="d-flex flex-wrap mt-3" style={{ gap: "10px" }}>
-    {formData.gallery.map((img, i) => (
-  <div
-    key={i}
-    style={{
-      position: "relative",
-      width: "90px",
-      height: "90px",
-    }}
-  >
-    <img
-      src={img}
-      alt={`Gallery ${i}`}
-      style={{
-        width: "100%",
-        height: "100%",
-        borderRadius: "8px",
-        objectFit: "cover",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-      }}
-    />
-    {/* زر الحذف */}
-    <button
-      type="button"
-      onClick={() =>
-        setFormData((prev) => ({
-          ...prev,
-          gallery: prev.gallery.filter((_, index) => index !== i),
-        }))
-      }
-      style={{
-        position: "absolute",
-        top: "-6px",
-        right: "-6px",
-        background: "#cbbeb3",
-        color: "#3a0b0b",
-        border: "none",
-        borderRadius: "50%",
-        width: "22px",
-        height: "22px",
-        fontSize: "14px",
-        cursor: "pointer",
-        lineHeight: "1",
-      }}
-    >
-      ×
-    </button>
-  </div>
-))}
-
-  </div>
-</div>
-
-
-            {/* Buttons */}
             <div className="d-flex justify-content-end gap-3">
-              <button type="button" className="btn-outline" onClick={onClose}>
+              <button
+                type="button"
+                className="btn-outline"
+                onClick={async () => {
+                  const ok = await alertConfirm("Cancel without saving?", {
+                    title: "Confirm",
+                    confirmText: "Yes",
+                    cancelText: "No",
+                  });
+                  if (ok) onClose();
+                }}
+              >
                 Cancel
               </button>
               <button type="submit" className="btn-main">
@@ -321,25 +309,28 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
   );
 }
 
-/* =======================
-   Main Profile Page
-   ======================= */
+/* ======================= Main Profile Page ======================= */
 export default function Profile() {
   const [showEdit, setShowEdit] = useState(false);
   const [artisan, setArtisan] = useState(null);
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const artisanId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchArtisan = async () => {
-      const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (res.ok) setArtisan(await res.json());
+      try {
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        if (!res.ok) throw new Error("Failed to load profile.");
+        setArtisan(await res.json());
+      } catch (error) {
+        console.error("Error:", error);
+        await alertError("Failed to fetch artisan profile.");
+      }
     };
-    if (artisanId) fetchArtisan();
+    if (artisanId && token) fetchArtisan();
   }, [artisanId, token]);
 
   if (!artisan)
@@ -350,7 +341,7 @@ export default function Profile() {
     );
 
   return (
-<div className="artisan-profile">
+    <div className="artisan-profile">
       <Navbar />
 
       {/* ===== Profile Info ===== */}
@@ -372,86 +363,56 @@ export default function Profile() {
                 backgroundColor: "#e7e7e7",
               }}
             />
-{/* ===== Profile Info (Name + Craft Type + Services + Bio) ===== */}
-<div>
-  {/* ===== Name + Craft Type ===== */}
-<div className="d-flex align-items-center flex-wrap gap-2 mb-3">
-  <h6
-    className="fw-bold mb-0 text-lowercase"
-    style={{
-      color: "#3a0b0b",
-      fontSize: "1.15rem",
-      letterSpacing: "0.3px",
-    }}
-  >
-    {artisan.name}
-  </h6>
+            <div>
+              <h6
+                className="fw-bold mb-0 text-lowercase"
+                style={{
+                  color: "#3a0b0b",
+                  fontSize: "1.15rem",
+                  letterSpacing: "0.3px",
+                }}
+              >
+                {artisan.name}
+              </h6>
 
-</div>
+              <p className="services-list mb-2">
+                {artisan.offersProduct && <span className="service-badge">Products</span>}
+                {artisan.offersWorkshop && <span className="service-badge">Workshops</span>}
+                {artisan.offersLiveShow && <span className="service-badge">Live Show</span>}
+              </p>
 
-{/* Services Offered */}
-<p className="services-list mb-2">
-  {artisan.offersProduct && (
-    <span className="service-badge">Products</span>
-  )}
-
-  {artisan.offersWorkshop && (
-    <span className="service-badge">Workshops</span>
-  )}
-
-  {artisan.offersLiveShow && (
-    <span className="service-badge">Live Show</span>
-  )}
-</p>
-
-
-  {/* Bio */}
-  <p
-    className="small mb-0"
-    style={{
-      color: "#6f4e37", 
-      lineHeight: "1.8",
-      maxWidth: "420px",
-      fontSize: "0.95rem",
-      marginTop: "8px", // تباعد بصري أنيق
-    }}
-  >
-    {artisan.bio && artisan.bio.trim() !== ""
-      ? artisan.bio
-      : "No bio yet — every craft tells a story waiting to be shared."}
-  </p>
-</div>
-
+              <p
+                className="small mb-0"
+                style={{
+                  color: "#6f4e37",
+                  lineHeight: "1.8",
+                  maxWidth: "420px",
+                  fontSize: "0.95rem",
+                  marginTop: "8px",
+                }}
+              >
+                {artisan.bio && artisan.bio.trim() !== ""
+                  ? artisan.bio
+                  : "No bio yet — every craft tells a story waiting to be shared."}
+              </p>
+            </div>
           </div>
 
-        <div className="col-md-4 mt-4 mt-md-0 d-flex gap-3 justify-content-md-end justify-content-center">
-  <button className="btn btn-outline btn-small" onClick={() => setShowEdit(true)}>
-    Edit Account
-  </button>
-</div>
-
+          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-3 justify-content-md-end justify-content-center">
+            <button className="btn btn-outline btn-small" onClick={() => setShowEdit(true)}>
+              Edit Account
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* ===== Divider ===== */}
-      <div
-        className="container"
-        style={{
-          borderBottom: "1px solid #cbbeb3",
-          opacity: "0.5",
-          marginBottom: "2rem",
-        }}
-      ></div>
+      <div className="container" style={{ borderBottom: "1px solid #cbbeb3", opacity: "0.5", marginBottom: "2rem" }}></div>
 
-      {/* ===== Work Gallery ===== */}
+      {/* ===== Gallery ===== */}
       <section className="container py-5 text-center">
         <h5
           className="fw-bold mb-5"
-          style={{
-            color: "#3a0b0b",
-            fontSize: "1.25rem",
-            letterSpacing: "0.5px",
-          }}
+          style={{ color: "#3a0b0b", fontSize: "1.25rem", letterSpacing: "0.5px" }}
         >
           My Work
           <div
@@ -468,16 +429,10 @@ export default function Profile() {
         {artisan.images?.slice(1)?.length ? (
           <div className="row justify-content-center" style={{ rowGap: "60px" }}>
             {artisan.images.slice(1).map((img, i) => (
-              <div
-                key={i}
-                className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center"
-              >
+              <div key={i} className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center">
                 <div
                   className="overflow-hidden"
-                  style={{
-                    borderRadius: "10px",
-                    boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-                  }}
+                  style={{ borderRadius: "10px", boxShadow: "0 3px 10px rgba(0,0,0,0.08)" }}
                 >
                   <img
                     src={img}
@@ -490,7 +445,9 @@ export default function Profile() {
                     }}
                   />
                 </div>
-               
+                <h6 className="fw-semibold mt-3 mb-1" style={{ color: "#3a0b0b" }}>
+                  {artisan.galleryTitles?.[i] || `Artwork ${i + 1}`}
+                </h6>
               </div>
             ))}
           </div>
@@ -501,7 +458,6 @@ export default function Profile() {
 
       <Footer />
 
-      {/* ===== Edit Modal ===== */}
       <EditAccountModal
         show={showEdit}
         onClose={() => setShowEdit(false)}

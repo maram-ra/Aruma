@@ -2,8 +2,8 @@
   "counters": {
     "artisan": 3,
     "client": 1,
-    "request": 9,
-    "contract": 2
+    "request": 12,
+    "contract": 5
   },
   "artisans": [
     {
@@ -30,7 +30,19 @@
       "completedWorkCount": 0,
       "_id": "art000003",
       "createdAt": "2025-10-21T19:48:59.462166",
-      "updatedAt": "2025-10-25T20:24:58.651976"
+      "updatedAt": "2025-11-01T14:59:11.863849",
+      "galleryTitles": [
+        "",
+        "الجبال اوتادا",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "offersProduct": false
     }
   ],
   "clients": [
@@ -86,25 +98,27 @@
       "clientId": "cli000001",
       "artisanId": "art000003",
       "requestType": "workshop",
-      "message": "Hi! We’d love a group pottery workshop (intro level) for 10 people",
-      "status": "pending",
-      "cost": null,
+      "message": "",
+      "status": "in progress",
+      "cost": 1600.0,
       "timeframe": null,
       "_id": "req000004",
       "createdAt": "2025-11-01T13:22:33.146539",
-      "updatedAt": "2025-11-01T13:22:33.146539"
+      "updatedAt": "2025-11-01T14:30:16.759424",
+      "date": "2025-11-12"
     },
     {
       "clientId": "cli000001",
       "artisanId": "art000003",
       "requestType": "product",
-      "message": "Hello! We’re interested in a small pottery class for 4 Please let me know your schedule and cost",
-      "status": "pending",
-      "cost": null,
+      "message": "",
+      "status": "completed",
+      "cost": 1599.0,
       "timeframe": null,
       "_id": "req000005",
       "createdAt": "2025-11-01T13:23:46.898142",
-      "updatedAt": "2025-11-01T13:23:46.898142"
+      "updatedAt": "2025-11-01T14:25:23.951697",
+      "date": "2025-11-25"
     },
     {
       "clientId": "cli000001",
@@ -121,38 +135,14 @@
     {
       "clientId": "cli000001",
       "artisanId": "art000003",
-      "requestType": "workshop",
-      "message": "Hi! I’d love to arrange a visit to your studio with 20 people. When would be a good time?",
+      "requestType": "product",
+      "message": "I’m interested in placing a bulk order of your handmade products for resale.\nCould you please share your wholesale pricing",
       "status": "pending",
       "cost": null,
       "timeframe": null,
-      "_id": "req000007",
-      "createdAt": "2025-11-01T13:31:53.191129",
-      "updatedAt": "2025-11-01T13:31:53.191129"
-    },
-    {
-      "clientId": "cli000001",
-      "artisanId": "art000003",
-      "requestType": "workshop",
-      "message": "تت",
-      "status": "pending",
-      "cost": null,
-      "timeframe": null,
-      "_id": "req000008",
-      "createdAt": "2025-11-01T13:32:29.772538",
-      "updatedAt": "2025-11-01T13:32:29.772538"
-    },
-    {
-      "clientId": "cli000001",
-      "artisanId": "art000003",
-      "requestType": "workshop",
-      "message": "ةت",
-      "status": "pending",
-      "cost": null,
-      "timeframe": null,
-      "_id": "req000009",
-      "createdAt": "2025-11-01T13:42:42.537412",
-      "updatedAt": "2025-11-01T13:42:42.537412"
+      "_id": "req000012",
+      "createdAt": "2025-11-01T14:34:35.355763",
+      "updatedAt": "2025-11-01T14:34:35.355763"
     }
   ],
   "contracts": [
@@ -179,6 +169,42 @@
       "_id": "con000002",
       "createdAt": "2025-11-01T13:15:50.428295",
       "updatedAt": "2025-11-01T13:18:58.728522"
+    },
+    {
+      "requestId": "req000004",
+      "artisanId": "art000003",
+      "clientId": "cli000001",
+      "status": "confirmed",
+      "cost": 1600.0,
+      "message": "",
+      "date": "2025-11-12",
+      "_id": "con000003",
+      "createdAt": "2025-11-01T13:51:42.175466",
+      "updatedAt": "2025-11-01T14:30:16.740134"
+    },
+    {
+      "requestId": "req000005",
+      "artisanId": "art000003",
+      "clientId": "cli000001",
+      "status": "completed",
+      "cost": 1599.0,
+      "message": "",
+      "date": "2025-11-25",
+      "_id": "con000004",
+      "createdAt": "2025-11-01T14:11:08.568635",
+      "updatedAt": "2025-11-01T14:25:23.974718"
+    },
+    {
+      "requestId": "req000007",
+      "artisanId": "art000003",
+      "clientId": "cli000001",
+      "status": "confirmed",
+      "cost": 3500.0,
+      "message": "",
+      "date": "2025-11-13",
+      "_id": "con000005",
+      "createdAt": "2025-11-01T14:26:00.154656",
+      "updatedAt": "2025-11-01T14:30:27.275269"
     }
   ]
 }

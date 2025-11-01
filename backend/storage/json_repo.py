@@ -27,19 +27,12 @@ class JSONRepository:
         self.path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # ==========================
-    # ID Generator (Corrected)
+    # ID Generator
     # ==========================
     def _next_id(self, kind: str, data: Dict[str, Any]) -> str:
-        """Generate the next sequential ID without re-writing the file"""
         current_value = data["counters"].get(kind, 0) + 1
         data["counters"][kind] = current_value
-
-        prefix_map = {
-            "artisan": "art",
-            "client": "cli",
-            "request": "req",
-            "contract": "con",
-        }
+        prefix_map = {"artisan": "art", "client": "cli", "request": "req", "contract": "con"}
         prefix = prefix_map.get(kind, "id")
         return f"{prefix}{current_value:06d}"
 
@@ -47,7 +40,6 @@ class JSONRepository:
     # Users
     # ==========================
     def find_user_by_email(self, user_type: str, email: str) -> Optional[Dict[str, Any]]:
-        """Find a user (artisan or client) by email"""
         data = self._read()
         items = data["artisans"] if user_type == "artisan" else data["clients"]
         for u in items:
@@ -56,7 +48,6 @@ class JSONRepository:
         return None
 
     def get_user(self, user_type: str, user_id: str) -> Optional[Dict[str, Any]]:
-        """Find a user by ID"""
         data = self._read()
         items = data["artisans"] if user_type == "artisan" else data["clients"]
         for u in items:
@@ -71,12 +62,16 @@ class JSONRepository:
         now = datetime.utcnow().isoformat()
         artisan["createdAt"] = now
         artisan["updatedAt"] = now
+
+        # 🆕 تأكد أن المفاتيح الجديدة موجودة
+        artisan.setdefault("galleryTitles", [])
+        artisan.setdefault("offersProduct", False)
+
         data["artisans"].append(artisan)
         self._write(data)
         return artisan
 
     def create_client(self, client: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new client and assign a unique sequential ID"""
         data = self._read()
         client["_id"] = self._next_id("client", data)
         now = datetime.utcnow().isoformat()
@@ -90,10 +85,18 @@ class JSONRepository:
         """Update artisan or client info"""
         data = self._read()
         key = "artisans" if user_type == "artisan" else "clients"
+
         for i, u in enumerate(data[key]):
             if u["_id"] == user_id:
                 u.update(updates)
                 u["updatedAt"] = datetime.utcnow().isoformat()
+
+                # 🆕 تأكد أن الحقول الجديدة موجودة دائمًا
+                if "galleryTitles" not in u:
+                    u["galleryTitles"] = []
+                if "offersProduct" not in u:
+                    u["offersProduct"] = False
+
                 data[key][i] = u
                 self._write(data)
                 return u
@@ -103,7 +106,6 @@ class JSONRepository:
     # Requests
     # ==========================
     def create_request(self, req: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new request between client and artisan"""
         data = self._read()
         req["_id"] = self._next_id("request", data)
         now = datetime.utcnow().isoformat()
@@ -114,7 +116,6 @@ class JSONRepository:
         return req
 
     def list_requests_for_artisan(self, artisan_id: str, status: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List all requests received by an artisan"""
         data = self._read()
         items = [r for r in data["requests"] if r["artisanId"] == artisan_id]
         if status:
@@ -122,12 +123,10 @@ class JSONRepository:
         return items
 
     def list_requests_for_client(self, client_id: str) -> List[Dict[str, Any]]:
-        """List all requests created by a client"""
         data = self._read()
         return [r for r in data["requests"] if r["clientId"] == client_id]
 
     def get_request(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch a single request by ID"""
         data = self._read()
         for r in data["requests"]:
             if r["_id"] == request_id:
@@ -135,7 +134,6 @@ class JSONRepository:
         return None
 
     def update_request(self, request_id: str, updates: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Update an existing request"""
         data = self._read()
         for i, r in enumerate(data["requests"]):
             if r["_id"] == request_id:
@@ -150,7 +148,6 @@ class JSONRepository:
     # Contracts
     # ==========================
     def create_contract(self, contract: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new contract for a request"""
         data = self._read()
         contract["_id"] = self._next_id("contract", data)
         now = datetime.utcnow().isoformat()
@@ -161,12 +158,10 @@ class JSONRepository:
         return contract
 
     def list_contracts_for_user(self, user_id: str) -> List[Dict[str, Any]]:
-        """List all contracts related to a user"""
         data = self._read()
         return [c for c in data["contracts"] if c.get("artisanId") == user_id or c.get("clientId") == user_id]
 
     def get_contract(self, contract_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch a single contract by ID"""
         data = self._read()
         for c in data["contracts"]:
             if c["_id"] == contract_id:
@@ -174,7 +169,6 @@ class JSONRepository:
         return None
 
     def update_contract(self, contract_id: str, updates: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Update an existing contract"""
         data = self._read()
         for i, c in enumerate(data["contracts"]):
             if c["_id"] == contract_id:

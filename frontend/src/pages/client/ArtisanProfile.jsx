@@ -3,165 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-
-/* ===================== Elegant Alert Dialog (Aruma Style) ===================== */
-const theme = {
-  primary: "#3a0b0b",
-  beige: "#f9f7f2",
-  border: "#cbbeb3",
-  success: "#3c7c59",
-  error: "#a13a3a",
-  text: "#5c4b45",
-};
-
-function showAlert({ type = "info", title = "Message", message = "", confirmText = "OK", cancelText = "Cancel" } = {}) {
-  return new Promise((resolve) => {
-    const overlay = document.createElement("div");
-    Object.assign(overlay.style, {
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.35)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 9999,
-      backdropFilter: "blur(2px)",
-    });
-
-    const dialog = document.createElement("div");
-    Object.assign(dialog.style, {
-      backgroundColor: theme.beige,
-      borderRadius: "16px",
-      padding: "28px 26px 24px",
-      width: "90%",
-      maxWidth: "420px",
-      boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
-      border: `1px solid ${theme.border}`,
-      fontFamily: "inherit",
-      textAlign: "center",
-      opacity: 0,
-      transform: "scale(0.9)",
-      transition: "all 0.25s ease",
-    });
-
-    const icon = document.createElement("div");
-    icon.textContent =
-      type === "success" ? "✓" : type === "error" ? "✕" : type === "confirm" ? "⚑" : "ℹ";
-    Object.assign(icon.style, {
-      fontSize: "28px",
-      color:
-        type === "success"
-          ? theme.success
-          : type === "error"
-          ? theme.error
-          : theme.primary,
-      marginBottom: "12px",
-    });
-
-    const titleEl = document.createElement("h4");
-    titleEl.textContent = title;
-    Object.assign(titleEl.style, {
-      color: theme.primary,
-      fontWeight: 700,
-      fontSize: "1.15rem",
-      margin: "0 0 8px",
-    });
-
-    const msgEl = document.createElement("p");
-    msgEl.textContent = message;
-    Object.assign(msgEl.style, {
-      color: theme.text,
-      lineHeight: 1.6,
-      fontSize: "0.95rem",
-      margin: "0 0 20px",
-      whiteSpace: "pre-wrap",
-    });
-
-    const btnWrap = document.createElement("div");
-    Object.assign(btnWrap.style, {
-      display: "flex",
-      justifyContent: type === "confirm" ? "space-between" : "center",
-      gap: "12px",
-    });
-
-    const confirmBtn = document.createElement("button");
-    confirmBtn.textContent =
-      type === "success" ? "Great" : type === "error" ? "Close" : confirmText;
-    Object.assign(confirmBtn.style, {
-      flex: 1,
-      borderRadius: "20px",
-      border: "none",
-      padding: "8px 16px",
-      fontWeight: 600,
-      backgroundColor:
-        type === "error"
-          ? theme.error
-          : type === "success"
-          ? theme.success
-          : theme.primary,
-      color: "#fff",
-      cursor: "pointer",
-      transition: "opacity 0.2s",
-    });
-    confirmBtn.onmouseover = () => (confirmBtn.style.opacity = "0.85");
-    confirmBtn.onmouseout = () => (confirmBtn.style.opacity = "1");
-
-    const cancelBtn = document.createElement("button");
-    cancelBtn.textContent = cancelText;
-    Object.assign(cancelBtn.style, {
-      flex: 1,
-      borderRadius: "20px",
-      border: `1px solid ${theme.border}`,
-      padding: "8px 16px",
-      fontWeight: 500,
-      backgroundColor: "transparent",
-      color: theme.primary,
-      cursor: "pointer",
-      display: type === "confirm" ? "block" : "none",
-    });
-
-    const close = (result) => {
-      dialog.style.opacity = "0";
-      dialog.style.transform = "scale(0.9)";
-      setTimeout(() => {
-        overlay.remove();
-        resolve(result);
-      }, 200);
-    };
-
-    confirmBtn.onclick = () => close(true);
-    cancelBtn.onclick = () => close(false);
-
-    btnWrap.appendChild(cancelBtn);
-    btnWrap.appendChild(confirmBtn);
-
-    dialog.appendChild(icon);
-    dialog.appendChild(titleEl);
-    dialog.appendChild(msgEl);
-    dialog.appendChild(btnWrap);
-    overlay.appendChild(dialog);
-    document.body.appendChild(overlay);
-
-    setTimeout(() => {
-      dialog.style.opacity = "1";
-      dialog.style.transform = "scale(1)";
-    }, 10);
-
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) close(false);
-    });
-    window.addEventListener("keydown", (e) => e.key === "Escape" && close(false));
-  });
-}
-
-const alertSuccess = (msg, opts) => showAlert({ type: "success", message: msg, title: "Success", ...opts });
-const alertError = (msg, opts) => showAlert({ type: "error", message: msg, title: "Error", ...opts });
-const alertInfo = (msg, opts) => showAlert({ type: "info", message: msg, title: "Notice", ...opts });
-const alertConfirm = (msg, opts) => showAlert({ type: "confirm", message: msg, title: "Confirm", ...opts });
-/* ============================================================================ */
+import { alertSuccess, alertError, alertInfo, alertConfirm } from "../../components/ArumaAlert";
 
 /* ======================= Request Modal ======================= */
 function RequestModal({ show, onClose, artisan }) {
@@ -263,7 +105,18 @@ function RequestModal({ show, onClose, artisan }) {
             </div>
 
             <div className="d-flex justify-content-end gap-3">
-              <button type="button" className="btn-outline" onClick={onClose}>
+              <button
+                type="button"
+                className="btn-outline"
+                onClick={async () => {
+                  const ok = await alertConfirm("Cancel this action?", {
+                    title: "Confirm",
+                    confirmText: "Yes",
+                    cancelText: "No",
+                  });
+                  if (ok) onClose();
+                }}
+              >
                 Cancel
               </button>
               <button type="submit" className="btn-main">

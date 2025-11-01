@@ -1,9 +1,9 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 
-# ----------------------------
-# Shared
-# ----------------------------
+# =============================
+# 🔸 Shared
+# =============================
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
@@ -11,25 +11,35 @@ class Token(BaseModel):
     user_id: str
 
 
-# ----------------------------
-# Artisan
-# ----------------------------
+# =============================
+# 🔸 Artisan Models
+# =============================
 class ArtisanBase(BaseModel):
-    """Base fields shared by Artisan models."""
     name: str
     email: EmailStr
     phone: Optional[str] = None
     bio: Optional[str] = None
     craftType: Optional[str] = None
-    images: List[str] = Field(default_factory=list)   # avoid mutable default
+    images: Optional[List[str]] = []
+    galleryTitles: Optional[List[str]] = []  # 🆕 أسماء الأعمال (تطابق الصور)
     offersWorkshop: bool = False
     offersLiveShow: bool = False
+    offersProduct: bool = False
     completedWorkCount: int = 0
 
 
 class ArtisanCreate(ArtisanBase):
-    """Payload for creating an artisan user."""
     password: str = Field(min_length=6)
+
+
+class ArtisanUpdate(BaseModel):
+    bio: Optional[str] = None
+    craftType: Optional[str] = None
+    images: Optional[List[str]] = None
+    galleryTitles: Optional[List[str]] = None  # 🆕 إضافة دعم تحديث أسماء الصور
+    offersWorkshop: Optional[bool] = None
+    offersLiveShow: Optional[bool] = None
+    offersProduct: Optional[bool] = None
 
 
 class ArtisanPublic(ArtisanBase):
@@ -38,45 +48,31 @@ class ArtisanPublic(ArtisanBase):
 
     class Config:
         allow_population_by_field_name = True
-        orm_mode = True  # optional: helps if using ORM objects
+        orm_mode = True  # يسهل التوافق مع ORM مستقبلاً
 
 
-class ArtisanUpdate(BaseModel):
-    """Partial update payload for an artisan."""
-    bio: Optional[str] = None
-    craftType: Optional[str] = None
-    images: Optional[List[str]] = None
-    offersWorkshop: Optional[bool] = None
-    offersLiveShow: Optional[bool] = None
-
-
-# ----------------------------
-# Client
-# ----------------------------
+# =============================
+# 🔸 Client Models
+# =============================
 class ClientBase(BaseModel):
-    """Base fields shared by Client models."""
     name: str
     email: EmailStr
 
 
 class ClientCreate(ClientBase):
-    """Payload for creating a client user."""
     password: str = Field(min_length=6)
 
 
 class ClientPublic(ClientBase):
-    """Public representation of a client (DB-facing id alias)."""
     id: str = Field(alias="_id")
 
     class Config:
         allow_population_by_field_name = True
-        orm_mode = True  # optional
 
 
-# ----------------------------
+# =============================
 # Auth
-# ----------------------------
+# =============================
 class LoginRequest(BaseModel):
-    """Login payload for both artisan/client (by email)."""
     email: EmailStr
     password: str
