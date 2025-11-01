@@ -1,8 +1,8 @@
 {
   "counters": {
-    "artisan": 6,
+    "artisan": 3,
     "client": 1,
-    "request": 3,
+    "request": 8,
     "contract": 2
   },
   "artisans": [
@@ -48,49 +48,125 @@
       "clientId": "cli000001",
       "artisanId": "art000003",
       "requestType": "product",
-      "status": "completed",
-      "cost": 4500.0,
+      "message": "",
+      "status": "in progress",
+      "cost": 666.0,
+      "timeframe": null,
+      "_id": "req000001",
+      "createdAt": "2025-11-01T12:55:33.925505",
+      "updatedAt": "2025-11-01T13:05:57.128667",
+      "date": "2025-11-11"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "product",
+      "message": "large serving bowl 32 cm × 10 cm, sand matte",
+      "status": "rejected",
+      "cost": null,
       "timeframe": null,
       "_id": "req000002",
-      "createdAt": "2025-10-28T23:31:00.993495",
-      "updatedAt": "2025-10-28T23:53:11.790504",
-      "date": "2025-10-16"
+      "createdAt": "2025-11-01T12:56:51.914867",
+      "updatedAt": "2025-11-01T13:04:34.117736"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "live_show",
+      "message": "",
+      "status": "completed",
+      "cost": 1500.0,
+      "timeframe": null,
+      "_id": "req000003",
+      "createdAt": "2025-11-01T13:15:23.277860",
+      "updatedAt": "2025-11-01T13:18:58.715132",
+      "date": "2025-11-19"
     },
     {
       "clientId": "cli000001",
       "artisanId": "art000003",
       "requestType": "workshop",
-      "status": "in progress",
-      "cost": 500.0,
+      "message": "Hi! We’d love a group pottery workshop (intro level) for 10 people",
+      "status": "pending",
+      "cost": null,
       "timeframe": null,
-      "_id": "req000003",
-      "createdAt": "2025-10-28T23:52:32.992319",
-      "updatedAt": "2025-10-28T23:53:47.691318",
-      "date": "2025-10-22"
+      "_id": "req000004",
+      "createdAt": "2025-11-01T13:22:33.146539",
+      "updatedAt": "2025-11-01T13:22:33.146539"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "product",
+      "message": "Hello! We’re interested in a small pottery class for 4 Please let me know your schedule and cost",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000005",
+      "createdAt": "2025-11-01T13:23:46.898142",
+      "updatedAt": "2025-11-01T13:23:46.898142"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "workshop",
+      "message": "Hi! I’d love to book a pottery workshop for a group of 20 When’s your next available date?",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000006",
+      "createdAt": "2025-11-01T13:26:42.989114",
+      "updatedAt": "2025-11-01T13:26:42.989114"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "workshop",
+      "message": "Hi! I’d love to arrange a visit to your studio with 20 people. When would be a good time?",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000007",
+      "createdAt": "2025-11-01T13:31:53.191129",
+      "updatedAt": "2025-11-01T13:31:53.191129"
+    },
+    {
+      "clientId": "cli000001",
+      "artisanId": "art000003",
+      "requestType": "workshop",
+      "message": "تت",
+      "status": "pending",
+      "cost": null,
+      "timeframe": null,
+      "_id": "req000008",
+      "createdAt": "2025-11-01T13:32:29.772538",
+      "updatedAt": "2025-11-01T13:32:29.772538"
     }
   ],
   "contracts": [
     {
-      "requestId": "req000002",
+      "requestId": "req000001",
       "artisanId": "art000003",
       "clientId": "cli000001",
-      "status": "completed",
-      "cost": 4500.0,
-      "date": "2025-10-16",
+      "status": "confirmed",
+      "cost": 666.0,
+      "message": "",
+      "date": "2025-11-11",
       "_id": "con000001",
-      "createdAt": "2025-10-28T23:46:22.397797",
-      "updatedAt": "2025-10-28T23:53:11.801238"
+      "createdAt": "2025-11-01T13:03:12.067171",
+      "updatedAt": "2025-11-01T13:05:57.117233"
     },
     {
       "requestId": "req000003",
       "artisanId": "art000003",
       "clientId": "cli000001",
-      "status": "confirmed",
-      "cost": 500.0,
-      "date": "2025-10-22",
+      "status": "completed",
+      "cost": 1500.0,
+      "message": "",
+      "date": "2025-11-19",
       "_id": "con000002",
-      "createdAt": "2025-10-28T23:53:01.950383",
-      "updatedAt": "2025-10-28T23:53:47.678471"
+      "createdAt": "2025-11-01T13:15:50.428295",
+      "updatedAt": "2025-11-01T13:18:58.728522"
     }
   ]
 }

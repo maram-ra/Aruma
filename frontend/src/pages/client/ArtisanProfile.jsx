@@ -4,20 +4,176 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
-/* =======================
-   Request Modal
-   ======================= */
+/* ===================== Elegant Alert Dialog (Aruma Style) ===================== */
+const theme = {
+  primary: "#3a0b0b",
+  beige: "#f9f7f2",
+  border: "#cbbeb3",
+  success: "#3c7c59",
+  error: "#a13a3a",
+  text: "#5c4b45",
+};
+
+function showAlert({ type = "info", title = "Message", message = "", confirmText = "OK", cancelText = "Cancel" } = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.35)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+      backdropFilter: "blur(2px)",
+    });
+
+    const dialog = document.createElement("div");
+    Object.assign(dialog.style, {
+      backgroundColor: theme.beige,
+      borderRadius: "16px",
+      padding: "28px 26px 24px",
+      width: "90%",
+      maxWidth: "420px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+      border: `1px solid ${theme.border}`,
+      fontFamily: "inherit",
+      textAlign: "center",
+      opacity: 0,
+      transform: "scale(0.9)",
+      transition: "all 0.25s ease",
+    });
+
+    const icon = document.createElement("div");
+    icon.textContent =
+      type === "success" ? "✓" : type === "error" ? "✕" : type === "confirm" ? "⚑" : "ℹ";
+    Object.assign(icon.style, {
+      fontSize: "28px",
+      color:
+        type === "success"
+          ? theme.success
+          : type === "error"
+          ? theme.error
+          : theme.primary,
+      marginBottom: "12px",
+    });
+
+    const titleEl = document.createElement("h4");
+    titleEl.textContent = title;
+    Object.assign(titleEl.style, {
+      color: theme.primary,
+      fontWeight: 700,
+      fontSize: "1.15rem",
+      margin: "0 0 8px",
+    });
+
+    const msgEl = document.createElement("p");
+    msgEl.textContent = message;
+    Object.assign(msgEl.style, {
+      color: theme.text,
+      lineHeight: 1.6,
+      fontSize: "0.95rem",
+      margin: "0 0 20px",
+      whiteSpace: "pre-wrap",
+    });
+
+    const btnWrap = document.createElement("div");
+    Object.assign(btnWrap.style, {
+      display: "flex",
+      justifyContent: type === "confirm" ? "space-between" : "center",
+      gap: "12px",
+    });
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.textContent =
+      type === "success" ? "Great" : type === "error" ? "Close" : confirmText;
+    Object.assign(confirmBtn.style, {
+      flex: 1,
+      borderRadius: "20px",
+      border: "none",
+      padding: "8px 16px",
+      fontWeight: 600,
+      backgroundColor:
+        type === "error"
+          ? theme.error
+          : type === "success"
+          ? theme.success
+          : theme.primary,
+      color: "#fff",
+      cursor: "pointer",
+      transition: "opacity 0.2s",
+    });
+    confirmBtn.onmouseover = () => (confirmBtn.style.opacity = "0.85");
+    confirmBtn.onmouseout = () => (confirmBtn.style.opacity = "1");
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = cancelText;
+    Object.assign(cancelBtn.style, {
+      flex: 1,
+      borderRadius: "20px",
+      border: `1px solid ${theme.border}`,
+      padding: "8px 16px",
+      fontWeight: 500,
+      backgroundColor: "transparent",
+      color: theme.primary,
+      cursor: "pointer",
+      display: type === "confirm" ? "block" : "none",
+    });
+
+    const close = (result) => {
+      dialog.style.opacity = "0";
+      dialog.style.transform = "scale(0.9)";
+      setTimeout(() => {
+        overlay.remove();
+        resolve(result);
+      }, 200);
+    };
+
+    confirmBtn.onclick = () => close(true);
+    cancelBtn.onclick = () => close(false);
+
+    btnWrap.appendChild(cancelBtn);
+    btnWrap.appendChild(confirmBtn);
+
+    dialog.appendChild(icon);
+    dialog.appendChild(titleEl);
+    dialog.appendChild(msgEl);
+    dialog.appendChild(btnWrap);
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+      dialog.style.opacity = "1";
+      dialog.style.transform = "scale(1)";
+    }, 10);
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) close(false);
+    });
+    window.addEventListener("keydown", (e) => e.key === "Escape" && close(false));
+  });
+}
+
+const alertSuccess = (msg, opts) => showAlert({ type: "success", message: msg, title: "Success", ...opts });
+const alertError = (msg, opts) => showAlert({ type: "error", message: msg, title: "Error", ...opts });
+const alertInfo = (msg, opts) => showAlert({ type: "info", message: msg, title: "Notice", ...opts });
+const alertConfirm = (msg, opts) => showAlert({ type: "confirm", message: msg, title: "Confirm", ...opts });
+/* ============================================================================ */
+
+/* ======================= Request Modal ======================= */
 function RequestModal({ show, onClose, artisan }) {
   const [formData, setFormData] = useState({ type: "", message: "" });
   const token = localStorage.getItem("token");
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.type) {
-      alert("Please select a service type");
+      await alertInfo("Please select a service type.", { title: "Missing Field" });
       return;
     }
 
@@ -37,14 +193,16 @@ function RequestModal({ show, onClose, artisan }) {
 
       const data = await res.json();
       if (res.ok) {
-        alert(`Request sent successfully to ${artisan.name}!`);
+        await alertSuccess(`Request sent successfully to ${artisan.name}!`, {
+          confirmText: "Great",
+        });
         onClose();
         setFormData({ type: "", message: "" });
       } else {
-        alert(data.detail || "Failed to send request");
+        await alertError(data.detail || "Failed to send request");
       }
     } catch {
-      alert("Network error");
+      await alertError("Network error.\nPlease try again later.");
     }
   };
 
@@ -69,7 +227,6 @@ function RequestModal({ show, onClose, artisan }) {
           </div>
 
           <form onSubmit={handleSubmit}>
-            {/* Type */}
             <div className="mb-3 text-start">
               <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Type of Service <span className="text-danger">*</span>
@@ -89,7 +246,6 @@ function RequestModal({ show, onClose, artisan }) {
               </select>
             </div>
 
-            {/* Message */}
             <div className="mb-4 text-start">
               <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Message <span className="text-danger">*</span>
@@ -106,7 +262,6 @@ function RequestModal({ show, onClose, artisan }) {
               ></textarea>
             </div>
 
-            {/* Buttons */}
             <div className="d-flex justify-content-end gap-3">
               <button type="button" className="btn-outline" onClick={onClose}>
                 Cancel
@@ -122,9 +277,7 @@ function RequestModal({ show, onClose, artisan }) {
   );
 }
 
-/* =======================
-   Main Artisan Profile
-   ======================= */
+/* ======================= Main Artisan Profile ======================= */
 export default function ArtisanProfile() {
   const [searchParams] = useSearchParams();
   const [artisan, setArtisan] = useState(null);
@@ -139,8 +292,10 @@ export default function ArtisanProfile() {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) setArtisan(await res.json());
+        else await alertError("Failed to load artisan details.");
       } catch (error) {
         console.error("Error fetching artisan:", error);
+        await alertError("Network error while loading artisan.");
       }
     };
     if (artisanId) fetchArtisan();
@@ -154,11 +309,9 @@ export default function ArtisanProfile() {
     );
 
   return (
-   <div className="artisan-profile">
-
+    <div className="artisan-profile">
       <Navbar />
 
-      {/* ===== Profile Info ===== */}
       <section className="container py-5 mt-5">
         <div className="row align-items-center justify-content-between">
           <div
@@ -191,22 +344,12 @@ export default function ArtisanProfile() {
                   {artisan.name}
                 </h6>
               </div>
-{/* Services Offered */}
-<p className="services-list mb-2">
-  {artisan.offersProduct && (
-    <span className="service-badge">Products</span>
-  )}
 
-  {artisan.offersWorkshop && (
-    <span className="service-badge">Workshops</span>
-  )}
-
-  {artisan.offersLiveShow && (
-    <span className="service-badge">Live Show</span>
-  )}
-</p>
-
-
+              <p className="services-list mb-2">
+                {artisan.offersProduct && <span className="service-badge">Products</span>}
+                {artisan.offersWorkshop && <span className="service-badge">Workshops</span>}
+                {artisan.offersLiveShow && <span className="service-badge">Live Show</span>}
+              </p>
 
               <p
                 className="small mb-0"
@@ -233,7 +376,6 @@ export default function ArtisanProfile() {
         </div>
       </section>
 
-      {/* ===== Divider ===== */}
       <div
         className="container"
         style={{
@@ -243,7 +385,6 @@ export default function ArtisanProfile() {
         }}
       ></div>
 
-      {/* ===== Work Gallery ===== */}
       <section className="container py-5 text-center">
         <h5
           className="fw-bold mb-5"
@@ -268,10 +409,7 @@ export default function ArtisanProfile() {
         {artisan.images?.slice(1)?.length ? (
           <div className="row justify-content-center" style={{ rowGap: "60px" }}>
             {artisan.images.slice(1).map((img, i) => (
-              <div
-                key={i}
-                className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center"
-              >
+              <div key={i} className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center">
                 <div
                   className="overflow-hidden"
                   style={{

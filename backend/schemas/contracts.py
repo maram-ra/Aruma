@@ -18,5 +18,5 @@ class ContractPublic(BaseModel):
 
 class SetTermsRequest(BaseModel):
     cost: float
-    message: str
-    date: str  # YYYY-MM-DD format
+    message: Optional[str] = None   # ← اختياري
+    date: str                       # YYYY-MM-DD format

@@ -3,6 +3,154 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
+/* ===================== Elegant Alert Dialog (Aruma Style) ===================== */
+const theme = {
+  primary: "#3a0b0b",
+  beige: "#f9f7f2",
+  border: "#cbbeb3",
+  success: "#3c7c59",
+  error: "#a13a3a",
+  text: "#5c4b45",
+};
+
+function showAlert({ type = "info", title = "Message", message = "", confirmText = "OK", cancelText = "Cancel" } = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement("div");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.35)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+      backdropFilter: "blur(2px)",
+    });
+
+    const dialog = document.createElement("div");
+    Object.assign(dialog.style, {
+      backgroundColor: theme.beige,
+      borderRadius: "16px",
+      padding: "28px 26px 24px",
+      width: "90%",
+      maxWidth: "420px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+      border: `1px solid ${theme.border}`,
+      fontFamily: "inherit",
+      textAlign: "center",
+    });
+
+    const icon = document.createElement("div");
+    icon.textContent =
+      type === "success" ? "✓" : type === "error" ? "✕" : type === "confirm" ? "⚑" : "ℹ";
+    Object.assign(icon.style, {
+      fontSize: "28px",
+      color:
+        type === "success"
+          ? theme.success
+          : type === "error"
+          ? theme.error
+          : theme.primary,
+      marginBottom: "12px",
+    });
+
+    const titleEl = document.createElement("h4");
+    titleEl.textContent = title;
+    Object.assign(titleEl.style, {
+      color: theme.primary,
+      fontWeight: 700,
+      fontSize: "1.15rem",
+      margin: "0 0 8px",
+    });
+
+    const msgEl = document.createElement("p");
+    msgEl.textContent = message;
+    Object.assign(msgEl.style, {
+      color: theme.text,
+      lineHeight: 1.6,
+      fontSize: "0.95rem",
+      margin: "0 0 20px",
+      whiteSpace: "pre-wrap",
+    });
+
+    const btnWrap = document.createElement("div");
+    Object.assign(btnWrap.style, {
+      display: "flex",
+      justifyContent: type === "confirm" ? "space-between" : "center",
+      gap: "12px",
+    });
+
+    const confirmBtn = document.createElement("button");
+    confirmBtn.textContent =
+      type === "success" ? "Great" : type === "error" ? "Close" : confirmText;
+    Object.assign(confirmBtn.style, {
+      flex: 1,
+      borderRadius: "20px",
+      border: "none",
+      padding: "8px 16px",
+      fontWeight: 600,
+      backgroundColor:
+        type === "error"
+          ? theme.error
+          : type === "success"
+          ? theme.success
+          : theme.primary,
+      color: "#fff",
+      cursor: "pointer",
+      transition: "opacity 0.2s",
+    });
+    confirmBtn.onmouseover = () => (confirmBtn.style.opacity = "0.8");
+    confirmBtn.onmouseout = () => (confirmBtn.style.opacity = "1");
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = cancelText;
+    Object.assign(cancelBtn.style, {
+      flex: 1,
+      borderRadius: "20px",
+      border: `1px solid ${theme.border}`,
+      padding: "8px 16px",
+      fontWeight: 500,
+      backgroundColor: "transparent",
+      color: theme.primary,
+      cursor: "pointer",
+      display: type === "confirm" ? "block" : "none",
+    });
+
+    const close = (result) => {
+      overlay.remove();
+      resolve(result);
+    };
+
+    confirmBtn.onclick = () => close(true);
+    cancelBtn.onclick = () => close(false);
+
+    btnWrap.appendChild(cancelBtn);
+    btnWrap.appendChild(confirmBtn);
+
+    dialog.appendChild(icon);
+    dialog.appendChild(titleEl);
+    dialog.appendChild(msgEl);
+    dialog.appendChild(btnWrap);
+
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    // Close on ESC or outside click
+    const escHandler = (e) => e.key === "Escape" && close(false);
+    window.addEventListener("keydown", escHandler);
+    overlay.addEventListener("click", (e) => e.target === overlay && close(false));
+  });
+}
+
+const alertSuccess = (msg, opts) => showAlert({ type: "success", message: msg, title: "Success", ...opts });
+const alertError = (msg, opts) => showAlert({ type: "error", message: msg, title: "Error", ...opts });
+const alertInfo = (msg, opts) => showAlert({ type: "info", message: msg, title: "Notice", ...opts });
+const alertConfirm = (msg, opts) => showAlert({ type: "confirm", message: msg, title: "Confirm", ...opts });
+/* ============================================================================ */
+
 export default function Requests_C() {
   const [requests, setRequests] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -10,11 +158,9 @@ export default function Requests_C() {
   const clientId = localStorage.getItem("userId");
   const userName = localStorage.getItem("userName") || "";
 
-  // ==== Modal States ====
   const [showModal, setShowModal] = useState(false);
   const [selectedContractId, setSelectedContractId] = useState(null);
 
-  // 🧩 جلب الطلبات من الباك إند
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -29,14 +175,21 @@ export default function Requests_C() {
         setRequests(data.requests || []);
       } catch (err) {
         console.error("Error fetching client requests:", err);
+        await alertError("Failed to load requests.\nPlease try again later.");
       }
     };
 
     if (clientId && token) fetchRequests();
   }, [clientId, token]);
 
-  // 🪄 تأكيد العقد
+  // 🪄 Confirm contract
   const handleConfirmContract = async (contractId) => {
+    const ok = await alertConfirm(
+      "Do you confirm the workshop details shared by the artisan?",
+      { confirmText: "Yes", cancelText: "Cancel" }
+    );
+    if (!ok) return;
+
     try {
       const res = await fetch(
         `http://127.0.0.1:8000/api/v1/contracts/${contractId}/confirm`,
@@ -46,23 +199,20 @@ export default function Requests_C() {
         }
       );
       if (!res.ok) throw new Error("Failed to confirm contract");
-      alert("Workshop confirmed successfully! 🌿");
+      await alertSuccess("Workshop confirmed successfully! 🌿");
       window.location.reload();
     } catch (err) {
       console.error(err);
-      alert("Error confirming contract");
+      await alertError("Error confirming contract.\nPlease try again later.");
     }
   };
 
-  // 🎨 ألوان الحالات
   const getStatusColor = (status) => {
     switch (status) {
       case "pending":
         return "#d4a017";
       case "accepted":
         return "#9370DB";
-      case "in progress":
-        return "#29648a";
       case "completed":
         return "#3c7c59";
       case "rejected":
@@ -72,11 +222,9 @@ export default function Requests_C() {
     }
   };
 
-  // 🔍 الفلترة
   const filteredRequests =
     filter === "all" ? requests : requests.filter((r) => r.status === filter);
 
-  // 🔢 العدّاد
   const getCount = (state) =>
     state === "all"
       ? requests.length
@@ -100,7 +248,6 @@ export default function Requests_C() {
         </p>
       </section>
 
-      {/* Divider */}
       <div
         className="container"
         style={{
@@ -113,7 +260,7 @@ export default function Requests_C() {
       {/* ===== Filters ===== */}
       <section className="container text-center mb-4">
         <div className="d-flex flex-wrap justify-content-center gap-3">
-          {["all", "pending", "accepted", "in progress", "completed", "rejected"].map(
+          {["all", "pending", "accepted", "completed", "rejected"].map(
             (state) => (
               <button
                 key={state}
@@ -172,7 +319,6 @@ export default function Requests_C() {
                   className="border rounded-3 p-4 shadow-sm w-100"
                   style={{ backgroundColor: "#f1efe8" }}
                 >
-                  {/* Header */}
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <div className="text-start">
                       <h6
@@ -188,27 +334,25 @@ export default function Requests_C() {
                     <small className="text-muted">{req.date || "—"}</small>
                   </div>
 
-                  {/* Message */}
                   <p
                     className="small text-start"
                     style={{ color: "#5c4b45", lineHeight: "1.6" }}
                   >
                     {req.message}
                   </p>
+
                   {req.contractCost && (
-  <p className="small text-start text-muted mb-1">
-    <strong>Price:</strong> {req.contractCost} SAR
-  </p>
-)}
+                    <p className="small text-start text-muted mb-1">
+                      <strong>Price:</strong> {req.contractCost} SAR
+                    </p>
+                  )}
 
-{req.contractDate && (
-  <p className="small text-start text-muted mb-3">
-    <strong>Date:</strong> {req.contractDate}
-  </p>
-)}
+                  {req.contractDate && (
+                    <p className="small text-start text-muted mb-3">
+                      <strong>Date:</strong> {req.contractDate}
+                    </p>
+                  )}
 
-
-                  {/* Status + Actions */}
                   <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <span
                       className="px-3 py-1 border rounded-pill small fw-medium"
@@ -221,14 +365,10 @@ export default function Requests_C() {
                       {req.status?.toUpperCase()}
                     </span>
 
-                    {/* ✅ Confirm Contract */}
                     {req.status === "accepted" && req.contractId && (
                       <button
                         className="btn"
-                        onClick={() => {
-                          setSelectedContractId(req.contractId);
-                          setShowModal(true);
-                        }}
+                        onClick={() => handleConfirmContract(req.contractId)}
                         style={{
                           border: "1px solid #3a0b0b",
                           color: "#3a0b0b",
@@ -241,7 +381,6 @@ export default function Requests_C() {
                       </button>
                     )}
 
-                    {/* ✅ WhatsApp Contact after confirmation */}
                     {req.status === "in progress" && req.artisanPhone && (
                       <a
                         href={`https://wa.me/${req.artisanPhone}?text=${encodeURIComponent(
@@ -268,78 +407,6 @@ export default function Requests_C() {
           </div>
         )}
       </section>
-
-      {/* ===== Confirm Contract Modal ===== */}
-      {showModal && (
-        <div
-          className="modal-overlay"
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.4)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 999,
-          }}
-        >
-          <div
-            className="modal-content p-4 rounded-3 shadow"
-            style={{
-              backgroundColor: "#f9f7f2",
-              width: "90%",
-              maxWidth: "420px",
-            }}
-          >
-            <h5
-              className="fw-bold mb-3"
-              style={{ color: "#3a0b0b", textAlign: "center" }}
-            >
-              Confirm Workshop Details
-            </h5>
-
-            <p
-              className="text-center small mb-4"
-              style={{ color: "#5c4b45", lineHeight: "1.6" }}
-            >
-              By confirming, you agree to the workshop’s proposed date and cost
-              shared by the artisan. You can then contact them directly on
-              WhatsApp 🌿
-            </p>
-
-            <div className="d-flex justify-content-end gap-3">
-              <button
-                className="btn btn-outline-secondary"
-                style={{
-                  borderRadius: "20px",
-                  padding: "6px 16px",
-                }}
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="btn"
-                style={{
-                  backgroundColor: "#3a0b0b",
-                  color: "#fff",
-                  borderRadius: "20px",
-                  padding: "6px 16px",
-                }}
-                onClick={() => {
-                  handleConfirmContract(selectedContractId);
-                  setShowModal(false);
-                }}
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <Footer />
     </div>
