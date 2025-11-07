@@ -1,137 +1,497 @@
-body {
-  background-color: #f5f5ee;
+/* ========== Aruma Buttons – Refined Professional Edition ========== */
+
+:root {
+  --color-primary: #3a0b0b;
+  --color-primary-dark: #2c0707;
+  --color-primary-light: #5a1d1d;
+  --color-bg: #f5f5ee;
+  --color-outline-hover: rgba(58, 11, 11, 0.06);
+  --transition-fast: all 0.25s ease;
+  --radius-pill: 999px;
+  --shadow-soft: 0 3px 10px rgba(58, 11, 11, 0.15);
+  --shadow-strong: 0 6px 16px rgba(58, 11, 11, 0.25);
 }
 
-/* ========== Global Button Styles (Unified Aruma Theme) ========== */
+body {
+  background-color: #dcdcd0ff;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-/* زر أساسي (Primary) */
-.btn-main {
-  background-color: #3a0b0b;
-  color: #f5f5ee;
-  border: 1.5px solid #3a0b0b;
-  border-radius: 25px;
-  padding: 10px 28px;
+.overlay {
+  color: #dcdcd0ff !important;
+}
+
+
+a.btn-outline,
+a.btn-main,
+a.btn-small {
+  text-decoration: none !important;
+}
+
+a.btn-outline:hover,
+a.btn-main:hover {
+  text-decoration: none !important;
+}
+
+/* === Base Button Style === */
+button,
+.btn {
+  font-family: inherit;
   font-weight: 600;
-  font-size: 1rem;
   letter-spacing: 0.3px;
-  transition: all 0.25s ease;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-fast);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1.4;
+  user-select: none;
+}
+
+/* === Primary Button === */
+.btn-main {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: 2px solid var(--color-primary);
+  padding: 12px 32px;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(58, 11, 11, 0.15);
 }
 
 .btn-main:hover {
-  background-color: #5b2a2a;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.15);
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1.5px);
 }
 
-/* زر بإطار فقط (Outline) */
+.btn-main:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .btn-outline {
+  position: relative;
   background-color: transparent;
-  color: #3a0b0b;
-  border: 1.5px solid #3a0b0b;
-  border-radius: 25px;
-  padding: 10px 28px;
-  font-weight: 600;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: 12px 32px;
   font-size: 1rem;
-  letter-spacing: 0.3px;
-  transition: all 0.25s ease;
-  cursor: pointer;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  transition: all 0.35s ease;
+  overflow: hidden;
+  z-index: 1;
 }
 
+/* subtle gradient edge */
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(58,11,11,0.08), rgba(58,11,11,0.02));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* Hover State */
 .btn-outline:hover {
-  background-color: #3a0b0b;
-  color: #f5f5ee;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.15);
-}
-
-/* زر خاص بالصفحة الرئيسية */
-.btn-client {
-  border-color: #6b6078;
-  color: #6b6078;
-}
-
-.btn-client:hover {
-  background-color: #6b6078;
-  color: #f5f5ee;
-  box-shadow: 0 4px 10px rgba(107, 96, 120, 0.2);
-}
-
-.btn-artisan {
-  border-color: #3a0b0b;
-  color: #3a0b0b;
-}
-
-.btn-artisan:hover {
-  background-color: #3a0b0b;
-  color: #f5f5ee;
-  box-shadow: 0 4px 10px rgba(58, 11, 11, 0.2);
-}
-
-/* زر نجاح (أخضر) */
-.btn-success {
-  background-color: #3c7c59;
   color: #fff;
-  border: 1.5px solid #3c7c59;
-  border-radius: 25px;
-  padding: 10px 28px;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.3px;
-  transition: all 0.25s ease;
+  border-color: var(--color-primary-dark);
+  background-color: var(--color-primary);
+  box-shadow: 0 6px 14px rgba(58, 11, 11, 0.2);
+  transform: translateY(-2px);
 }
 
-.btn-success:hover {
-  background-color: #356d50;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(60, 124, 89, 0.2);
+.btn-outline:hover::before {
+  opacity: 1;
 }
 
-/* زر رفض (أحمر ناعم) */
-.btn-danger {
-  background-color: transparent;
-  color: #a13a3a;
-  border: 1.5px solid #a13a3a;
-  border-radius: 25px;
-  padding: 10px 28px;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.3px;
-  transition: all 0.25s ease;
+/* Active (Pressed) State */
+.btn-outline:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  background-color: var(--color-primary-dark);
 }
 
-.btn-danger:hover {
-  background-color: #a13a3a;
-  color: #fff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(161, 58, 58, 0.2);
+/* Focus (Accessibility) */
+.btn-outline:focus-visible {
+  outline: 2px solid rgba(58, 11, 11, 0.4);
+  outline-offset: 3px;
 }
 
-/* زر نصي (لروابط مثل Forgot Password) */
+/* === Text Button (for inline links) === */
 .btn-text {
   background: none;
   border: none;
-  color: #3a0b0b;
+  color: var(--color-primary);
   font-weight: 600;
   font-size: 0.95rem;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
+  padding: 0;
 }
 
 .btn-text:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* === Small & Large Variants === */
+.btn-small {
+  padding: 8px 22px;         
+  font-size: 0.9rem;
+  border-radius: var(--radius-pill); 
+  min-width: 120px;           
+  text-align: center;
+}
+
+
+.btn-large {
+  padding: 14px 38px;
+  font-size: 1.05rem;
+}
+
+/* === Unified hover/active fix === */
+button:focus-visible {
+  outline: 2px solid rgba(58, 11, 11, 0.3);
+  outline-offset: 2px;
+}
+
+/* === Button Group === */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  align-items: center;
+}
+
+
+/* ========== HERO SECTION (Unified with Navbar) ========== */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* الفيديو الخلفي */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.79) contrast(1.05) saturate(0.95);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: #dcdcd0ff;
+  max-width: 760px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 2rem;
+  animation: fadeSlide 1.4s ease;
+}
+
+/* ===== Headline ===== */
+.hero-title {
+  font-family: "DM Sans", "Inter", sans-serif;  /* 👈 more modern & elegant */
+  font-weight: 700;
+  font-size: 3.8rem;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  color: #dcdcd0ff;
+  margin-bottom: 1.25rem;
+  text-transform: none;
+}
+
+.hero-title span {
+  font-weight: 700;
+  color: #dcdcd0ff;
+}
+
+/* ===== Subtext ===== */
+.hero-subtext {
+  font-family: "Inter", sans-serif;
+  color: #e0ded8;
+  font-size: 1.15rem;
+  line-height: 1.85;
+  font-weight: 400;
+  opacity: 0.92;
+  max-width: 560px;
+  margin: 0 auto;
+}
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.8rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+  }
+}
+
+/* ====== NAVBAR LAYOUT ====== */
+.navbar {
+  padding: 1.5rem 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* ===== Transparent Navbar for Hero Page ===== */
+.navbar-hero {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  border: none;
+  z-index: 10;
+}
+
+.navbar-hero .nav-link-custom,
+.navbar-hero .nav-username {
+  color: #f5f5ee !important;
+}
+
+.navbar-hero .nav-link-custom:hover {
   opacity: 0.7;
 }
 
-/* زر صغير */
-.btn-small {
-  padding: 5px 16px;
-  font-size: 0.9rem;
-  border-radius: 20px;
+/* ===== Default Navbar for Other Pages ===== */
+.navbar-default {
+  background-color: var(--color-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* مجموعة الأزرار في الصفحة الرئيسية */
-.button-group {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+.navbar-default .nav-link-custom,
+.navbar-default .nav-username {
+  color: #3a0b0b !important;
 }
+
+.navbar-default .nav-link-custom:hover {
+  opacity: 0.7;
+}
+
+/* ===== General Styles ===== */
+.nav-link-custom {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.navbar-logo {
+  filter: contrast(95%) brightness(97%);
+  opacity: 0.95;
+  transition: filter 0.3s ease;
+}
+
+/* ===== Alignment Fix ===== */
+.navbar-left {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.navbar-right {
+  flex: 1;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.navbar-center {
+  z-index: 5;
+}
+
+.nav-username {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+  .navbar-left,
+  .navbar-right {
+    flex: unset;
+  }
+
+  .navbar-center {
+    position: static;
+    transform: none;
+  }
+
+  .container-fluid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+
+/* ===== Modern Split Layout ===== */
+.user-type-modern {
+  background-color: #dcdcd0ff; /* Beige neutral background */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 0;
+}
+
+/* ===== Text Content ===== */
+.modern-title {
+  font-family: "DM Sans", "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 3.2rem;
+  line-height: 1.15;
+  color: #3a0b0b;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.modern-title span {
+  color: #7a7392;
+  font-weight: 600;
+}
+
+.modern-subtext {
+  font-family: "Inter", sans-serif;
+  color: #5c4b45;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 460px;
+  opacity: 0.92;
+}
+
+/* ===== Buttons ===== */
+.btn-modern {
+  background-color: #3a0b0b;
+  color: #f5f5ee;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+  background-color: #5a1d1d;
+  transform: translateY(-2px);
+}
+
+.btn-modern-outline {
+  background-color: transparent;
+  color: #3a0b0b;
+  border: 2px solid #3a0b0b;
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-modern-outline:hover {
+  background-color: #3a0b0b;
+  color: #f5f5ee;
+}
+
+/* ===== Video Frame ===== */
+.video-frame {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  width: 100%;
+  max-width: 650px;
+}
+
+.modern-video {
+  width: 100%;
+  height: 420px;
+  border-radius: 12px;
+  object-fit: cover;
+  filter: brightness(0.97) contrast(1);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .user-type-modern {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .modern-title {
+    font-size: 2.6rem;
+  }
+
+  .modern-subtext {
+    margin: 0 auto 2rem;
+  }
+
+  .video-frame {
+    padding: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .modern-video {
+    height: 320px;
+  }
+}
+
+/* ====== SERVICE BADGES (Refined Aruma Style) ====== */
+.services-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.service-badge {
+  background-color: #7d769c;     
+  color: #f5f5ee;                  
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.77rem;
+  padding: 5px 10px;
+  border-radius: 555px;          
+  letter-spacing: 0.3px;
+  
+  
+}
+
+
+
+
+
+
+

@@ -1,4 +1,3 @@
-
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
@@ -9,6 +8,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24  # 1 day
     ALGORITHM: str = "HS256"
     DB_FILE: str = "db.json"
+    DATABASE_URL: str = "sqlite:///./aruma.db"  # ← ADD THIS LINE
 
     class Config:
         case_sensitive = True

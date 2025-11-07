@@ -1,12 +1,19 @@
-
-from fastapi import Header, HTTPException
+# routers/_deps.py
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from core.security import decode_token
 
-def get_current_user(authorization: str = Header(None)):
-    if not authorization or not authorization.lower().startswith("bearer "):
-        raise HTTPException(status_code=401, detail="Missing bearer token")
-    token = authorization.split(" ", 1)[1]
-    ok, payload = decode_token(token)
-    if not ok:
-        raise HTTPException(status_code=401, detail=payload.get("detail", "Invalid token"))
-    return payload  # contains sub (user id) and user_type
+bearer_scheme = HTTPBearer(auto_error=False)
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
+    if not credentials or not credentials.scheme or not credentials.credentials:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # credentials.scheme = "Bearer", credentials.credentials = token
+    token = credentials.credentials
+    try:
+        payload = decode_token(token)
+        # payload: {"sub": "<user_id>", "user_type": "artisan|client", ...}
+        return payload
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")

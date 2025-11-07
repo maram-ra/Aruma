@@ -1,17 +1,17 @@
+# --- imports ---
+from dotenv import load_dotenv
+load_dotenv(override=True)
 from fastapi import FastAPI
-from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from core.config import get_settings
-from routers import auth, artisans, clients, requests as reqs, contracts, upload  
+from routers import debug as debug_router
 
-settings = get_settings()
-app = FastAPI(title=settings.APP_NAME, version="0.1.0")
+from routers import auth, artisans, clients, requests as requests_router, contracts
+from routers import uploads as uploads_router   # ✅ اسم الملف الصحيح
 
-# 🔹 Mount images directory
-app.mount("/images", StaticFiles(directory="../frontend/public/images"), name="images")
+app = FastAPI(title="Aruma API", version="1.0")
 
-# 🔹 CORS
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,14 +20,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 🔹 Include routers
-app.include_router(auth.router, prefix=settings.API_V1_STR)
-app.include_router(artisans.router, prefix=settings.API_V1_STR)
-app.include_router(clients.router, prefix=settings.API_V1_STR)
-app.include_router(reqs.router, prefix=settings.API_V1_STR)
-app.include_router(contracts.router, prefix=settings.API_V1_STR)
-app.include_router(upload.router, prefix=settings.API_V1_STR)  # ← هنا المهم جدًا
+# static
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
-def root():
-    return {"message": "Aruma backend is running", "docs": "/docs"}
+# routers
+app.include_router(auth.router, prefix="/api/v1")
+app.include_router(artisans.router, prefix="/api/v1")
+app.include_router(clients.router, prefix="/api/v1")
+app.include_router(requests_router.router, prefix="/api/v1")
+app.include_router(contracts.router, prefix="/api/v1")
+app.include_router(uploads_router.router, prefix="/api/v1", tags=["upload"])  # ✅
+
+
+
+app.include_router(debug_router.router, prefix="/api/v1")

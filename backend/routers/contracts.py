@@ -1,32 +1,19 @@
 from fastapi import APIRouter, HTTPException, Depends
-from storage.json_repo import JSONRepository
+from database import repo
 from ._deps import get_current_user
 
-router = APIRouter(prefix="/contracts", tags=["contracts"])
-repo = JSONRepository()
+router = APIRouter()
 
-@router.post("", status_code=201)
-def create_contract(payload: dict, user=Depends(get_current_user)):
-    # فقط الحرفي (artisan) يمكنه إنشاء العقد
-    if user["user_type"] != "artisan":
-        raise HTTPException(status_code=403, detail="Artisans only")
-
-    # التحقق من وجود الطلب أو المستخدمين
-    request_id = payload.get("requestId")
-    artisan_id = payload.get("artisanId")
-    client_id = payload.get("clientId")
-
-    if not request_id or not artisan_id or not client_id:
-        raise HTTPException(status_code=400, detail="Missing required fields")
-
-    # إنشاء العقد الجديد
-    contract = repo.create_contract({
-        "requestId": request_id,
-        "artisanId": artisan_id,
-        "clientId": client_id,
-        "status": payload.get("status", "pending"),
-        "cost": payload.get("cost"),
-        "timeframe": payload.get("timeframe"),
-    })
-
-    return {"contract": contract}
+@router.put("/contracts/{contract_id}/confirm")
+def confirm_contract(contract_id: str, current_user: dict = Depends(get_current_user)):
+    try:
+        if current_user.get("user_type") != "client":
+            raise HTTPException(status_code=403, detail="Clients only")
+        updated = repo.confirm_contract(contract_id=contract_id, client_id=str(current_user.get("sub")))
+        if not updated:
+            raise HTTPException(status_code=404, detail="Contract not found or not owned by this client")
+        return {"message": "confirmed", "contract_id": contract_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

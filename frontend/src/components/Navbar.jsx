@@ -7,7 +7,9 @@ export default function Navbar() {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ لتحديد المسار الحالي
+  const location = useLocation();
+
+  const isHeroPage = location.pathname === "/marketplace";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,7 +19,6 @@ export default function Navbar() {
     setUserName(name || "");
     setUserRole(role || "");
 
-    // تحديث الحالة عند أي تغيير في localStorage
     const checkLogin = () => {
       const token = localStorage.getItem("token");
       const name = localStorage.getItem("userName");
@@ -36,27 +37,35 @@ export default function Navbar() {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userName");
     setIsLoggedIn(false);
-    navigate("/UserType"); // إعادة التوجيه بعد تسجيل الخروج
+    navigate("/UserType");
   };
 
   return (
     <nav
-      className="navbar navbar-expand-lg py-3 shadow-0"
+      className="navbar navbar-expand-lg shadow-0"
       style={{
-        backgroundColor: "#f5f5ee",
-        borderBottom: "1px solid rgba(0,0,0,0.05)",
+        paddingTop: "2.75rem",
+        paddingBottom: "2.75rem",
+        backgroundColor: isHeroPage ? "transparent" : "var(--color-background)",
+        borderBottom: isHeroPage ? "none" : "1px solid rgba(0, 0, 0, 0.05)",
+        position: isHeroPage ? "absolute" : "relative",
+        top: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 10,
+        transition: "all 0.3s ease",
       }}
     >
       <div className="container d-flex justify-content-between align-items-center">
         {/* ===== Left Links ===== */}
         <div className="d-flex gap-4 align-items-center">
-          {/* قبل تسجيل الدخول */}
+          {/* --- Public link before login --- */}
           {!isLoggedIn && (
             <Link
               to="/"
               className="text-decoration-none fw-semibold small"
               style={{
-                color: "#3a0b0b",
+                color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
                 letterSpacing: "0.3px",
                 transition: "opacity 0.2s ease",
               }}
@@ -67,41 +76,75 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* بعد تسجيل الدخول كـ Client */}
+          {/* --- Client links --- */}
           {isLoggedIn && userRole === "client" && (
             <>
-              <Link
-                to="/client/Requests_C"
-                className="text-decoration-none fw-semibold small"
-                style={{
-                  color: "#3a0b0b",
-                  letterSpacing: "0.3px",
-                  transition: "opacity 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-              >
-                My Requests
-              </Link>
+              {location.pathname !== "/client/Requests_C" && (
+                <Link
+                  to="/client/Requests_C"
+                  className="text-decoration-none fw-semibold small"
+                  style={{
+                    color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
+                    letterSpacing: "0.3px",
+                    transition: "opacity 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                >
+                  My Requests
+                </Link>
+              )}
 
-              {/* ✅ يظهر فقط إذا لم نكن في صفحة /marketplace */}
               {location.pathname !== "/marketplace" && (
                 <Link
                   to="/marketplace"
                   className="text-decoration-none fw-semibold small"
                   style={{
-                    color: "#3a0b0b",
+                    color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
                     letterSpacing: "0.3px",
                     transition: "opacity 0.2s ease",
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.opacity = "0.7")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.opacity = "1")
-                  }
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                 >
                   Marketplace
+                </Link>
+              )}
+            </>
+          )}
+
+          {/* --- Artisan links --- */}
+          {isLoggedIn && userRole === "artisan" && (
+            <>
+              {location.pathname !== "/artisan/Profile" && (
+                <Link
+                  to="/artisan/Profile"
+                  className="text-decoration-none fw-semibold small"
+                  style={{
+                    color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
+                    letterSpacing: "0.3px",
+                    transition: "opacity 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                >
+                  Profile
+                </Link>
+              )}
+
+              {location.pathname !== "/artisan/Requests_A" && (
+                <Link
+                  to="/artisan/Requests_A"
+                  className="text-decoration-none fw-semibold small"
+                  style={{
+                    color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
+                    letterSpacing: "0.3px",
+                    transition: "opacity 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                >
+                  My Requests
                 </Link>
               )}
             </>
@@ -115,14 +158,19 @@ export default function Navbar() {
           style={{ pointerEvents: "none" }}
         >
           <img
-            src="/logo.png"
-            alt="Aruma Logo"
-            width="52"
-            style={{
-              filter: "contrast(90%) brightness(95%)",
-              opacity: "0.95",
-            }}
-          />
+  src={isHeroPage ? "/logo2.png" : "/logo.png"}
+  alt="Aruma Logo"
+  width="77"
+  style={{
+    filter: isHeroPage
+      ? "contrast(100%) brightness(100%)"
+      : "contrast(90%) brightness(95%)",
+    opacity: "0.95",
+    transition: "filter 0.3s ease",
+  
+  }}
+/>
+
         </Link>
 
         {/* ===== Auth Section ===== */}
@@ -135,8 +183,8 @@ export default function Navbar() {
               <span
                 className="fw-semibold small"
                 style={{
-                  color: "#3a0b0b",
-                  opacity: 0.85,
+                  color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
+                  opacity: 0.9,
                   letterSpacing: "0.3px",
                 }}
               >
@@ -147,16 +195,12 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="btn btn-link text-decoration-none fw-semibold small"
                 style={{
-                  color: "#3a0b0b",
+                  color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
                   letterSpacing: "0.3px",
                   transition: "opacity 0.2s ease",
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.opacity = "0.7")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.opacity = "1")
-                }
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
                 Log out
               </button>
@@ -166,16 +210,12 @@ export default function Navbar() {
               to="/login"
               className="text-decoration-none fw-semibold small"
               style={{
-                color: "#3a0b0b",
+                color: isHeroPage ? "#f5f5ee" : "#3a0b0b",
                 letterSpacing: "0.3px",
                 transition: "opacity 0.2s ease",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.opacity = "0.7")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.opacity = "1")
-              }
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
               Login
             </Link>

@@ -1,109 +1,81 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import heroImg from "../assets/Header.png";
+import headerImage from "../assets/header2.png"; // ← استدعاء الصورة نفسها
 
 export default function HeroSection() {
   return (
     <section
-      style={{
-        backgroundColor: "#f5f5ee",
-        minHeight: "90vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "7rem 0",
-        animation: "fadeInUp 1.2s ease",
-      }}
+      className="hero-section"
+      style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}
     >
-      <div className="container">
-        <div className="row align-items-center justify-content-center text-center text-md-start">
-          {/* ===== Left: Text ===== */}
-          <div className="col-12 col-md-6 mb-5 mb-md-0">
-            <h1
-              className="fw-bold mb-4"
-              style={{
-                color: "#3a0b0b",
-                fontSize: "4.2rem", 
-                lineHeight: "1.15",
-                letterSpacing: "0.5px",
-                maxWidth: "580px",
-                fontFamily: '"Playfair Display", serif',
-                textShadow: "0 2px 3px rgba(0,0,0,0.04)",
-              }}
-            >
-              Discover Unique <br />
-              <span
-                style={{
-                  color: "#7a7392",
-                  fontWeight: 500,
-                  fontSize: "4rem",
-                }}
-              >
-                Handmade Creations
-              </span>
-            </h1>
+      {/* ===== خلفية الصورة ===== */}
+      <img
+        src={headerImage}
+        alt="Hero background"
+        className="hero-image"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -2,
+          filter: "brightness(0.9)",
 
-            <p
-              style={{
-                color: "#5c4b45",
-                maxWidth: "520px",
-                fontSize: "1.3rem", 
-                lineHeight: "1.9",
-                fontWeight: "400",
-                letterSpacing: "0.2px",
-                fontFamily: '"Inter", sans-serif',
-                opacity: "0.9",
-                marginTop: "1.5rem",
-              }}
-            >
-              Experience artistry and authenticity — book workshops, and connect
-              directly with passionate makers.
-            </p>
-          </div>
+        }}
+      />
 
-          {/* ===== Right: Image ===== */}
-          <div className="col-12 col-md-6 d-flex justify-content-center">
-            <img
-              src={heroImg}
-              alt="Aruma visual"
-              className="img-fluid"
-              style={{
-                maxWidth: "85%",
-                height: "auto",
-                borderRadius: "12px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-                filter: "brightness(0.97) contrast(0.98)",
-              }}
-            />
-          </div>
-        </div>
+      {/* ===== تظليل ناعم فوق الصورة ===== */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(58, 11, 11, 0.35)", 
+          zIndex: -1,
+        }}
+      ></div>
+
+      {/* ===== المحتوى ===== */}
+      <div
+        className="container hero-content text-center"
+        style={{
+          color: "#fff",
+          position: "relative",
+          zIndex: 1,
+          paddingTop: "12rem",
+          paddingBottom: "8rem",
+        }}
+      >
+        <h1
+          className="hero-title fw-bold mb-3"
+          style={{
+            fontSize: "3rem",
+            lineHeight: "1.2",
+          }}
+        >
+          Where <span style={{ color: "#cbbeb3" }}>craft</span>
+          <br />
+          Becomes <span style={{ color: "#cbbeb3" }}>connection</span>
+        </h1>
+
+        <p
+          className="hero-subtext"
+          style={{
+            maxWidth: "600px",
+            margin: "1.5rem auto 0",
+            color: "#f5f5ee",
+            fontSize: "1.1rem",
+            lineHeight: "1.6",
+          }}
+        >
+          Aruma is a space that celebrates the beauty of handmade creation 
+          where every detail tells a story, and every maker finds their rhythm.
+        </p>
       </div>
-
-      {/* ===== Animation Keyframes ===== */}
-      <style>
-        {`
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(25px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @media (max-width: 768px) {
-            h1 {
-              font-size: 2.6rem !important;
-              line-height: 1.2;
-            }
-            p {
-              font-size: 1.05rem !important;
-            }
-          }
-        `}
-      </style>
     </section>
   );
 }

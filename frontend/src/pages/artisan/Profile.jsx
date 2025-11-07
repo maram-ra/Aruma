@@ -1,115 +1,143 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import {
+  alertSuccess,
+  alertError,
+  alertInfo,
+  alertConfirm,
+} from "../../components/ArumaAlert";
 
-/* =======================
-   Edit Account Modal
-   ======================= */
+// قاعدة عنوان الـ API
+const API =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
+
+// أصل الخادم بدون /api/v1 لعرض الصور الداخلية
+const ORIGIN = (() => {
+  try {
+    const u = new URL(API, window.location.origin);
+    return u.toString().replace(/\/api\/v1\/?$/, "").replace(/\/+$/, "");
+  } catch {
+    return "http://127.0.0.1:8000";
+  }
+})();
+const toImageURL = (path) => {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${ORIGIN}${p}`;
+};
+
+// أداة صغيرة لإظهار الرسائل الحقيقية من الـ response عند الخطأ
+async function readErr(res) {
+  try {
+    const j = await res.clone().json();
+    return j?.detail || JSON.stringify(j);
+  } catch {
+    try {
+      return await res.clone().text();
+    } catch {
+      return res.statusText || "Request failed";
+    }
+  }
+}
+
+/* ======================= Edit Account Modal ======================= */
 function EditAccountModal({ show, onClose, artisan, setArtisan }) {
-  const [formData, setFormData] = useState({
-    name: artisan?.name || "",
-    craftType: artisan?.craftType || "",
-    bio: artisan?.bio || "",
-    offersWorkshop: artisan?.offersWorkshop || false,
-    offersLiveShow: artisan?.offersLiveShow || false,
-    offersProduct: artisan?.offersProduct || false,
-    profileImage: artisan?.images?.[0] || "",
-    gallery: artisan?.images?.slice(1) || [],
+  const [form, setForm] = useState({
+    bio: "",
+    craftType: "",
+    offersWorkshop: false,
+    offersLiveShow: false,
+    offersProduct: false,
+    image: "",
   });
 
-  // تحديث بيانات الفورم عند تغيير بيانات الحرفي
+  // تعريف التوكن والآي دي داخل المكوّن
+  const token = localStorage.getItem("token");
+  const artisanId = localStorage.getItem("userId");
+
   useEffect(() => {
     if (artisan) {
-      setFormData({
-        name: artisan.name,
-        craftType: artisan.craftType,
+      setForm({
         bio: artisan.bio || "",
-        offersWorkshop: artisan.offersWorkshop || false,
-        offersLiveShow: artisan.offersLiveShow || false,
-        offersProduct: artisan.offersProduct || false,
-        profileImage: artisan.images?.[0] || "",
-        gallery: artisan.images?.slice(1) || [],
+        craftType: artisan.craftType || "",
+        offersWorkshop: !!artisan.offersWorkshop,
+        offersLiveShow: !!artisan.offersLiveShow,
+        offersProduct: !!artisan.offersProduct,
+        image: artisan.images?.[0] || artisan.image || "",
       });
     }
   }, [artisan]);
 
   if (!show) return null;
 
-  const handleChange = (e) => {
+  const onChange = (e) => {
     const { name, type, checked, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    setForm((p) => ({ ...p, [name]: type === "checkbox" ? checked : value }));
   };
 
-  // رفع الصور (بروفايل أو معرض أعمال)
-  const handleImageUpload = async (e, type) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // ✅ تصحيح المسار إلى /uploads/image
+  const uploadOne = async (file) => {
+    if (!token) {
+      await alertInfo("Please login again.");
+      return "";
+    }
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`${API}/uploads/image`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    });
+    if (!res.ok) throw new Error(await readErr(res));
+    const data = await res.json();
+    return data.url;
+  };
 
-    const uploadData = new FormData();
-    uploadData.append("file", file);
-
+  const handleUpload = async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/upload/image", {
-        method: "POST",
-        body: uploadData,
-      });
-      const data = await res.json();
-
-      if (res.ok) {
-        if (type === "profile") {
-          setFormData((prev) => ({ ...prev, profileImage: data.url }));
-        } else {
-          setFormData((prev) => ({
-            ...prev,
-            gallery: [...prev.gallery, data.url],
-          }));
-        }
-      } else alert("Upload failed");
-    } catch {
-      alert("Network error while uploading image");
+      const url = await uploadOne(f);
+      if (!url) return;
+      setForm((p) => ({ ...p, image: url }));
+      await alertSuccess("Profile image uploaded!");
+    } catch (err) {
+      await alertError(err.message || "Upload error");
     }
   };
 
-  // حفظ التغييرات
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
-  const artisanId = localStorage.getItem("userId");
-
-  try {
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
-      {
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!token || !artisanId) {
+      await alertInfo("Please login again.");
+      return;
+    }
+    try {
+      const res = await fetch(`${API}/artisans/${artisanId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          bio: formData.bio,
-          craftType: formData.craftType,
-          offersWorkshop: formData.offersWorkshop,
-          offersLiveShow: formData.offersLiveShow,
-          offersProduct: formData.offersProduct,
-          images: [formData.profileImage, ...formData.gallery],
+          bio: form.bio,
+          craftType: form.craftType,
+          offersWorkshop: form.offersWorkshop,
+          offersLiveShow: form.offersLiveShow,
+          offersProduct: form.offersProduct,
+          image: form.image || "",
         }),
-      }
-    );
-
-    const data = await res.json();
-
-      if (res.ok) {
-        alert("Profile updated successfully!");
-        setArtisan({ ...artisan, ...data });
-        onClose();
-      } else alert(data.detail || "Update failed");
-    } catch {
-      alert("Network error");
+      });
+      if (!res.ok) throw new Error(await readErr(res));
+      const data = await res.json();
+      setArtisan((prev) => ({ ...prev, ...data }));
+      await alertSuccess("Account updated!");
+      onClose();
+    } catch (err) {
+      await alertError(err.message || "Network error");
     }
   };
 
@@ -121,41 +149,32 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div
           className="modal-content border-0 shadow"
-          style={{
-            backgroundColor: "#f5f5ee",
-            borderRadius: "16px",
-            padding: "2rem 1.5rem",
-          }}
+          style={{ background: "#f5f5ee", borderRadius: 16 }}
         >
-          {/* ===== Header ===== */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center p-3">
             <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
               Edit Account
             </h5>
-            <button type="button" className="btn-close" onClick={onClose}></button>
+            <button className="btn-close" onClick={onClose} />
           </div>
 
-          {/* ===== Form ===== */}
-          <form onSubmit={handleSubmit}>
-            {/* Name */}
+          <form onSubmit={submit} className="px-3 pb-4">
             <div className="mb-3">
               <label
                 className="form-label fw-semibold small"
                 style={{ color: "#3a0b0b" }}
               >
-                Name
+                Craft Type
               </label>
               <input
-                type="text"
-                name="name"
-                value={formData.name}
-                disabled
                 className="form-control"
-                style={{ borderRadius: "8px", borderColor: "#cbbeb3" }}
+                name="craftType"
+                value={form.craftType}
+                onChange={onChange}
+                placeholder="Pottery / Glass / ..."
               />
             </div>
 
-            {/* Bio */}
             <div className="mb-3">
               <label
                 className="form-label fw-semibold small"
@@ -164,117 +183,88 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
                 Bio
               </label>
               <textarea
-                name="bio"
-                rows="3"
-                placeholder="Short description about your craft"
-                value={formData.bio}
-                onChange={handleChange}
                 className="form-control"
-                style={{ borderRadius: "8px", borderColor: "#cbbeb3" }}
-              ></textarea>
+                name="bio"
+                rows={3}
+                value={form.bio}
+                onChange={onChange}
+                placeholder="Short description..."
+              />
             </div>
 
-            {/* Profile Image */}
-<div className="mb-4">
- 
-  <label
-    htmlFor="profileUpload"
-    className="btn d-inline-flex align-items-center gap-2"
-    style={{
-      backgroundColor: "#eae4de",
-      color: "#3a0b0b",
-      borderRadius: "8px",
-      padding: "8px 16px",
-      cursor: "pointer",
-      fontWeight: 500,
-    }}
-  >
-    <i className="bi bi-camera-fill"></i> 
-    {formData.profileImage ? "Change Image" : "Upload Image"}
-  </label>
-  <input
-    id="profileUpload"
-    type="file"
-    accept="image/*"
-    onChange={(e) => handleImageUpload(e, "profile")}
-    style={{ display: "none" }}
-  />
+            <div className="d-flex flex-wrap gap-3 mb-3">
+              <label className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="offersWorkshop"
+                  checked={form.offersWorkshop}
+                  onChange={onChange}
+                />
+                <span className="ms-2">Workshops</span>
+              </label>
+              <label className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="offersLiveShow"
+                  checked={form.offersLiveShow}
+                  onChange={onChange}
+                />
+                <span className="ms-2">Live Show</span>
+              </label>
+              <label className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="offersProduct"
+                  checked={form.offersProduct}
+                  onChange={onChange}
+                />
+                <span className="ms-2">Products</span>
+              </label>
+            </div>
 
-  {formData.profileImage && (
-    <>
-      <div
-        className="mt-2 small text-muted"
-        style={{ color: "#6c757d", fontSize: "0.85rem" }}
-      >
-        {formData.profileImage.split("/").pop()}
-      </div>
-      <img
-        src={formData.profileImage}
-        alt="Profile"
-        className="mt-2 rounded-circle border"
-        style={{
-          width: "100px",
-          height: "100px",
-          objectFit: "cover",
-          borderColor: "#cbbeb3",
-        }}
-      />
-    </>
-  )}
-</div>
+            {/* Profile image */}
+            <div className="mb-4">
+              <label
+                className="btn"
+                htmlFor="pf-upload"
+                style={{ background: "#eae4de", color: "#3a0b0b", borderRadius: 8 }}
+              >
+                <i className="bi bi-camera-fill me-2" />{" "}
+                {form.image ? "Change Image" : "Upload Image"}
+              </label>
+              <input
+                id="pf-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleUpload}
+                style={{ display: "none" }}
+              />
+              {form.image && (
+                <img
+                  src={toImageURL(form.image)}
+                  alt="profile"
+                  className="mt-3 rounded-circle border"
+                  style={{ width: 100, height: 100, objectFit: "cover" }}
+                />
+              )}
+            </div>
 
-{/* Work Gallery */}
-<div className="mb-4">
-  
-  <label
-    htmlFor="galleryUpload"
-    className="btn d-inline-flex align-items-center gap-2"
-    style={{
-      backgroundColor: "#eae4de",
-      color: "#3a0b0b",
-      borderRadius: "8px",
-      padding: "8px 16px",
-      cursor: "pointer",
-      fontWeight: 500,
-    }}
-  >
-    <i className="bi bi-images"></i> {/* ← أيقونة معرض الصور */}
-    Add Images
-  </label>
-  <input
-    id="galleryUpload"
-    type="file"
-    multiple
-    accept="image/*"
-    onChange={(e) => handleImageUpload(e, "gallery")}
-    style={{ display: "none" }}
-  />
-
-  <div className="d-flex flex-wrap mt-3" style={{ gap: "10px" }}>
-    {formData.gallery.map((img, i) => (
-      <img
-        key={i}
-        src={img}
-        alt={`Gallery ${i}`}
-        style={{
-          width: "90px",
-          height: "90px",
-          borderRadius: "8px",
-          objectFit: "cover",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-        }}
-      />
-    ))}
-  </div>
-</div>
-
-
-            {/* Buttons */}
-            <div className="d-flex justify-content-end gap-3">
-              <button type="button" className="btn-outline" onClick={onClose}>
+            <div className="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={onClose}
+              >
                 Cancel
               </button>
-              <button type="submit" className="btn-main">
+              <button
+                type="submit"
+                className="btn"
+                style={{ background: "#3a0b0b", color: "#fff" }}
+              >
                 Save Changes
               </button>
             </div>
@@ -285,39 +275,247 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
   );
 }
 
-/* =======================
-   Main Profile Page
-   ======================= */
+/* ======================= Work Editor Modal ======================= */
+function WorkEditor({ show, onClose, artisan, setArtisan }) {
+  const token = localStorage.getItem("token");
+  const artisanId = localStorage.getItem("userId");
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (artisan) {
+      const imgs = Array.isArray(artisan.workImages) ? artisan.workImages : [];
+      const titles = Array.isArray(artisan.workTitles) ? artisan.workTitles : [];
+      const merged = imgs.map((u, i) => ({ url: u, title: titles[i] || "" }));
+      setItems(merged);
+    }
+  }, [artisan]);
+
+  if (!show) return null;
+
+  const uploadOne = async (file) => {
+    if (!token) {
+      await alertInfo("Please login again.");
+      return "";
+    }
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`${API}/uploads/image`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    });
+    if (!res.ok) throw new Error(await readErr(res));
+    const data = await res.json();
+    return data.url;
+  };
+
+  const addWork = async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    try {
+      const url = await uploadOne(f);
+      if (!url) return;
+      const title = ""; // ينعرض ويتحرر داخل الكارد
+      const res = await fetch(`${API}/artisans/${artisanId}/work`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ url, title }),
+      });
+      if (!res.ok) throw new Error(await readErr(res));
+      const data = await res.json();
+      setArtisan((prev) => ({
+        ...prev,
+        workImages: data.workImages || [],
+        workTitles: data.workTitles || [],
+      }));
+      await alertSuccess("Work added!");
+      onClose();
+    } catch (err) {
+      await alertError(err.message || "Network error");
+    }
+  };
+
+  const saveOne = async (index) => {
+    const item = items[index];
+    try {
+      const res = await fetch(`${API}/artisans/${artisanId}/work/${index}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ url: item.url, title: item.title || "" }),
+      });
+      if (!res.ok) throw new Error(await readErr(res));
+      const data = await res.json();
+      setArtisan((prev) => ({
+        ...prev,
+        workImages: data.workImages || [],
+        workTitles: data.workTitles || [],
+      }));
+      await alertSuccess("Work updated!");
+      onClose();
+    } catch (err) {
+      await alertError(err.message || "Network error");
+    }
+  };
+
+  const deleteOne = async (index) => {
+    const ok = await alertConfirm("Delete this work item?", {
+      title: "Confirm",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!ok) return;
+    try {
+      const res = await fetch(`${API}/artisans/${artisanId}/work/${index}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error(await readErr(res));
+      const data = await res.json();
+      setArtisan((prev) => ({
+        ...prev,
+        workImages: data.workImages || [],
+        workTitles: data.workTitles || [],
+      }));
+      await alertSuccess("Work deleted!");
+      onClose();
+    } catch (err) {
+      await alertError(err.message || "Network error");
+    }
+  };
+
+  return (
+    <div
+      className="modal show d-block"
+      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+    >
+      <div className="modal-dialog modal-dialog-centered modal-xl">
+        <div
+          className="modal-content border-0 shadow"
+          style={{ background: "#f5f5ee", borderRadius: 16 }}
+        >
+          <div className="d-flex justify-content-between align-items-center p-3">
+            <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
+              Manage “My Work”
+            </h5>
+            <button className="btn-close" onClick={onClose} />
+          </div>
+
+          <div className="px-3 pb-4">
+            <label
+              className="btn mb-3"
+              htmlFor="work-add"
+              style={{ background: "#eae4de", color: "#3a0b0b", borderRadius: 8 }}
+            >
+              <i className="bi bi-plus-circle me-2" /> Add Work
+            </label>
+            <input
+              id="work-add"
+              type="file"
+              accept="image/*"
+              onChange={addWork}
+              style={{ display: "none" }}
+            />
+
+            <div className="row g-4">
+              {items.map((it, i) => (
+                <div key={i} className="col-12 col-sm-6 col-md-4">
+                  <div className="border rounded-3 p-3" style={{ background: "#fff" }}>
+                    <img
+                      src={toImageURL(it.url)}
+                      alt={`work-${i}`}
+                      style={{
+                        width: "100%",
+                        height: 240,
+                        objectFit: "cover",
+                        borderRadius: 8,
+                      }}
+                    />
+                    <input
+                      className="form-control mt-2"
+                      placeholder="Title"
+                      value={it.title}
+                      onChange={(e) => {
+                        const copy = [...items];
+                        copy[i].title = e.target.value;
+                        setItems(copy);
+                      }}
+                    />
+                    <div className="d-flex justify-content-between mt-3">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={() => deleteOne(i)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="btn"
+                        style={{ background: "#3a0b0b", color: "#fff" }}
+                        onClick={() => saveOne(i)}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {items.length === 0 && (
+                <p className="text-muted text-center">
+                  No work yet — add your first piece.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ======================= Main Profile Page ======================= */
 export default function Profile() {
-  const [showEdit, setShowEdit] = useState(false);
   const [artisan, setArtisan] = useState(null);
-  const navigate = useNavigate();
+  const [showEdit, setShowEdit] = useState(false);
+  const [showWorkEditor, setShowWorkEditor] = useState(false);
+
   const token = localStorage.getItem("token");
   const artisanId = localStorage.getItem("userId");
 
   useEffect(() => {
-    const fetchArtisan = async () => {
-      const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (res.ok) setArtisan(await res.json());
+    const load = async () => {
+      try {
+        const res = await fetch(`${API}/artisans/${artisanId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.detail || "Load failed");
+        setArtisan(data);
+      } catch (err) {
+        await alertError(err.message || "Failed to fetch artisan profile.");
+      }
     };
-    if (artisanId) fetchArtisan();
+    if (artisanId && token) load();
   }, [artisanId, token]);
 
-  if (!artisan)
+  if (!artisan) {
     return (
       <div className="text-center py-5">
         <p>Loading profile...</p>
       </div>
     );
+  }
 
   return (
-    <div className="artisan-profile" style={{ backgroundColor: "#f5f5ee" }}>
+    <div className="artisan-profile">
       <Navbar />
 
-      {/* ===== Profile Info ===== */}
+      {/* Header */}
       <section className="container py-5 mt-5">
         <div className="row align-items-center justify-content-between">
           <div
@@ -325,166 +523,112 @@ export default function Profile() {
             style={{ gap: "1.5rem" }}
           >
             <img
-              src={artisan.images?.[0] || "/images/default_profile.png"}
+              src={
+                toImageURL(artisan.images?.[0] || artisan.image) ||
+                "/images/default_profile.png"
+              }
               alt="Profile"
               className="rounded-circle"
               style={{
-                width: "90px",
-                height: "90px",
+                width: 90,
+                height: 90,
                 objectFit: "cover",
                 border: "1px solid #d3d3d3",
                 backgroundColor: "#e7e7e7",
               }}
             />
-{/* ===== Profile Info (Name + Craft Type + Services + Bio) ===== */}
-<div>
-  {/* ===== Name + Craft Type ===== */}
-<div className="d-flex align-items-center flex-wrap gap-2 mb-3">
-  <h6
-    className="fw-bold mb-0 text-lowercase"
-    style={{
-      color: "#3a0b0b",
-      fontSize: "1.15rem",
-      letterSpacing: "0.3px",
-    }}
-  >
-    {artisan.name}
-  </h6>
-
-</div>
-
-
-  {/* Services Offered */}
-  <p className="mb-2">
-    {artisan.offersProduct && (
-      <span
-        className="badge small fw-normal me-2"
-        style={{
-          backgroundColor: "#e3e4e1",
-          color: "#3a0b0b",
-        }}
-      >
-        Products
-      </span>
-    )}
-
-    {artisan.offersWorkshop && (
-      <span
-        className="badge small fw-normal me-2"
-        style={{
-          backgroundColor: "#e3e4e1",
-          color: "#3a0b0b",
-        }}
-      >
-        Workshops
-      </span>
-    )}
-
-    {artisan.offersLiveShow && (
-      <span
-        className="badge small fw-normal me-2"
-        style={{
-          backgroundColor: "#e3e4e1",
-          color: "#3a0b0b",
-        }}
-      >
-        Live Show
-      </span>
-    )}
-  </p>
-
-  {/* Bio */}
-  <p
-    className="small mb-0"
-    style={{
-      color: "#6f4e37", // لون أدفأ وهادئ
-      lineHeight: "1.8",
-      maxWidth: "420px",
-      fontSize: "0.95rem",
-      marginTop: "8px", // تباعد بصري أنيق
-    }}
-  >
-    {artisan.bio && artisan.bio.trim() !== ""
-      ? artisan.bio
-      : "No bio yet — every craft tells a story waiting to be shared."}
-  </p>
-</div>
-
+            <div>
+              <h6
+                className="fw-bold mb-1"
+                style={{ color: "#3a0b0b", fontSize: "1.15rem" }}
+              >
+                {artisan.name}
+              </h6>
+              <small className="text-muted">{artisan.craftType || ""}</small>
+              <p
+                className="small mb-0 mt-2"
+                style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}
+              >
+                {artisan.bio?.trim()
+                  ? artisan.bio
+                  : "No bio yet — every craft tells a story waiting to be shared."}
+              </p>
+            </div>
           </div>
 
-          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-3 justify-content-md-end justify-content-center">
+          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center">
             <button
-              className="btn-outline"
-              onClick={() => navigate("/artisan/Requests_A")}
+              className="btn btn-outline-secondary"
+              onClick={() => setShowEdit(true)}
             >
-              View Requests
-            </button>
-            <button className="btn-outline" onClick={() => setShowEdit(true)}>
               Edit Account
+            </button>
+            <button
+              className="btn"
+              style={{ background: "#3a0b0b", color: "#fff" }}
+              onClick={() => setShowWorkEditor(true)}
+            >
+              + Add Work
             </button>
           </div>
         </div>
       </section>
 
-      {/* ===== Divider ===== */}
       <div
         className="container"
         style={{
           borderBottom: "1px solid #cbbeb3",
-          opacity: "0.5",
+          opacity: 0.5,
           marginBottom: "2rem",
         }}
-      ></div>
+      />
 
-      {/* ===== Work Gallery ===== */}
-      <section className="container py-5 text-center">
-        <h5
-          className="fw-bold mb-5"
-          style={{
-            color: "#3a0b0b",
-            fontSize: "1.25rem",
-            letterSpacing: "0.5px",
-          }}
-        >
+      {/* My Work */}
+      <section className="container pb-5">
+        <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
           My Work
-          <div
-            style={{
-              width: "50px",
-              height: "2px",
-              backgroundColor: "#cbbeb3",
-              margin: "10px auto 0",
-              opacity: "0.8",
-            }}
-          ></div>
+          <span
+            className="ms-2 text-muted fw-normal"
+            style={{ fontSize: 14 }}
+          >
+            ({artisan.workImages?.length || 0})
+          </span>
         </h5>
 
-        {artisan.images?.slice(1)?.length ? (
-          <div className="row justify-content-center" style={{ rowGap: "60px" }}>
-            {artisan.images.slice(1).map((img, i) => (
-              <div
-                key={i}
-                className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center"
-              >
-                <div
-                  className="overflow-hidden"
-                  style={{
-                    borderRadius: "10px",
-                    boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-                  }}
-                >
+        {artisan.workImages?.length ? (
+          <div className="row g-4">
+            {artisan.workImages.map((u, i) => (
+              <div key={i} className="col-12 col-sm-6 col-lg-4">
+                <div className="position-relative">
                   <img
-                    src={img}
-                    alt={`Work ${i + 1}`}
+                    src={toImageURL(u)}
+                    alt={`work-${i}`}
                     style={{
                       width: "100%",
-                      maxWidth: "340px",
-                      height: "420px",
+                      height: 420,
                       objectFit: "cover",
+                      borderRadius: 12,
                     }}
                   />
+                  <div className="position-absolute top-0 end-0 p-2 d-flex gap-2">
+                    <button
+                      className="btn btn-light btn-sm"
+                      title="Edit"
+                      onClick={() => setShowWorkEditor(true)}
+                    >
+                      <i className="bi bi-pencil" />
+                    </button>
+                    <button
+                      className="btn btn-light btn-sm"
+                      title="Delete"
+                      onClick={() => setShowWorkEditor(true)}
+                    >
+                      <i className="bi bi-trash" />
+                    </button>
+                  </div>
                 </div>
-                <h6 className="fw-semibold mt-3 mb-1" style={{ color: "#3a0b0b" }}>
-                  Artwork {i + 1}
+                <h6 className="fw-semibold mt-2" style={{ color: "#3a0b0b" }}>
+                  {artisan.workTitles?.[i] || `Artwork ${i + 1}`}
                 </h6>
               </div>
             ))}
@@ -496,10 +640,15 @@ export default function Profile() {
 
       <Footer />
 
-      {/* ===== Edit Modal ===== */}
       <EditAccountModal
         show={showEdit}
         onClose={() => setShowEdit(false)}
+        artisan={artisan}
+        setArtisan={setArtisan}
+      />
+      <WorkEditor
+        show={showWorkEditor}
+        onClose={() => setShowWorkEditor(false)}
         artisan={artisan}
         setArtisan={setArtisan}
       />

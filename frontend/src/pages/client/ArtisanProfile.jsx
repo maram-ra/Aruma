@@ -1,30 +1,68 @@
+// src/pages/client/ArtisanProfile.jsx
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import WorkGallery from "../../components/WorkGallery";
-import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import { alertError, alertSuccess, alertInfo } from "../../components/ArumaAlert";
 
-function RequestModal({ show, onClose, artisan }) {
-  const [formData, setFormData] = useState({
-    type: "",
-    message: "",
-  });
+const API = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
-  const token = localStorage.getItem("token");
+/* -------- Origin (for serving internal/static images) -------- */
+const ORIGIN = (() => {
+  try {
+    const u = new URL(API, window.location.origin);
+    return u.toString().replace(/\/api\/v1\/?$/, "").replace(/\/+$/, "");
+  } catch {
+    return "http://127.0.0.1:8000";
+  }
+})();
+const toImageURL = (path) => {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${ORIGIN}${p}`;
+};
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+/* ======================= Send Request Modal ======================= */
+function SendRequestModal({ show, onClose, artisan }) {
+  const [requestType, setRequestType] = useState("custom");
+  const [message, setMessage] = useState("");
+  const [budget, setBudget] = useState("");
+  const [deadline, setDeadline] = useState("");
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    if (show) {
+      setRequestType("custom");
+      setMessage("");
+      setBudget("");
+      setDeadline("");
+    }
+  }, [show]);
+
+  if (!show) return null;
+
+  const submit = async (e) => {
     e.preventDefault();
-    if (!formData.type) {
-      alert("Please select a service type");
+
+    const token = localStorage.getItem("token");
+    const rawType =
+      (localStorage.getItem("userType") ||
+        localStorage.getItem("role") ||
+        localStorage.getItem("accountType") ||
+        ""
+      ).toLowerCase();
+
+    // احتياط: اعتبره client لو داخل من مسار /client
+    const isClient = rawType === "client" || window.location.pathname.startsWith("/client");
+
+    if (!token || !isClient) {
+      await alertInfo("Please login as a client to send a request.");
       return;
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/requests", {
+      const res = await fetch(`${API}/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,94 +70,98 @@ function RequestModal({ show, onClose, artisan }) {
         },
         body: JSON.stringify({
           artisanId: artisan._id,
-          requestType: formData.type,
-          message: formData.message,
+          requestType,
+          description: message,
+          offerBudget: budget ? Number(budget) : null,
+          offerDeadline: deadline || null,
         }),
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.detail || "Failed to send request");
 
-      const data = await response.json();
-      if (response.ok) {
-        alert(`Request sent successfully to ${artisan.name}!`);
-        onClose();
-        setFormData({ type: "", message: "" });
-      } else {
-        alert(data.detail || "Failed to send request");
-      }
-    } catch (error) {
-      console.error("Error sending request:", error);
-      alert("Network error");
+      await alertSuccess("Your request was sent!");
+      onClose();
+    } catch (err) {
+      await alertError(err.message || "Network error");
     }
   };
-
-  if (!show) return null;
 
   return (
     <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered">
-        <div
-          className="modal-content border-0 shadow"
-          style={{ backgroundColor: "#f5f5ee", borderRadius: "16px", padding: "2rem 1.5rem" }}
-        >
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h5 className="fw-bold m-0" style={{ color: "#3a0b0b", fontSize: "1.4rem" }}>
-              Send Request
+        <div className="modal-content border-0 shadow" style={{ background: "#f5f5ee", borderRadius: 16 }}>
+          <div className="d-flex justify-content-between align-items-center p-3">
+            <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
+              Send Request to {artisan?.name}
             </h5>
-            <button type="button" className="btn-close" onClick={onClose}></button>
+            <button className="btn-close" onClick={onClose} />
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+          <form onSubmit={submit} className="px-3 pb-4">
+            <div className="mb-3">
               <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                Type of Service <span className="text-danger">*</span>
+                Request Type
               </label>
               <select
-                name="type"
                 className="form-select"
-                value={formData.type}
-                onChange={handleChange}
-                required
-                style={{
-                  borderRadius: "8px",
-                  borderColor: "#cbbeb3",
-                  color: "#3a0b0b",
-                }}
+                value={requestType}
+                onChange={(e) => setRequestType(e.target.value)}
               >
-                <option value="" disabled>
-                  Choose service type
-                </option>
-                <option value="workshop">Workshop</option>
+                <option value="custom">Custom</option>
                 <option value="product">Product</option>
+                <option value="workshop">Workshop</option>
                 <option value="live_show">Live Show</option>
               </select>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                Message <span className="text-danger">*</span>
+                Message
               </label>
               <textarea
-                name="message"
                 className="form-control"
-                placeholder="Describe your request..."
-                rows="4"
-                value={formData.message}
-                onChange={handleChange}
+                rows={4}
+                placeholder="Describe what you need…"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 required
-                style={{
-                  borderRadius: "8px",
-                  borderColor: "#cbbeb3",
-                  backgroundColor: "#fff",
-                  color: "#3a0b0b",
-                }}
-              ></textarea>
+              />
             </div>
 
-            <div className="d-flex justify-content-end gap-3 pt-3">
-              <button type="button" className="btn-outline btn-small" onClick={onClose}>
+            <div className="row g-3 mb-4">
+              <div className="col-md-6">
+                <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+                  Budget (optional)
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  min="0"
+                  step="1"
+                  value={budget}
+                  onChange={(e) => setBudget(e.target.value)}
+                  placeholder="e.g. 300"
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
+                  Deadline (optional)
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-end gap-2">
+              <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                 Cancel
               </button>
-              <button type="submit" className="btn-main btn-small">
-                Send
+              <button type="submit" className="btn" style={{ background: "#3a0b0b", color: "#fff" }}>
+                Send Request
               </button>
             </div>
           </form>
@@ -129,169 +171,143 @@ function RequestModal({ show, onClose, artisan }) {
   );
 }
 
+/* ======================= Main Client View ======================= */
 export default function ArtisanProfile() {
   const [searchParams] = useSearchParams();
   const [artisan, setArtisan] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const token = localStorage.getItem("token");
+  const [showSend, setShowSend] = useState(false);
+
   const artisanId = searchParams.get("id");
-  
+  const token = localStorage.getItem("token");
+
+  // استنتاج نوع المستخدم من أكثر من مفتاح + مسار الصفحة
+  const rawUserType =
+    (localStorage.getItem("userType") ||
+      localStorage.getItem("role") ||
+      localStorage.getItem("accountType") ||
+      ""
+    ).toLowerCase();
+
+  const isClient = rawUserType === "client" || window.location.pathname.startsWith("/client");
 
   useEffect(() => {
-  const fetchArtisan = async () => {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/artisans/${artisanId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        console.error("Failed to load artisan");
-        return;
+    const load = async () => {
+      try {
+        const res = await fetch(`${API}/artisans/${artisanId}`, {
+          headers: { Authorization: token ? `Bearer ${token}` : undefined },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.detail || "Failed to load artisan");
+        setArtisan(data);
+      } catch (err) {
+        await alertError(err.message || "Network error");
       }
-
-      const data = await response.json();
-      setArtisan(data);
-    } catch (error) {
-      console.error("Error fetching artisan:", error);
-    }
-  };
-
-  if (artisanId) fetchArtisan();
-}, [artisanId, token]);
+    };
+    if (artisanId) load();
+  }, [artisanId, token]);
 
   if (!artisan) {
     return (
       <div className="text-center py-5">
-        <p>Loading artisan details...</p>
+        <p>Loading profile…</p>
       </div>
     );
   }
 
   return (
-    <div className="artisan-profile" style={{ backgroundColor: "#f5f5ee" }}>
+    <div className="artisan-profile">
       <Navbar />
 
+      {/* Header */}
       <section className="container py-5 mt-5">
         <div className="row align-items-center justify-content-between">
           <div
             className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center"
             style={{ gap: "1.5rem" }}
           >
-            <div
-              className="rounded-circle flex-shrink-0"
+            <img
+              src={toImageURL(artisan.images?.[0] || artisan.image) || "/images/default_profile.png"}
+              alt="Profile"
+              className="rounded-circle"
               style={{
-                width: "90px",
-                height: "90px",
+                width: 90,
+                height: 90,
+                objectFit: "cover",
                 border: "1px solid #d3d3d3",
                 backgroundColor: "#e7e7e7",
               }}
-            ></div>
-
+            />
             <div>
-              <h6 className="fw-bold mb-2 text-lowercase" style={{ color: "#3a0b0b" }}>
+              <h6 className="fw-bold mb-1" style={{ color: "#3a0b0b", fontSize: "1.15rem" }}>
                 {artisan.name}
               </h6>
-
-              <p className="mb-2">
-                {artisan.offersWorkshop && (
-                  <span className="badge small me-2" style={{ backgroundColor: "#e3e4e1" }}>
-                    Workshops
-                  </span>
-                )}
-                {artisan.offersLiveShow && (
-                  <span className="badge small me-2" style={{ backgroundColor: "#e3e4e1" }}>
-                    Live Show
-                  </span>
-                )}
-                <span className="badge small" style={{ backgroundColor: "#e3e4e1" }}>
-                  {artisan.craftType || "Craft"}
-                </span>
-              </p>
-
-              <p className="small mb-0" style={{ color: "#5c4b45", lineHeight: "1.8" }}>
-                {artisan.bio || "This artisan hasn’t added a bio yet."}
+              <small className="text-muted">{artisan.craftType || ""}</small>
+              <p
+                className="small mb-0 mt-2"
+                style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}
+              >
+                {artisan.bio?.trim()
+                  ? artisan.bio
+                  : "No bio yet — every craft tells a story waiting to be shared."}
               </p>
             </div>
           </div>
 
-          <div className="col-md-4 mt-4 mt-md-0 d-flex justify-content-md-end justify-content-center">
-            <button className="btn-outline" onClick={() => setShowModal(true)}>
-              Send Request
-            </button>
+          {/* زر Send Request يظهر للعميل دائماً */}
+          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center">
+            {isClient && (
+              <button
+                className="btn"
+                style={{ background: "#3a0b0b", color: "#fff" }}
+                onClick={() => setShowSend(true)}
+              >
+                Send Request
+              </button>
+            )}
           </div>
         </div>
       </section>
 
-      <div className="container" style={{ borderBottom: "1px solid #cbbeb3", opacity: "0.5", marginBottom: "2rem" }}></div>
+      <div
+        className="container"
+        style={{ borderBottom: "1px solid #cbbeb3", opacity: 0.5, marginBottom: "2rem" }}
+      />
 
-     {/* ===== Work Gallery (Dynamic) ===== */}
-<section className="container py-5 text-center">
-  <h5
-    className="fw-bold mb-5"
-    style={{
-      color: "#3a0b0b",
-      fontSize: "1.25rem",
-      letterSpacing: "0.5px",
-    }}
-  >
-    My Work
-    <div
-      style={{
-        width: "50px",
-        height: "2px",
-        backgroundColor: "#cbbeb3",
-        margin: "10px auto 0",
-        opacity: "0.8",
-      }}
-    ></div>
-  </h5>
+      {/* My Work */}
+      <section className="container pb-5">
+        <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
+          My Work
+          <span className="ms-2 text-muted fw-normal" style={{ fontSize: 14 }}>
+            ({artisan.workImages?.length || 0})
+          </span>
+        </h5>
 
-  {artisan.images && artisan.images.length > 1 ? (
-    <div className="row justify-content-center" style={{ rowGap: "60px" }}>
-      {artisan.images.slice(1).map((img, i) => (
-        <div
-          key={i}
-          className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center"
-        >
-          <div
-            className="overflow-hidden"
-            style={{
-              borderRadius: "10px",
-              boxShadow: "0 3px 10px rgba(0,0,0,0.08)",
-            }}
-          >
-            <img
-              src={img}
-              alt={`Artwork ${i + 1}`}
-              style={{
-                width: "100%",
-                maxWidth: "340px",
-                height: "420px",
-                objectFit: "cover",
-              }}
-            />
+        {artisan.workImages?.length ? (
+          <div className="row g-4">
+            {artisan.workImages.map((u, i) => (
+              <div key={i} className="col-12 col-sm-6 col-lg-4">
+                <div className="position-relative">
+                  <img
+                    src={toImageURL(u)}
+                    alt={`work-${i}`}
+                    style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12 }}
+                  />
+                </div>
+                <h6 className="fw-semibold mt-3 mb-0" style={{ color: "#3a0b0b" }}>
+                  {artisan.workTitles?.[i] || `Artwork ${i + 1}`}
+                </h6>
+              </div>
+            ))}
           </div>
-          <h6 className="fw-semibold mt-3 mb-1" style={{ color: "#3a0b0b" }}>
-            {artisan.galleryTitles?.[i] || `Artwork ${i + 1}`}
-          </h6>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-muted">No work uploaded yet.</p>
-  )}
-</section>
-
+        ) : (
+          <p className="text-muted">No work images uploaded yet.</p>
+        )}
+      </section>
 
       <Footer />
 
-      <RequestModal show={showModal} onClose={() => setShowModal(false)} artisan={artisan} />
+      {/* Modal */}
+      <SendRequestModal show={showSend} onClose={() => setShowSend(false)} artisan={artisan} />
     </div>
   );
 }

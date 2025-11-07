@@ -1,32 +1,34 @@
-
-from datetime import datetime, timedelta
-from typing import Optional, Tuple
-import jwt
+# core/security.py
+from datetime import datetime, timedelta, timezone
+from jose import jwt, JWTError
 from passlib.context import CryptContext
-from .config import get_settings
+from typing import Optional
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# ندعم التحقق من bcrypt لو فيه كلمات مرور قديمة,
+# بس الافتراضي للحفظ جديدًا: pbkdf2_sha256 (مستقر، بدون مشاكل على ويندوز)
+pwd_context = CryptContext(
+    schemes=["pbkdf2_sha256", "bcrypt"],
+    deprecated="auto",
+)
 
-def hash_password(password: str) -> str:
+JWT_SECRET = "change-me-in-env"  # ضعيه من .env بالانتاج
+JWT_ALG = "HS256"
+JWT_EXPIRE_MIN = 60 * 24 * 7  # أسبوع
+
+def hash_pwd(password: str) -> str:
     return pwd_context.hash(password)
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
+def verify_pwd(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    settings = get_settings()
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-    return encoded_jwt
+def create_access_token(sub: str, user_type: str, expires_minutes: int = JWT_EXPIRE_MIN) -> str:
+    now = datetime.now(timezone.utc)
+    exp = now + timedelta(minutes=expires_minutes)
+    to_encode = {"sub": sub, "user_type": user_type, "iat": int(now.timestamp()), "exp": int(exp.timestamp())}
+    return jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALG)
 
-def decode_token(token: str) -> Tuple[bool, Optional[dict]]:
-    settings = get_settings()
+def decode_token(token: str) -> Optional[dict]:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        return True, payload
-    except jwt.ExpiredSignatureError:
-        return False, {"detail": "Token has expired"}
-    except jwt.PyJWTError:
-        return False, {"detail": "Could not validate token"}
+        return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])
+    except JWTError:
+        return None
