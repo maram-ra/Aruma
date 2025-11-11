@@ -384,36 +384,42 @@ def get_requests_by_artisan(artisan_id: str) -> List[Dict[str, Any]]:
 # ======= قوائم منضمة للاستخدام في الواجهات =======
 def get_requests_by_client_with_artisan_name(client_id: str) -> List[Dict[str, Any]]:
     """
-    ترجع معلومات الطلبات مع اسم الحرفي + عقد (إن وجد) + عرض (إن وجد)
-    حقول إضافية:
-      artisan_name, artisan_phone,
-      contract_id, contract_cost, contract_date,
-      offer_budget, offer_deadline
+    تُرجع جميع طلبات العميل مع اسم الحرفي وبيانات العرض/العقد،
+    والأهم: تُرجع حقل الوصف (description) كرسالة العميل.
     """
     con = _connect()
     try:
         with con.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
             cur.execute(
                 """
-                SELECT r.*,
-                       a.name  AS artisan_name,
-                       a.phone AS artisan_phone,
-                       c.id    AS contract_id,
-                       c.cost  AS contract_cost,
-                       c.date  AS contract_date
-                  FROM requests r
-             LEFT JOIN artisans a ON a.id = r.artisan_id
-             LEFT JOIN contracts c ON c.request_id = r.id
-                 WHERE r.client_id = %s
-              ORDER BY r.created_at DESC, r.id DESC;
+                SELECT
+                    r.id,
+                    r.client_id,
+                    r.artisan_id,
+                    r.request_type,
+                    r.description AS description,        -- << هنا الرسالة
+                    r.status_client,
+                    r.status_artisan,
+                    r.offer_budget,
+                    r.offer_deadline,
+                    r.contract_id,
+                    c.cost  AS contract_cost,
+                    c.date  AS contract_date,
+                    a.name  AS artisan_name,
+                    a.phone AS artisan_phone,
+                    r.created_at
+                FROM requests r
+                LEFT JOIN artisans a ON a.id = r.artisan_id
+                LEFT JOIN contracts c ON c.id = r.contract_id
+                WHERE r.client_id = %s
+                ORDER BY r.created_at DESC;
                 """,
                 (client_id,),
             )
             rows = cur.fetchall()
-            return _rows_to_list(rows)
+            return [dict(r) for r in rows]
     finally:
         con.close()
-
 
 def get_requests_by_artisan_with_client_name(artisan_id: str) -> List[Dict[str, Any]]:
     con = _connect()

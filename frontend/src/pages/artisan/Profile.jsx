@@ -1,3 +1,4 @@
+// src/pages/artisan/Profile.jsx
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
@@ -142,10 +143,7 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
   };
 
   return (
-    <div
-      className="modal show d-block"
-      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-    >
+    <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div
           className="modal-content border-0 shadow"
@@ -160,10 +158,7 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
 
           <form onSubmit={submit} className="px-3 pb-4">
             <div className="mb-3">
-              <label
-                className="form-label fw-semibold small"
-                style={{ color: "#3a0b0b" }}
-              >
+              <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Craft Type
               </label>
               <input
@@ -176,10 +171,7 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
             </div>
 
             <div className="mb-3">
-              <label
-                className="form-label fw-semibold small"
-                style={{ color: "#3a0b0b" }}
-              >
+              <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
                 Bio
               </label>
               <textarea
@@ -390,10 +382,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
   };
 
   return (
-    <div
-      className="modal show d-block"
-      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-    >
+    <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered modal-xl">
         <div
           className="modal-content border-0 shadow"
@@ -478,6 +467,43 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
   );
 }
 
+/* ---------- شارات الخدمات (مثل الكلاينت) ---------- */
+function ServicesOffered({ artisan }) {
+  const pills = [];
+  if (artisan.offersProduct) {
+    pills.push({ icon: "bag", text: "Products" });
+  }
+  if (artisan.offersWorkshop) {
+    pills.push({ icon: "easel", text: "Workshops" });
+  }
+  if (artisan.offersLiveShow) {
+    pills.push({ icon: "broadcast-pin", text: "Live Show" });
+  }
+
+  if (pills.length === 0) return null;
+
+  return (
+    <div className="d-flex flex-wrap gap-2 mt-2">
+      {pills.map((p, i) => (
+        <span
+          key={i}
+          className="badge d-inline-flex align-items-center"
+          style={{
+            background: "#eae4de",
+            color: "#3a0b0b",
+            padding: "0.5rem 0.75rem",
+            borderRadius: "999px",
+            fontWeight: 600,
+          }}
+        >
+          <i className={`bi bi-${p.icon} me-1`} />
+          {p.text}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /* ======================= Main Profile Page ======================= */
 export default function Profile() {
   const [artisan, setArtisan] = useState(null);
@@ -553,6 +579,9 @@ export default function Profile() {
                   ? artisan.bio
                   : "No bio yet — every craft tells a story waiting to be shared."}
               </p>
+
+              {/* ✅ الخدمات التي أقدمها */}
+              <ServicesOffered artisan={artisan} />
             </div>
           </div>
 
@@ -587,10 +616,7 @@ export default function Profile() {
       <section className="container pb-5">
         <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
           My Work
-          <span
-            className="ms-2 text-muted fw-normal"
-            style={{ fontSize: 14 }}
-          >
+          <span className="ms-2 text-muted fw-normal" style={{ fontSize: 14 }}>
             ({artisan.workImages?.length || 0})
           </span>
         </h5>

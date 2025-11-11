@@ -14,6 +14,18 @@ import {
 const API =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
+/* -------- Helpers -------- */
+function formatDateTime(input) {
+  if (!input) return "—";
+  const d = new Date(input);
+  if (Number.isNaN(d.getTime())) return input; // لو كان نص عادي رجّعه كما هو
+  // تاريخ محلي + وقت (ساعتين/دقيقة)
+  return `${d.toLocaleDateString()} ${d.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
+}
+
 export default function Requests_A() {
   const [requests, setRequests] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -44,12 +56,12 @@ export default function Requests_A() {
         // ندعم الشكلين: مصفوفة مباشرة أو كائن فيه {requests: [...]}
         const raw = Array.isArray(payload) ? payload : payload.requests || [];
 
-        // نطبّع الحقول عشان نتعامل مع تسميات قديمة/جديدة
+        // نطبّع الحقول عشان نتعامل مع تسميات قديمة/جديدة + تأكيد الرسالة
         const list = raw.map((r) => ({
           id: r.id ?? r._id ?? r.requestId,
           type: r.type ?? r.requestType ?? r.request_type ?? "request",
-          message: r.message ?? r.description ?? "",
-          // الحرفي لازم يشوف حالة الحرفي
+          message:
+            (r.message ?? r.description ?? r.request_desc ?? "").toString(),
           status:
             r.status ??
             r.status_artisan ??
@@ -84,14 +96,19 @@ export default function Requests_A() {
     let body = {};
 
     if (modalType === "accept") {
-      if (!formData.budget || !formData.deadline) {
+      if (formData.budget === "" || formData.deadline === "") {
         await alertInfo("Please fill in both budget and deadline.");
+        return;
+      }
+      const b = Number(formData.budget);
+      if (!Number.isFinite(b) || b < 0) {
+        await alertInfo("Budget must be a non-negative number.");
         return;
       }
       // المسار الجديد لعرض الحرفي
       url += "/artisan/offer";
       body = {
-        budget: Number(formData.budget),
+        budget: b,
         deadline: formData.deadline, // YYYY-MM-DD
       };
     } else if (modalType === "reject") {
@@ -284,14 +301,18 @@ export default function Requests_A() {
                         Client: {req.clientName || "Unknown"}
                       </small>
                     </div>
-                    <small className="text-muted">{req.createdAt || "—"}</small>
+                    <small className="text-muted">
+                      {formatDateTime(req.createdAt)}
+                    </small>
                   </div>
 
                   <p
                     className="small text-start"
                     style={{ color: "#5c4b45", lineHeight: "1.6" }}
                   >
-                    {req.message}
+                    {req.message?.trim()
+                      ? req.message
+                      : <em className="text-muted">No message provided.</em>}
                   </p>
 
                   <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -423,6 +444,8 @@ export default function Requests_A() {
                   <input
                     type="number"
                     className="form-control"
+                    min="0"
+                    step="1"
                     value={formData.budget}
                     onChange={(e) =>
                       setFormData({ ...formData, budget: e.target.value })

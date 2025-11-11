@@ -1,5 +1,5 @@
 // src/pages/client/ArtisanProfile.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
@@ -26,25 +26,41 @@ const toImageURL = (path) => {
 
 /* ======================= Send Request Modal ======================= */
 function SendRequestModal({ show, onClose, artisan }) {
-  const [requestType, setRequestType] = useState("custom");
+  // ✅ بدون Custom
+  const requestTypeOptions = useMemo(() => {
+    const opts = [];
+    if (artisan?.offersProduct)  opts.push({ value: "product", label: "Product" });
+    if (artisan?.offersWorkshop) opts.push({ value: "workshop", label: "Workshop" });
+    if (artisan?.offersLiveShow) opts.push({ value: "live_show", label: "Live Show" });
+    // fallback لو الحرفي ما حدّد خدماته
+    if (opts.length === 0) {
+      opts.push(
+        { value: "product", label: "Product" },
+        { value: "workshop", label: "Workshop" },
+        { value: "live_show", label: "Live Show" }
+      );
+    }
+    return opts;
+  }, [artisan]);
+
+  const [requestType, setRequestType] = useState("product"); // الافتراضي
   const [message, setMessage] = useState("");
   const [budget, setBudget] = useState("");
   const [deadline, setDeadline] = useState("");
 
   useEffect(() => {
     if (show) {
-      setRequestType("custom");
+      setRequestType(requestTypeOptions[0]?.value || "product");
       setMessage("");
       setBudget("");
       setDeadline("");
     }
-  }, [show]);
+  }, [show, requestTypeOptions]);
 
   if (!show) return null;
 
   const submit = async (e) => {
     e.preventDefault();
-
     const token = localStorage.getItem("token");
     const rawType =
       (localStorage.getItem("userType") ||
@@ -53,7 +69,6 @@ function SendRequestModal({ show, onClose, artisan }) {
         ""
       ).toLowerCase();
 
-    // احتياط: اعتبره client لو داخل من مسار /client
     const isClient = rawType === "client" || window.location.pathname.startsWith("/client");
 
     if (!token || !isClient) {
@@ -70,8 +85,8 @@ function SendRequestModal({ show, onClose, artisan }) {
         },
         body: JSON.stringify({
           artisanId: artisan._id,
-          requestType,
-          description: message,
+          requestType,         // فقط: product | workshop | live_show
+          message,
           offerBudget: budget ? Number(budget) : null,
           offerDeadline: deadline || null,
         }),
@@ -107,10 +122,11 @@ function SendRequestModal({ show, onClose, artisan }) {
                 value={requestType}
                 onChange={(e) => setRequestType(e.target.value)}
               >
-                <option value="custom">Custom</option>
-                <option value="product">Product</option>
-                <option value="workshop">Workshop</option>
-                <option value="live_show">Live Show</option>
+                {requestTypeOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -139,7 +155,10 @@ function SendRequestModal({ show, onClose, artisan }) {
                   min="0"
                   step="1"
                   value={budget}
-                  onChange={(e) => setBudget(e.target.value)}
+                  onChange={(e) => {
+                    const val = Number(e.target.value);
+                    if (val >= 0 || e.target.value === "") setBudget(e.target.value);
+                  }}
                   placeholder="e.g. 300"
                 />
               </div>
@@ -180,7 +199,6 @@ export default function ArtisanProfile() {
   const artisanId = searchParams.get("id");
   const token = localStorage.getItem("token");
 
-  // استنتاج نوع المستخدم من أكثر من مفتاح + مسار الصفحة
   const rawUserType =
     (localStorage.getItem("userType") ||
       localStorage.getItem("role") ||
@@ -218,7 +236,6 @@ export default function ArtisanProfile() {
     <div className="artisan-profile">
       <Navbar />
 
-      {/* Header */}
       <section className="container py-5 mt-5">
         <div className="row align-items-center justify-content-between">
           <div
@@ -242,18 +259,37 @@ export default function ArtisanProfile() {
                 {artisan.name}
               </h6>
               <small className="text-muted">{artisan.craftType || ""}</small>
-              <p
-                className="small mb-0 mt-2"
-                style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}
-              >
+              <p className="small mb-0 mt-2" style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}>
                 {artisan.bio?.trim()
                   ? artisan.bio
                   : "No bio yet — every craft tells a story waiting to be shared."}
               </p>
+
+              <div className="d-flex flex-wrap gap-2 mt-2">
+                {artisan.craftType && (
+                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
+                    {artisan.craftType}
+                  </span>
+                )}
+                {artisan.offersProduct && (
+                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
+                    Products
+                  </span>
+                )}
+                {artisan.offersWorkshop && (
+                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
+                    Workshops
+                  </span>
+                )}
+                {artisan.offersLiveShow && (
+                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
+                    Live Show
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* زر Send Request يظهر للعميل دائماً */}
           <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center">
             {isClient && (
               <button
@@ -273,7 +309,6 @@ export default function ArtisanProfile() {
         style={{ borderBottom: "1px solid #cbbeb3", opacity: 0.5, marginBottom: "2rem" }}
       />
 
-      {/* My Work */}
       <section className="container pb-5">
         <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
           My Work
@@ -305,8 +340,6 @@ export default function ArtisanProfile() {
       </section>
 
       <Footer />
-
-      {/* Modal */}
       <SendRequestModal show={showSend} onClose={() => setShowSend(false)} artisan={artisan} />
     </div>
   );

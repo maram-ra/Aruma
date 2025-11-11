@@ -14,6 +14,17 @@ import {
 const API =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
+// دالة لتنسيق التاريخ والوقت
+function formatDateTime(input) {
+  if (!input) return "—";
+  const d = new Date(input);
+  if (Number.isNaN(d.getTime())) return input;
+  return `${d.toLocaleDateString()} ${d.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
+}
+
 export default function Requests_C() {
   const [requests, setRequests] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -32,8 +43,34 @@ export default function Requests_C() {
         if (!res.ok) throw new Error("Failed to fetch requests");
         const data = await res.json();
 
-        // الـ endpoint يرجّع {requests: [...]}
-        const list = Array.isArray(data) ? data : data.requests || [];
+        const raw = Array.isArray(data) ? data : data.requests || [];
+
+        // ✅ استخراج الرسالة من جميع الأسماء المحتملة
+        const list = raw.map((r) => ({
+          id: r._id ?? r.id ?? r.requestId,
+          requestType: r.requestType ?? r.type ?? r.request_type ?? "request",
+          message:
+            r.message ??
+            r.description ??
+            r.request_desc ??
+            r.req_message ??
+            r.note ??
+            "",
+          status:
+            r.status ??
+            r.status_client ??
+            r.statusClient ??
+            r.status_artisan ??
+            "pending",
+          artisanName: r.artisanName ?? r.artisan_name ?? r.artisan ?? "Unknown",
+          createdAt: r.createdAt ?? r.created_at ?? r.date ?? "",
+          offerBudget: r.offerBudget ?? r.offer_budget ?? null,
+          offerDeadline: r.offerDeadline ?? r.offer_deadline ?? null,
+          contractId: r.contractId ?? r.contract_id ?? null,
+          contractCost: r.contractCost ?? r.contract_cost ?? null,
+          contractDate: r.contractDate ?? r.contract_date ?? null,
+        }));
+
         setRequests(list);
       } catch (err) {
         console.error("Error fetching client requests:", err);
@@ -68,10 +105,9 @@ export default function Requests_C() {
 
       await alertSuccess("Offer confirmed! Contract created.");
 
-      // عدّلي الحالة محليًا
       setRequests((prev) =>
         prev.map((r) =>
-          r._id === requestId
+          r.id === requestId
             ? {
                 ...r,
                 status: "inprogress",
@@ -113,13 +149,8 @@ export default function Requests_C() {
 
       await alertSuccess("Offer rejected.");
 
-      // حدّثي الحالة محليًا
       setRequests((prev) =>
-        prev.map((r) =>
-          r._id === requestId
-            ? { ...r, status: "rejected" }
-            : r
-        )
+        prev.map((r) => (r.id === requestId ? { ...r, status: "rejected" } : r))
       );
     } catch (e) {
       await alertError(e.message || "Network error");
@@ -149,12 +180,16 @@ export default function Requests_C() {
   const filteredRequests =
     filter === "all"
       ? requests
-      : requests.filter((r) => (r.status || "").toLowerCase() === filter);
+      : requests.filter(
+          (r) => (r.status || "").toLowerCase() === filter
+        );
 
   const getCount = (state) =>
     state === "all"
       ? requests.length
-      : requests.filter((r) => (r.status || "").toLowerCase() === state).length;
+      : requests.filter(
+          (r) => (r.status || "").toLowerCase() === state
+        ).length;
 
   return (
     <div className="requests-page">
@@ -233,13 +268,12 @@ export default function Requests_C() {
         ) : (
           <div className="row justify-content-center">
             {filteredRequests.map((req) => {
-              // اعرض العرض إن وُجد حتى قبل العقد
               const price = req.contractCost ?? req.offerBudget;
               const date = req.contractDate ?? req.offerDeadline;
 
               return (
                 <div
-                  key={req._id}
+                  key={req.id}
                   className="col-12 col-sm-10 col-md-8 mb-4 d-flex justify-content-center"
                 >
                   <div
@@ -258,14 +292,18 @@ export default function Requests_C() {
                           Artisan: {req.artisanName || "Unknown"}
                         </small>
                       </div>
-                      <small className="text-muted">{req.createdAt || "—"}</small>
+                      <small className="text-muted">
+                        {formatDateTime(req.createdAt)}
+                      </small>
                     </div>
 
                     <p
                       className="small text-start"
                       style={{ color: "#5c4b45", lineHeight: "1.6" }}
                     >
-                      {req.message}
+                      {req.message?.trim()
+                        ? req.message
+                        : <em className="text-muted">No message provided.</em>}
                     </p>
 
                     {price != null && (
@@ -291,13 +329,12 @@ export default function Requests_C() {
                         {(req.status || "").toUpperCase()}
                       </span>
 
-                      {/* أزرار العميل عند استلام عرض من الحرفي */}
                       {(req.status || "").toLowerCase() === "accepted" &&
                         (req.offerBudget != null || req.offerDeadline) && (
                           <div className="d-flex gap-2">
                             <button
                               className="btn"
-                              onClick={() => handleConfirmOffer(req._id)}
+                              onClick={() => handleConfirmOffer(req.id)}
                               style={{
                                 border: "1px solid #3a0b0b",
                                 color: "#3a0b0b",
@@ -310,7 +347,7 @@ export default function Requests_C() {
                             </button>
                             <button
                               className="btn"
-                              onClick={() => handleRejectOffer(req._id)}
+                              onClick={() => handleRejectOffer(req.id)}
                               style={{
                                 border: "1px solid #a13a3a",
                                 color: "#a13a3a",
