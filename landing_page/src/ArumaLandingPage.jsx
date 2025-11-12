@@ -5,9 +5,9 @@ const PROJECT = {
   name: "Aruma",
   tagline:
     "The main goal of the platform is to empower artisans to showcase their products and services, reach more clients, and strengthen their market presence through a comprehensive digital space.",
-  logo: "/ArumaLogo.png",     // must exist in landing_page/public
-  coverImage: "/cover.jpg",  // must exist in landing_page/public
-  deployedUrl: "https://example.com", // TODO
+  logo: "/ArumaLogo.png",     
+  coverImage: "/cover.jpg",
+  deployedUrl: "https://aruma-seven.vercel.app/",
   repoUrl: "https://github.com/maram-ra/Aruma",
   holbertonUrl: "https://www.holbertonschool.com/",
   TuwaiqUrl: "https://tuwaiq.edu.sa/",
@@ -77,29 +77,29 @@ const TEAM = [
     name: "Maram Alsofyani",
     role: "Frontend Developer & UI/UX Designer",
     links: { 
-      linkedin: "#", 
+      linkedin: "https://www.linkedin.com/in/maram-alsufyani-b2a761259?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
       github: "https://github.com/maram-ra" },
   },
   {
     name: "Shurooq Alabbadi",
     role: "Frontend Developer & QA Engineer",
     links: { 
-      linkedin: "#", 
+      linkedin: "https://www.linkedin.com/in/shurooq-alabbadi-1738131b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       github: "https://github.com/ShAlabbadi" },
   },
   {
     name: "Razan Alabdulhadi",
     role: "Backend Developer & QA Engineer",
     links: {
-      linkedin: "https://www.linkedin.com/in/razan-alabdulhadii-/",
+      linkedin: "https://www.linkedin.com/in/razan-alabdulhadii-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       github: "https://github.com/CODERrazan",
     },
   },
   {
     name: "Layan Aljunayh",
-    role: "Backend Developer",
+    role: "Backend & Database Developer",
     links: { 
-      linkedin: "", 
+      linkedin: "https://www.linkedin.com/in/layan-aljunayh-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", 
       github: "https://github.com/CoderLayan" },
   },
 ];
@@ -400,7 +400,9 @@ export default function ArumaLandingPage() {
             About the Project
           </h2>
           <p className="max-w-2xl mb-12" style={{ color: brand.subtle }}>
-            This project was inspired by a real problem I encountered...{" "}
+          This project was inspired by a real challenge faced by many Saudi artisans — the lack of a unified digital space to showcase their craftsmanship and connect with modern clients. During the Year of Handicrafts 2025, we recognized how much talent exists within our local communities, yet how difficult it can be for artisans to gain visibility or manage their work online.
+Aruma was designed to bridge that gap — empowering artisans with a dedicated digital platform to present their creations, receive requests, and grow their presence in the marketplace.
+This project was developed collaboratively as part of our {" "}
             It’s also part of my Portfolio Project for{" "}
             <a
               href={PROJECT.holbertonUrl}
@@ -425,9 +427,9 @@ export default function ArumaLandingPage() {
                 textDecorationStyle: "dotted",
               }}
             >
-              Tuwaiq Academy
+              Tuwaiq Academy 
             </a>
-            .
+            , and represents our shared vision to combine technology and culture in a meaningful way.
           </p>
 
           <h3 className="text-2xl font-semibold mb-8" style={{ color: brand.text }}>
