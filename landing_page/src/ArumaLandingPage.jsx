@@ -39,7 +39,7 @@ const FEATURES = [
   },
   {
     title: "4. Marketplace Browsing",
-    description: "Explain your second feature briefly.",
+    description: "Through this page, clients can browse the artisans and visit their profiles.",
     gallery: [
       { src: "Marketplace.png", label: "Marketplace" },
       { src: "Marketplace2.png", label: "Marketplace" },
@@ -47,24 +47,24 @@ const FEATURES = [
   },
   {
     title: "5. Artisan Profile Management",
-    description: "Explain your second feature briefly.",
+    description: "Through these pages, the artisans can view and edit all the data displayed in their profiles.",
     gallery: [
-      { src: "aArtisan_Profile.png", label: "" },
-      { src: "aEdit_Account.png", label: "" },
-      { src: "aMy_Work.png", label: "" },
+      { src: "aArtisan_Profile.png", label: "Artisans View To Their Profile" },
+      { src: "aEdit_Account.png", label: "The 'Edit Account' Form" },
+      { src: "aMy_Work.png", label: "The 'Manage My Work' Form" },
     ],
   },
   {
     title: "6. Browsing the Artisan Profile and sending request",
-    description: "Explain your third feature briefly.",
+    description: "Through these pages, clients can browse the artisans profiles and send requests.",
     gallery: [
-      { src: "cArtisan_Profile.png", label: "clients view to the Artisan Profile" },
-      { src: "cSend_Request.png", label: "client view for the send request form" },
+      { src: "cArtisan_Profile.png", label: "Clients View To The Artisan Profile" },
+      { src: "cSend_Request.png", label: "The 'Send Request' Form" },
     ],
   },
   {
     title: "7. Requests Tracking",
-    description: "Explain your fourth feature briefly.",
+    description: "Both the artisans and the clients can track the status of their requests ; each has a page that suits their needs.",
     gallery: [
       { src: "aRequests Tracking.png", label: "Artisan veiw to the Requests page" },
       { src: "cRequests_Tracking.png", label: "Clients view to the Requests page" },
@@ -76,16 +76,20 @@ const TEAM = [
   {
     name: "Maram Alsofyani",
     role: "Frontend Developer & UI/UX Designer",
-    links: { linkedin: "#", github: "https://github.com/maram-ra" },
+    links: { 
+      linkedin: "#", 
+      github: "https://github.com/maram-ra" },
   },
   {
     name: "Shurooq Alabbadi",
-    role: "Frontend Developer",
-    links: { linkedin: "#", github: "https://github.com/ShAlabbadi" },
+    role: "Frontend Developer & QA Engineer",
+    links: { 
+      linkedin: "#", 
+      github: "https://github.com/ShAlabbadi" },
   },
   {
     name: "Razan Alabdulhadi",
-    role: "Backend Developer",
+    role: "Backend Developer & QA Engineer",
     links: {
       linkedin: "https://www.linkedin.com/in/razan-alabdulhadii-/",
       github: "https://github.com/CODERrazan",
@@ -94,7 +98,9 @@ const TEAM = [
   {
     name: "Layan Aljunayh",
     role: "Backend Developer",
-    links: { linkedin: "", github: "https://github.com/CoderLayan" },
+    links: { 
+      linkedin: "", 
+      github: "https://github.com/CoderLayan" },
   },
 ];
 
@@ -335,7 +341,7 @@ export default function ArumaLandingPage() {
                 style={{
                   border: "2px solid #3a0b0b",
                   borderRadius: "12px",
-                  overflow: "hidden",
+                  overflow: "visible",
                   transition: "transform 0.3s ease, border-color 0.3s ease",
                 }}
                 className="hover:scale-105"
@@ -354,12 +360,11 @@ export default function ArumaLandingPage() {
                       />
                 <p
                   style={{
+                    color: "#3a0b0b",
                     textAlign: "center",
                     fontWeight: 600,
                     fontSize: "0.9rem",
-                    color: brand.text,
-                    padding: "8px 0",
-                    margin: 0,
+                    padding: "10px 0",
                     borderTop: `1px solid ${brand.border}`,
                   }}
                 >
@@ -370,7 +375,6 @@ export default function ArumaLandingPage() {
           </div>
 
           {/* divider between features */}
-          {i !== FEATURES.length - 1 && (
             <hr
               style={{
                 margin: "50px auto",
@@ -379,7 +383,7 @@ export default function ArumaLandingPage() {
                 opacity: 0.8,
               }}
             />
-          )}
+          
         </div>
       );
     })}
