@@ -468,20 +468,7 @@ export default function Requests_A() {
                   />
                 </div>
 
-                <div className="mb-3 text-start">
-                  <label className="form-label fw-semibold" style={{ color: "#3a0b0b" }}>
-                    Note (optional)
-                  </label>
-                  <textarea
-                    className="form-control"
-                    rows={2}
-                    value={formData.note}
-                    onChange={(e) =>
-                      setFormData({ ...formData, note: e.target.value })
-                    }
-                    placeholder="Add a note to the client (optional)"
-                  />
-                </div>
+               
               </>
             )}
 

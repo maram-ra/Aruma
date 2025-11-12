@@ -1,0 +1,179 @@
+/* ========================== Aruma Theme – Clean Base ========================== */
+
+:root {
+  --color-primary: #3a0b0b;
+  --color-primary-dark: #2c0707;
+  --color-primary-light: #5a1d1d;
+  --color-bg: #f5f5ee; /* light beige for surfaces */
+  --color-page: #dcdcd0ff; /* page background */
+  --color-text: #3a0b0b;
+  --color-muted: #6a5e5e;
+
+  --color-outline-hover: rgba(58, 11, 11, 0.06);
+  --radius-pill: 999px;
+  --shadow-soft: 0 3px 10px rgba(58, 11, 11, 0.15);
+  --shadow-strong: 0 6px 16px rgba(58, 11, 11, 0.25);
+  --transition-fast: all 0.25s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  background-color: var(--color-page);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove Vite starter link/button styles that were forcing dark colors */
+a { color: inherit; text-decoration: none; }
+a:hover { opacity: 0.85; }
+button { all: unset; }
+
+/* ========================== Buttons (Refined) ========================== */
+
+a.btn-outline, a.btn-main, a.btn-small { text-decoration: none !important; }
+
+button, .btn {
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-fast);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1.4;
+  user-select: none;
+}
+
+.btn-main {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: 2px solid var(--color-primary);
+  padding: 12px 32px;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(58, 11, 11, 0.15);
+}
+.btn-main:hover {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1.5px);
+}
+.btn-main:active { transform: translateY(0); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+
+.btn-outline {
+  position: relative;
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: 12px 32px;
+  font-size: 1rem;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: var(--radius-pill);
+  transition: all 0.35s ease;
+}
+.btn-outline::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(58,11,11,0.08), rgba(58,11,11,0.02));
+  opacity: 0; transition: opacity 0.35s ease; z-index: -1; border-radius: inherit;
+}
+.btn-outline:hover {
+  color: #fff;
+  border-color: var(--color-primary-dark);
+  background-color: var(--color-primary);
+  box-shadow: 0 6px 14px rgba(58, 11, 11, 0.2);
+  transform: translateY(-2px);
+}
+.btn-outline:hover::before { opacity: 1; }
+.btn-outline:active { transform: translateY(0); box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); background-color: var(--color-primary-dark); }
+.btn-outline:focus-visible { outline: 2px solid rgba(58, 11, 11, 0.4); outline-offset: 3px; }
+
+.btn-text {
+  background: none; border: none;
+  color: var(--color-primary);
+  font-weight: 600; font-size: 0.95rem; padding: 0;
+}
+.btn-text:hover { opacity: 0.75; text-decoration: underline; }
+
+.btn-small { padding: 8px 22px; font-size: 0.9rem; min-width: 120px; text-align: center; }
+.btn-large { padding: 14px 38px; font-size: 1.05rem; }
+
+.button-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; align-items: center; }
+
+/* ========================== Hero helpers (text-only hero) ========================== */
+
+.hero-title { font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1.15; letter-spacing: -0.5px; }
+.hero-subtext { color: var(--color-muted); font-size: 1.05rem; line-height: 1.8; }
+
+/* ========================== Card/Surface helpers ========================== */
+
+.surface {
+  background: var(--color-bg);
+  border: 1px solid #e0ddd3;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(58,11,11,0.08);
+}
+
+/* ========================== Accessibility ========================== */
+
+:focus-visible { outline: 2px solid rgba(58, 11, 11, 0.3); outline-offset: 2px; }
+
+/* ========================== Optional: Hide system light/dark override ========================== */
+/* If your browser prefers-color-scheme was flipping colors, keep this neutral: */
+@media (prefers-color-scheme: dark) {
+  /* do nothing; we control colors via variables */
+}
+@media (prefers-color-scheme: light) {
+  /* do nothing; we control colors via variables */
+}
+
+/* ========================== Extras you had (kept, cleaned) ========================== */
+
+.overlay { color: var(--color-page) !important; }
+
+.navbar-default { background-color: var(--color-bg); border-bottom: 1px solid rgba(0,0,0,0.05); }
+.navbar-default .nav-link-custom, .navbar-default .nav-username { color: var(--color-text) !important; }
+.nav-link-custom { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.3px; transition: opacity 0.25s ease; }
+.nav-link-custom:hover { opacity: 0.7; }
+
+/* Service badges (kept) */
+.services-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.service-badge {
+  background-color: #7d769c;
+  color: var(--color-bg);
+  font-weight: 500; font-size: 0.77rem;
+  padding: 5px 10px; border-radius: 555px; letter-spacing: 0.3px;
+}
+a:hover {
+  opacity: 0.8;  
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+}
+html {
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
+}
+img {
+  max-width: auto;
+  height: 100%;
+}

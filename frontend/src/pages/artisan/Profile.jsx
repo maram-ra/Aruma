@@ -10,11 +10,11 @@ import {
   alertConfirm,
 } from "../../components/ArumaAlert";
 
-// قاعدة عنوان الـ API
+// API base
 const API =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
 
-// أصل الخادم بدون /api/v1 لعرض الصور الداخلية
+// Server origin (for internal images)
 const ORIGIN = (() => {
   try {
     const u = new URL(API, window.location.origin);
@@ -30,7 +30,7 @@ const toImageURL = (path) => {
   return `${ORIGIN}${p}`;
 };
 
-// أداة صغيرة لإظهار الرسائل الحقيقية من الـ response عند الخطأ
+// read response error body
 async function readErr(res) {
   try {
     const j = await res.clone().json();
@@ -55,7 +55,6 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
     image: "",
   });
 
-  // تعريف التوكن والآي دي داخل المكوّن
   const token = localStorage.getItem("token");
   const artisanId = localStorage.getItem("userId");
 
@@ -79,7 +78,6 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
     setForm((p) => ({ ...p, [name]: type === "checkbox" ? checked : value }));
   };
 
-  // ✅ تصحيح المسار إلى /uploads/image
   const uploadOne = async (file) => {
     if (!token) {
       await alertInfo("Please login again.");
@@ -145,10 +143,7 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
   return (
     <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered modal-lg">
-        <div
-          className="modal-content border-0 shadow"
-          style={{ background: "#f5f5ee", borderRadius: 16 }}
-        >
+        <div className="modal-content border-0 shadow" style={{ background: "#f5f5ee", borderRadius: 16 }}>
           <div className="d-flex justify-content-between align-items-center p-3">
             <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
               Edit Account
@@ -245,18 +240,10 @@ function EditAccountModal({ show, onClose, artisan, setArtisan }) {
             </div>
 
             <div className="d-flex justify-content-end gap-2">
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={onClose}
-              >
+              <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                 Cancel
               </button>
-              <button
-                type="submit"
-                className="btn"
-                style={{ background: "#3a0b0b", color: "#fff" }}
-              >
+              <button type="submit" className="btn" style={{ background: "#3a0b0b", color: "#fff" }}>
                 Save Changes
               </button>
             </div>
@@ -307,7 +294,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
     try {
       const url = await uploadOne(f);
       if (!url) return;
-      const title = ""; // ينعرض ويتحرر داخل الكارد
+      const title = "";
       const res = await fetch(`${API}/artisans/${artisanId}/work`, {
         method: "POST",
         headers: {
@@ -384,10 +371,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
   return (
     <div className="modal show d-block" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-dialog-centered modal-xl">
-        <div
-          className="modal-content border-0 shadow"
-          style={{ background: "#f5f5ee", borderRadius: 16 }}
-        >
+        <div className="modal-content border-0 shadow" style={{ background: "#f5f5ee", borderRadius: 16 }}>
           <div className="d-flex justify-content-between align-items-center p-3">
             <h5 className="fw-bold m-0" style={{ color: "#3a0b0b" }}>
               Manage “My Work”
@@ -403,13 +387,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
             >
               <i className="bi bi-plus-circle me-2" /> Add Work
             </label>
-            <input
-              id="work-add"
-              type="file"
-              accept="image/*"
-              onChange={addWork}
-              style={{ display: "none" }}
-            />
+            <input id="work-add" type="file" accept="image/*" onChange={addWork} style={{ display: "none" }} />
 
             <div className="row g-4">
               {items.map((it, i) => (
@@ -418,12 +396,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
                     <img
                       src={toImageURL(it.url)}
                       alt={`work-${i}`}
-                      style={{
-                        width: "100%",
-                        height: 240,
-                        objectFit: "cover",
-                        borderRadius: 8,
-                      }}
+                      style={{ width: "100%", height: 240, objectFit: "cover", borderRadius: 8 }}
                     />
                     <input
                       className="form-control mt-2"
@@ -436,17 +409,10 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
                       }}
                     />
                     <div className="d-flex justify-content-between mt-3">
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={() => deleteOne(i)}
-                      >
+                      <button className="btn btn-outline-danger" onClick={() => deleteOne(i)}>
                         Delete
                       </button>
-                      <button
-                        className="btn"
-                        style={{ background: "#3a0b0b", color: "#fff" }}
-                        onClick={() => saveOne(i)}
-                      >
+                      <button className="btn" style={{ background: "#3a0b0b", color: "#fff" }} onClick={() => saveOne(i)}>
                         Save
                       </button>
                     </div>
@@ -455,9 +421,7 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
               ))}
 
               {items.length === 0 && (
-                <p className="text-muted text-center">
-                  No work yet — add your first piece.
-                </p>
+                <p className="text-muted text-center">No work yet — add your first piece.</p>
               )}
             </div>
           </div>
@@ -467,36 +431,30 @@ function WorkEditor({ show, onClose, artisan, setArtisan }) {
   );
 }
 
-/* ---------- شارات الخدمات (مثل الكلاينت) ---------- */
+/* ---------- Services badges ---------- */
 function ServicesOffered({ artisan }) {
   const pills = [];
-  if (artisan.offersProduct) {
-    pills.push({ icon: "bag", text: "Products" });
-  }
-  if (artisan.offersWorkshop) {
-    pills.push({ icon: "easel", text: "Workshops" });
-  }
-  if (artisan.offersLiveShow) {
-    pills.push({ icon: "broadcast-pin", text: "Live Show" });
-  }
+  if (artisan?.offersWorkshop) pills.push({ icon: "easel", text: "Workshops" });
+  if (artisan?.offersLiveShow) pills.push({ icon: "broadcast-pin", text: "Live Show" });
+  if (artisan?.offersProduct) pills.push({ icon: "bag", text: "Products" });
 
-  if (pills.length === 0) return null;
+  if (!pills.length) return null;
 
   return (
-    <div className="d-flex flex-wrap gap-2 mt-2">
+    <div className="d-flex flex-wrap gap-2 mt-3 services-pills">
       {pills.map((p, i) => (
         <span
           key={i}
           className="badge d-inline-flex align-items-center"
           style={{
-            background: "#eae4de",
+            background: "#f3efea",
             color: "#3a0b0b",
-            padding: "0.5rem 0.75rem",
             borderRadius: "999px",
             fontWeight: 600,
+            padding: "0.5rem 0.9rem",
           }}
         >
-          <i className={`bi bi-${p.icon} me-1`} />
+          <i className={`bi bi-${p.icon} me-2`} />
           {p.text}
         </span>
       ))}
@@ -543,18 +501,15 @@ export default function Profile() {
 
       {/* Header */}
       <section className="container py-5 mt-5">
-        <div className="row align-items-center justify-content-between">
+        <div className="row align-items-center justify-content-between hero-row">
           <div
-            className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center"
+            className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center profile-left"
             style={{ gap: "1.5rem" }}
           >
             <img
-              src={
-                toImageURL(artisan.images?.[0] || artisan.image) ||
-                "/images/default_profile.png"
-              }
+              src={toImageURL(artisan.images?.[0] || artisan.image) || "/images/default_profile.png"}
               alt="Profile"
-              className="rounded-circle"
+              className="rounded-circle mx-auto mx-md-0"
               style={{
                 width: 90,
                 height: 90,
@@ -563,37 +518,27 @@ export default function Profile() {
                 backgroundColor: "#e7e7e7",
               }}
             />
-            <div>
-              <h6
-                className="fw-bold mb-1"
-                style={{ color: "#3a0b0b", fontSize: "1.15rem" }}
-              >
+            <div className="w-100 w-md-auto">
+              <h6 className="fw-bold mb-1" style={{ color: "#3a0b0b", fontSize: "1.15rem" }}>
                 {artisan.name}
               </h6>
-              <small className="text-muted">{artisan.craftType || ""}</small>
-              <p
-                className="small mb-0 mt-2"
-                style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}
-              >
+              <small className="text-muted d-block">{artisan.craftType || ""}</small>
+              <p className="small mb-0 mt-2 bio" style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}>
                 {artisan.bio?.trim()
                   ? artisan.bio
                   : "No bio yet — every craft tells a story waiting to be shared."}
               </p>
-
-              {/* ✅ الخدمات التي أقدمها */}
               <ServicesOffered artisan={artisan} />
             </div>
           </div>
 
-          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center">
+          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center profile-actions">
+            <button className="btn btn-outline btn-small" onClick={() => setShowEdit(true)}>
+  Edit Account
+</button>
+
             <button
-              className="btn btn-outline-secondary"
-              onClick={() => setShowEdit(true)}
-            >
-              Edit Account
-            </button>
-            <button
-              className="btn"
+              className="btn add-work-btn"
               style={{ background: "#3a0b0b", color: "#fff" }}
               onClick={() => setShowWorkEditor(true)}
             >
@@ -605,15 +550,11 @@ export default function Profile() {
 
       <div
         className="container"
-        style={{
-          borderBottom: "1px solid #cbbeb3",
-          opacity: 0.5,
-          marginBottom: "2rem",
-        }}
+        style={{ borderBottom: "1px solid #cbbeb3", opacity: 0.5, marginBottom: "2rem" }}
       />
 
-      {/* My Work */}
-      <section className="container pb-5">
+      {/* My Work (centered) */}
+      <section className="container pb-5 d-flex flex-column align-items-center text-center" style={{ maxWidth: 1100 }}>
         <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
           My Work
           <span className="ms-2 text-muted fw-normal" style={{ fontSize: 14 }}>
@@ -622,38 +563,26 @@ export default function Profile() {
         </h5>
 
         {artisan.workImages?.length ? (
-          <div className="row g-4">
+          <div className="row justify-content-center g-4 w-100">
             {artisan.workImages.map((u, i) => (
-              <div key={i} className="col-12 col-sm-6 col-lg-4">
-                <div className="position-relative">
+              <div key={i} className="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center">
+                <div className="position-relative" style={{ width: "100%", maxWidth: 340 }}>
                   <img
                     src={toImageURL(u)}
                     alt={`work-${i}`}
-                    style={{
-                      width: "100%",
-                      height: 420,
-                      objectFit: "cover",
-                      borderRadius: 12,
-                    }}
+                    style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12, display: "block" }}
                   />
                   <div className="position-absolute top-0 end-0 p-2 d-flex gap-2">
-                    <button
-                      className="btn btn-light btn-sm"
-                      title="Edit"
-                      onClick={() => setShowWorkEditor(true)}
-                    >
+                    <button className="btn btn-light btn-sm" title="Edit" onClick={() => setShowWorkEditor(true)}>
                       <i className="bi bi-pencil" />
                     </button>
-                    <button
-                      className="btn btn-light btn-sm"
-                      title="Delete"
-                      onClick={() => setShowWorkEditor(true)}
-                    >
+                    <button className="btn btn-light btn-sm" title="Delete" onClick={() => setShowWorkEditor(true)}>
                       <i className="bi bi-trash" />
                     </button>
                   </div>
                 </div>
-                <h6 className="fw-semibold mt-2" style={{ color: "#3a0b0b" }}>
+
+                <h6 className="fw-semibold mt-3 mb-0" style={{ color: "#3a0b0b" }}>
                   {artisan.workTitles?.[i] || `Artwork ${i + 1}`}
                 </h6>
               </div>
@@ -666,18 +595,25 @@ export default function Profile() {
 
       <Footer />
 
-      <EditAccountModal
-        show={showEdit}
-        onClose={() => setShowEdit(false)}
-        artisan={artisan}
-        setArtisan={setArtisan}
-      />
-      <WorkEditor
-        show={showWorkEditor}
-        onClose={() => setShowWorkEditor(false)}
-        artisan={artisan}
-        setArtisan={setArtisan}
-      />
+      <EditAccountModal show={showEdit} onClose={() => setShowEdit(false)} artisan={artisan} setArtisan={setArtisan} />
+      <WorkEditor show={showWorkEditor} onClose={() => setShowWorkEditor(false)} artisan={artisan} setArtisan={setArtisan} />
+
+      {/* ===== Mobile-only centering (desktop unchanged) ===== */}
+      <style>{`
+        /* جوال فقط */
+        @media (max-width: 575.98px){
+          .artisan-profile .hero-row { text-align: center; }
+          .artisan-profile .profile-left { justify-content: center !important; }
+          .artisan-profile .services-pills { justify-content: center !important; }
+          .artisan-profile .profile-actions { justify-content: center !important; }
+          .artisan-profile .add-work-btn { width: 100%; max-width: 420px; }
+          .artisan-profile .bio { margin-left: auto; margin-right: auto; }
+        }
+
+        @media (prefers-reduced-motion: reduce){
+          * { transition: none !important; animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 }

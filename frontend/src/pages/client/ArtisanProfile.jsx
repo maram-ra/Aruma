@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { alertError, alertSuccess, alertInfo } from "../../components/ArumaAlert";
@@ -24,15 +25,44 @@ const toImageURL = (path) => {
   return `${ORIGIN}${p}`;
 };
 
+/* ---------- Services pills (client view) ---------- */
+function ServicesOffered({ artisan }) {
+  const pills = [];
+  if (artisan?.offersWorkshop) pills.push({ icon: "easel", text: "Workshops" });
+  if (artisan?.offersLiveShow) pills.push({ icon: "broadcast-pin", text: "Live Show" });
+  if (artisan?.offersProduct) pills.push({ icon: "bag", text: "Products" });
+
+  if (!pills.length) return null;
+
+  return (
+    <div className="d-flex flex-wrap gap-2 mt-3 services-pills">
+      {pills.map((p, i) => (
+        <span
+          key={i}
+          className="badge d-inline-flex align-items-center"
+          style={{
+            background: "#f3efea",
+            color: "#3a0b0b",
+            borderRadius: "999px",
+            fontWeight: 600,
+            padding: "0.5rem 0.9rem",
+          }}
+        >
+          <i className={`bi bi-${p.icon} me-2`} />
+          {p.text}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /* ======================= Send Request Modal ======================= */
 function SendRequestModal({ show, onClose, artisan }) {
-  // ✅ بدون Custom
   const requestTypeOptions = useMemo(() => {
     const opts = [];
-    if (artisan?.offersProduct)  opts.push({ value: "product", label: "Product" });
+    if (artisan?.offersProduct) opts.push({ value: "product", label: "Product" });
     if (artisan?.offersWorkshop) opts.push({ value: "workshop", label: "Workshop" });
     if (artisan?.offersLiveShow) opts.push({ value: "live_show", label: "Live Show" });
-    // fallback لو الحرفي ما حدّد خدماته
     if (opts.length === 0) {
       opts.push(
         { value: "product", label: "Product" },
@@ -43,7 +73,7 @@ function SendRequestModal({ show, onClose, artisan }) {
     return opts;
   }, [artisan]);
 
-  const [requestType, setRequestType] = useState("product"); // الافتراضي
+  const [requestType, setRequestType] = useState("product");
   const [message, setMessage] = useState("");
   const [budget, setBudget] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -62,12 +92,12 @@ function SendRequestModal({ show, onClose, artisan }) {
   const submit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const rawType =
-      (localStorage.getItem("userType") ||
-        localStorage.getItem("role") ||
-        localStorage.getItem("accountType") ||
-        ""
-      ).toLowerCase();
+    const rawType = (
+      localStorage.getItem("userType") ||
+      localStorage.getItem("role") ||
+      localStorage.getItem("accountType") ||
+      ""
+    ).toLowerCase();
 
     const isClient = rawType === "client" || window.location.pathname.startsWith("/client");
 
@@ -85,7 +115,7 @@ function SendRequestModal({ show, onClose, artisan }) {
         },
         body: JSON.stringify({
           artisanId: artisan._id,
-          requestType,         // فقط: product | workshop | live_show
+          requestType, // product | workshop | live_show
           message,
           offerBudget: budget ? Number(budget) : null,
           offerDeadline: deadline || null,
@@ -144,37 +174,6 @@ function SendRequestModal({ show, onClose, artisan }) {
               />
             </div>
 
-            <div className="row g-3 mb-4">
-              <div className="col-md-6">
-                <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                  Budget (optional)
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  min="0"
-                  step="1"
-                  value={budget}
-                  onChange={(e) => {
-                    const val = Number(e.target.value);
-                    if (val >= 0 || e.target.value === "") setBudget(e.target.value);
-                  }}
-                  placeholder="e.g. 300"
-                />
-              </div>
-              <div className="col-md-6">
-                <label className="form-label fw-semibold small" style={{ color: "#3a0b0b" }}>
-                  Deadline (optional)
-                </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.target.value)}
-                />
-              </div>
-            </div>
-
             <div className="d-flex justify-content-end gap-2">
               <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
                 Cancel
@@ -199,12 +198,12 @@ export default function ArtisanProfile() {
   const artisanId = searchParams.get("id");
   const token = localStorage.getItem("token");
 
-  const rawUserType =
-    (localStorage.getItem("userType") ||
-      localStorage.getItem("role") ||
-      localStorage.getItem("accountType") ||
-      ""
-    ).toLowerCase();
+  const rawUserType = (
+    localStorage.getItem("userType") ||
+    localStorage.getItem("role") ||
+    localStorage.getItem("accountType") ||
+    ""
+  ).toLowerCase();
 
   const isClient = rawUserType === "client" || window.location.pathname.startsWith("/client");
 
@@ -237,15 +236,15 @@ export default function ArtisanProfile() {
       <Navbar />
 
       <section className="container py-5 mt-5">
-        <div className="row align-items-center justify-content-between">
+        <div className="row align-items-center justify-content-between hero-row">
           <div
-            className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center"
+            className="col-md-8 d-flex align-items-center flex-wrap flex-md-nowrap text-md-start text-center profile-left"
             style={{ gap: "1.5rem" }}
           >
             <img
               src={toImageURL(artisan.images?.[0] || artisan.image) || "/images/default_profile.png"}
               alt="Profile"
-              className="rounded-circle"
+              className="rounded-circle mx-auto mx-md-0"
               style={{
                 width: 90,
                 height: 90,
@@ -254,46 +253,32 @@ export default function ArtisanProfile() {
                 backgroundColor: "#e7e7e7",
               }}
             />
-            <div>
+
+            <div className="w-100 w-md-auto">
               <h6 className="fw-bold mb-1" style={{ color: "#3a0b0b", fontSize: "1.15rem" }}>
                 {artisan.name}
               </h6>
-              <small className="text-muted">{artisan.craftType || ""}</small>
-              <p className="small mb-0 mt-2" style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}>
+
+              <small className="text-muted d-block">{artisan.craftType || ""}</small>
+
+              <p
+                className="small mb-0 mt-2 bio"
+                style={{ color: "#6f4e37", lineHeight: 1.8, maxWidth: 520 }}
+              >
                 {artisan.bio?.trim()
                   ? artisan.bio
                   : "No bio yet — every craft tells a story waiting to be shared."}
               </p>
 
-              <div className="d-flex flex-wrap gap-2 mt-2">
-                {artisan.craftType && (
-                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
-                    {artisan.craftType}
-                  </span>
-                )}
-                {artisan.offersProduct && (
-                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
-                    Products
-                  </span>
-                )}
-                {artisan.offersWorkshop && (
-                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
-                    Workshops
-                  </span>
-                )}
-                {artisan.offersLiveShow && (
-                  <span className="badge rounded-pill" style={{ background: "#e9e2da", color: "#3a0b0b" }}>
-                    Live Show
-                  </span>
-                )}
-              </div>
+              {/* كبسولات الخدمات */}
+              <ServicesOffered artisan={artisan} />
             </div>
           </div>
 
-          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center">
+          <div className="col-md-4 mt-4 mt-md-0 d-flex gap-2 justify-content-md-end justify-content-center profile-actions">
             {isClient && (
               <button
-                className="btn"
+                className="btn send-btn"
                 style={{ background: "#3a0b0b", color: "#fff" }}
                 onClick={() => setShowSend(true)}
               >
@@ -309,7 +294,11 @@ export default function ArtisanProfile() {
         style={{ borderBottom: "1px solid #cbbeb3", opacity: 0.5, marginBottom: "2rem" }}
       />
 
-      <section className="container pb-5">
+      {/* My Work (centered) */}
+      <section
+        className="container pb-5 d-flex flex-column align-items-center text-center"
+        style={{ maxWidth: 1100 }}
+      >
         <h5 className="fw-bold mb-4" style={{ color: "#3a0b0b" }}>
           My Work
           <span className="ms-2 text-muted fw-normal" style={{ fontSize: 14 }}>
@@ -318,14 +307,14 @@ export default function ArtisanProfile() {
         </h5>
 
         {artisan.workImages?.length ? (
-          <div className="row g-4">
+          <div className="row g-4 justify-content-center w-100">
             {artisan.workImages.map((u, i) => (
-              <div key={i} className="col-12 col-sm-6 col-lg-4">
-                <div className="position-relative">
+              <div key={i} className="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center">
+                <div className="position-relative" style={{ width: "100%", maxWidth: 340 }}>
                   <img
                     src={toImageURL(u)}
                     alt={`work-${i}`}
-                    style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12 }}
+                    style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 12, display: "block" }}
                   />
                 </div>
                 <h6 className="fw-semibold mt-3 mb-0" style={{ color: "#3a0b0b" }}>
@@ -340,7 +329,26 @@ export default function ArtisanProfile() {
       </section>
 
       <Footer />
+
       <SendRequestModal show={showSend} onClose={() => setShowSend(false)} artisan={artisan} />
+
+      {/* ===== Mobile-only centering (desktop unchanged) ===== */}
+      <style>{`
+        /* شاشات الجوال فقط */
+        @media (max-width: 575.98px){
+          .artisan-profile .hero-row { text-align: center; }
+          .artisan-profile .profile-left { justify-content: center !important; }
+          .artisan-profile .services-pills { justify-content: center !important; }
+          .artisan-profile .profile-actions { justify-content: center !important; }
+          .artisan-profile .send-btn { width: 100%; max-width: 420px; }
+          .artisan-profile .bio { margin-left: auto; margin-right: auto; }
+        }
+
+        /* حركة أقل */
+        @media (prefers-reduced-motion: reduce){
+          * { transition: none !important; animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
