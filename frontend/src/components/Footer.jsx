@@ -26,16 +26,6 @@ export default function Footer() {
         </a>
       </div>
 
-      {/* خط فاصل */}
-      <div
-        style={{
-          borderTop: "1px solid rgba(255,255,255,0.3)",
-          width: "85%",
-          margin: "0 auto 10px auto",
-        }}
-      ></div>
-
-    
     </footer>
   );
 }
