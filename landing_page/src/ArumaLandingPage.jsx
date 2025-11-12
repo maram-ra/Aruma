@@ -143,9 +143,9 @@ export default function ArumaLandingPage() {
           borderBottom: `1px solid ${brand.border}`,
           backdropFilter: "blur(6px)",
         }}
-      >
-        <div
-          className="mx-auto max-w-7xl px-6"
+      > 
+      <div
+      className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr", // left / center / right
@@ -173,7 +173,7 @@ export default function ArumaLandingPage() {
           </nav>
 
           {/* CENTER: Clickable logo to top */}
-          <div style={{ justifySelf: "center" }}>
+          <div className="order-first sm:order-none w-full sm:w-auto flex justify-center" style={{ justifySelf: "center" }}>
             <a href="#home" title="Go to top" style={{ display: "inline-block" }}>
               <img
                 src={PROJECT.logo}
@@ -210,8 +210,9 @@ export default function ArumaLandingPage() {
         <div
           className="w-full"
           style={{
-            height: "600px",               // FIX: add px
-            minHeight: "400px",
+            height: "50vh",
+            minHeight: "320px",
+            maxHeight: "640px",
             backgroundImage: `url(${PROJECT.coverImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
