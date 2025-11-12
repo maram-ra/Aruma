@@ -23,7 +23,7 @@ const FEATURES = [
   },
   {
     title: "2. Client Registration & Login",
-    description: "Explain your first feature briefly.",
+    description: "Through these two pages, clients can register and log into their profile..",
     gallery: [
       { src: "cRegistration.png", label: "Client Registration" },
       { src: "Login.png", label: "Client Login" },
@@ -31,7 +31,7 @@ const FEATURES = [
   },
   {
     title: "3. Artisan Registration & Login",
-    description: "Explain your first feature briefly.",
+    description: "Through these two pages, artisans can register and log into their profile..",
     gallery: [
       { src: "aRegistration.png", label: "Artisan Registration" },
       { src: "Login.png", label: "Artisan Login" },
@@ -55,7 +55,7 @@ const FEATURES = [
     ],
   },
   {
-    title: "7. Browsing the Artisan Profile and sending request",
+    title: "6. Browsing the Artisan Profile and sending request",
     description: "Explain your third feature briefly.",
     gallery: [
       { src: "cArtisan_Profile.png", label: "clients view to the Artisan Profile" },
@@ -256,189 +256,120 @@ export default function ArumaLandingPage() {
   <div className="max-w-7xl mx-auto px-6 space-y-20">
     {FEATURES.map((f, i) => {
       const gallery = Array.isArray(f.gallery) ? f.gallery : [];
+      const ph = (w, h, txt) =>
+        `https://placehold.co/${w}x${h}?text=${encodeURIComponent(txt)}`;
 
-      /* ===== FEATURE 1: one image but same title/description style ===== */
-      if (i === 0) {
-        const firstImage = gallery[0]?.src || "https://placehold.co/750x500?text=Feature+1";
-        const label = gallery[0]?.label || "Main Image";
+      // --- layout rules per feature ---
+      const getLayout = (idx) => {
+        switch (idx) {
+          case 0: return { cols: 1, count: 1, stacked: false }; // 1 image
+          case 1: return { cols: 2, count: 2, stacked: false };
+          case 2: return { cols: 2, count: 2, stacked: false };
+          case 3: return { cols: 1, count: 2, stacked: true  };
+          case 4: return { cols: 3, count: 3, stacked: false };
+          case 5: return { cols: 2, count: 2, stacked: false };
+          case 6: return { cols: 2, count: 2, stacked: false };
+          default: return { cols: 2, count: 2, stacked: false };
+        }
+      };
 
-        return (
-          <div key={i} className="w-full">
-            {/* Title + Description (same as other features) */}
-            <div
-              className="text-center mb-8"
-              style={{ color: brand.subtle, margin: "0 50px" }}
+      const layout = getLayout(i);
+
+      // normalize gallery items
+      const items = gallery
+        .slice(0, layout.count)
+        .map((img, idx) => ({
+          src:
+            typeof img === "string"
+              ? img
+              : img?.src || ph(560, 420, `${f.title} ${idx + 1}`),
+          label:
+            typeof img === "object" && img?.label
+              ? img.label
+              : `Image ${idx + 1}`,
+        }));
+
+      // --- title + description ---
+      const TitleBlock = (
+        <div
+          className="text-center mb-8"
+          style={{ color: brand.subtle, margin: "0 50px" }}
+        >
+          <h3
+            className="text-3xl font-semibold mb-3"
+            style={{ color: brand.text }}
+          >
+            {f.title}
+          </h3>
+          {f.description && (
+            <p
+              className="text-lg leading-relaxed max-w-2xl mx-auto"
+              style={{ color: brand.subtle }}
             >
-              <h3
-                className="text-3xl font-semibold mb-3"
-                style={{
-                  color: brand.text,
-                  fontSize: "1.12rem",
-                }}
-              >
-                {f.title}
-              </h3>
-              {f.description && (
-                <p
-                  className="text-lg leading-relaxed max-w-2xl mx-auto"
-                  style={{
-                    color: brand.subtle,
-                    fontSize: "1.12rem",
-                  }}
-                >
-                  {f.description}
-                </p>
-              )}
-            </div>
+              {f.description}
+            </p>
+          )}
+        </div>
+      );
 
-            {/* Image inside lavender frame */}
-            <div
-              style={{
-                padding: "30px",
-                borderRadius: "24px",
-                maxWidth: "800px",
-                margin: "0 auto",
-              }}
-            >
-              <img
-                src={firstImage}
-                alt={label}
-                style={{
-                  width: "100%",
-                  borderRadius: "16px",
-                  display: "block",
-                  objectFit: "cover",
-                }}
-              />
-              <p
-                style={{
-                  textAlign: "center",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  color: "#3a0b0b",
-                  marginTop: "10px",
-                }}
-              >
-                {label}
-              </p>
-            </div>
+      // --- grid wrapper style ---
+      const gridStyle = {
+        display: "grid",
+        gridTemplateColumns: `repeat(${
+          layout.stacked ? 1 : layout.cols
+        }, minmax(0, 1fr))`,
+        gap: "24px",
+        alignItems: "stretch",
+        maxWidth: "1100px",
+        margin: "0 auto",
+      };
 
-            {/* Divider */}
-            <hr
-              style={{
-                margin: "50px auto",
-                width: "80%",
-                border: `1px solid ${brand.border}`,
-                opacity: 0.8,
-              }}
-            />
-          </div>
-        );
-      }
-
-      /* ===== OTHER FEATURES ===== */
       return (
         <div key={i} className="w-full">
-          {/* Title + Description */}
-          <div
-            className="text-center mb-8"
-            style={{ color: brand.subtle, margin: "0 50px" }}
-          >
-            <h3
-              className="text-3xl font-semibold mb-3"
-              style={{
-                color: brand.text,
-                fontSize: "1.12rem",
-              }}
-            >
-              {f.title}
-            </h3>
-            {f.description && (
-              <p
-                className="text-lg leading-relaxed max-w-2xl mx-auto"
+          {TitleBlock}
+
+          <div style={gridStyle}>
+            {items.map(({ src, label }, idx) => (
+              <div
+                key={idx}
                 style={{
-                  color: brand.subtle,
-                  fontSize: "1.12rem",
+                  border: "2px solid #3a0b0b",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  transition: "transform 0.3s ease, border-color 0.3s ease",
                 }}
+                className="hover:scale-105"
               >
-                {f.description}
-              </p>
-            )}
-          </div>
-
-          {/* Two images side by side */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-              gap: "24px",
-              alignItems: "stretch",
-              maxWidth: "1100px",
-              margin: "0 auto",
-            }}
-          >
-            {gallery.map((img, idx) => {
-              const src = typeof img === "string" ? img : img.src;
-              const label = typeof img === "object" ? img.label : `Image ${idx + 1}`;
-
-              return (
-                <div
-                  key={idx}
-                  className="rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-105"
+                <img
+                  src={src}
+                  alt={label}
+                    className="block w-full object-cover"
+                    style={{
+                      width: "100%",
+                      maxWidth: "1100px",
+                      border: `1px solid ${brand.border}`,
+                      borderRadius: "12px",
+                      display: "block",
+                    }}
+                      />
+                <p
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    border: `1px solid ${brand.border}`,
-                    borderRadius: "16px",
-                    boxShadow: "0 6px 16px rgba(58,11,11,0.08)",
-                    overflow: "hidden",
-                    transition: "transform 0.3s ease",
+                    textAlign: "center",
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                    color: brand.text,
+                    padding: "8px 0",
+                    margin: 0,
+                    borderTop: `1px solid ${brand.border}`,
                   }}
                 >
-                  <section style={{ background: "#3a0b0b", padding: "2px 2px" }}>
-                    <div
-                      style={{
-                        overflow: "hidden",
-                        maxWidth: "1100px",
-                        margin: "0 auto",
-                        transition: "transform 0.3s ease",
-                      }}
-                      className="hover:scale-105"
-                    >
-                      <img
-                        src={src}
-                        alt={label}
-                        className="block w-full object-cover"
-                        style={{
-                          width: "100%",
-                          maxWidth: "1100px",
-                          border: `1px solid ${brand.border}`,
-                          borderRadius: "12px",
-                          display: "block",
-                          margin: "0 auto",
-                        }}
-                      />
-                      <p
-                        style={{
-                          textAlign: "center",
-                          fontWeight: 600,
-                          fontSize: "0.9rem",
-                          color: "#faf8f2",
-                          padding: "2.5px 0",
-                          margin: 0,
-                        }}
-                      >
-                        {label}
-                      </p>
-                    </div>
-                  </section>
-                </div>
-              );
-            })}
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
 
-          {/* Divider */}
+          {/* divider between features */}
           {i !== FEATURES.length - 1 && (
             <hr
               style={{
@@ -454,6 +385,8 @@ export default function ArumaLandingPage() {
     })}
   </div>
 </section>
+
+
 
 
       {/* ================= ABOUT / DEVELOPERS ================= */}
