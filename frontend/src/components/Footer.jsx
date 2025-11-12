@@ -35,10 +35,7 @@ export default function Footer() {
         }}
       ></div>
 
-      {/* الحقوق */}
-      <div className="small" style={{ opacity: 0.9 }}>
-        © {new Date().getFullYear()} Aruma — All rights reserved.
-      </div>
+    
     </footer>
   );
 }
