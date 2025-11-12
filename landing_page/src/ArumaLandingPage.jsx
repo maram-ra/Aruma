@@ -144,8 +144,7 @@ export default function ArumaLandingPage() {
           backdropFilter: "blur(6px)",
         }}
       > 
-      <div
-      className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3"
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr", // left / center / right
@@ -156,6 +155,7 @@ export default function ArumaLandingPage() {
         >
           {/* LEFT: Nav */}
           <nav
+              className="flex flex-wrap items-center gap-3 text-sm sm:text-base"
             style={{
               justifySelf: "start",
               display: "flex",
@@ -173,8 +173,8 @@ export default function ArumaLandingPage() {
           </nav>
 
           {/* CENTER: Clickable logo to top */}
-          <div className="order-first sm:order-none w-full sm:w-auto flex justify-center" style={{ justifySelf: "center" }}>
-            <a href="#home" title="Go to top" style={{ display: "inline-block" }}>
+          <div className="order-first sm:order-none w-full sm:w-auto flex justify-center">
+            <a href="#home" >
               <img
                 src={PROJECT.logo}
                 alt="Aruma Logo"
