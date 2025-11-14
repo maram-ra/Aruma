@@ -1,10 +1,11 @@
-// src/pages/client/ArtisanProfile.jsx
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ProfileLoader from "../../components/ProfileLoader";
+
 import { alertError, alertSuccess, alertInfo } from "../../components/ArumaAlert";
 
 const API = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1";
@@ -224,12 +225,9 @@ export default function ArtisanProfile() {
   }, [artisanId, token]);
 
   if (!artisan) {
-    return (
-      <div className="text-center py-5">
-        <p>Loading profile…</p>
-      </div>
-    );
-  }
+  return <ProfileLoader />;
+}
+
 
   return (
     <div className="artisan-profile">

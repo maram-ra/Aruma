@@ -1,4 +1,3 @@
-// src/pages/client/Requests_C.jsx
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
