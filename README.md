@@ -4,7 +4,7 @@
 
 
 ---
-![Aruma Cover](landing_page/public/cover.jpg)
+/*![Aruma Cover](landing_page/public/cover.jpg)*/
 
 # Aruma
 
