@@ -128,8 +128,27 @@ export default function ArumaLandingPage() {
     subtle: "#5a5050",
     border: "#e0ddd3",
   };
+  
 
   return (
+    <>
+      {/* Responsive styles for the header button */}
+      <style>
+        {`
+          @media (max-width: 640px) {
+            .aruma-btn {
+              font-size: 0.75rem !important;
+              padding: 6px 10px !important;
+              white-space: nowrap !important;
+            }
+
+            .aruma-btn-container {
+              justify-self: center !important;
+              text-align: center !important;
+            }
+          }
+        `}
+      </style>
     <div className="min-h-screen overflow-x-hidden">
       {/* ================= HEADER ================= */}
       <header
@@ -190,12 +209,12 @@ export default function ArumaLandingPage() {
           </div>
 
           {/* RIGHT: Button */}
-          <div style={{ justifySelf: "end" }}>
+          <div className="aruma-btn-container" style={{ justifySelf: "end" }}>
             <a
               href={PROJECT.deployedUrl}
               target="_blank"
               rel="noreferrer"
-              className="btn-main btn-small"
+              className="btn-main btn-small aruma-btn"
             >
               Go to Aruma Website
             </a>
@@ -553,5 +572,6 @@ This project was developed collaboratively as part of our {" "}
         </div>
       </footer>
     </div>
+    </>
   );
 }
