@@ -29,8 +29,7 @@ Many Saudi artisans struggle to find a unified digital space to present their ha
 - A **marketplace** where clients can discover artisans.
 - A **request and tracking system** connecting both sides.
 
-This project was developed collaboratively as part of a portfolio project for  
-[Holberton School](https://www.holbertonschool.com/) Supervised by [Tuwaiq Academy](https://tuwaiq.edu.sa/), and represents our shared vision to combine technology and culture in a meaningful way.
+This project was developed collaboratively as part of a portfolio project for [Holberton School](https://www.holbertonschool.com/) Supervised by [Tuwaiq Academy](https://tuwaiq.edu.sa/), and represents our shared vision to combine technology and culture in a meaningful way.
 
 ---
 
