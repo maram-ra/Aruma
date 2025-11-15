@@ -44,6 +44,7 @@ Through the **User Type** page, users can choose whether they want to continue a
 
 **Screenshot:**
 ![Aruma Cover](Aruma/landing_page/public/User%20Type.png)
+![Aruma Cover](cover.jpg)
 
 ![](Aruma/landing_page/public/User%20Type.png)
 
