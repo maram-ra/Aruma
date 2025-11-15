@@ -12,10 +12,10 @@
 
 ---
 
-## 🌐 Live Demo & Repository
+## 🌐 Live Demo
 
 - **Live Website:** [Go to Aruma Website](https://aruma-seven.vercel.app/)
-- **Repository:** [GitHub Repo](https://github.com/maram-ra/Aruma)
+- **Landing Page:** [Go to Aruma Website](https://arumalandingpage.vercel.app/)
 
 ---
 
@@ -129,25 +129,12 @@ Both **artisans** and **clients** can track the status of their requests:
 
 ---
 
-## 🧩 Tech & UI Highlights
-
-This repository includes a **React** landing page built with a focus on clarity and storytelling:
-
-- Smooth scrolling navigation (`Features`, `About` sections).
-- Fixed header with logo linked back to the top.
-- Responsive layout with grid-based feature galleries.
-- Structured **Features** and **About the Project** sections.
-- Developer cards with inline SVG icons for **LinkedIn** and **GitHub**.
-- Year-agnostic footer:  
-  `© {new Date().getFullYear()} Aruma. All rights reserved.`
-
----
-
 ## 🛠️ Tech Stack
 
-- **Frontend:** React
-- **Styling:** CSS + utility classes (with responsive layout & grid)
-- **Deployment:** Vercel (`https://aruma-seven.vercel.app/`)
+- **Frontend:** React (Vite), Tailwind CSS, Responsive UI components  
+- **Backend:** FastAPI (Python)  
+- **Database:** Supabase (PostgreSQL)  
+- **Deployment:** Vercel (Frontend) & Uvicorn/FastAPI (Backend local or server deployment)
 
 ---
 
