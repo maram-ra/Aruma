@@ -174,39 +174,41 @@ export default function ArumaLandingPage() {
         >
           {/* LEFT: Nav */}
           <nav
-              className="flex flex-wrap items-center gap-3 text-sm sm:text-base"
-            style={{
-              justifySelf: "start",
-              display: "flex",
-              alignItems: "center",
-              gap: "24px",
-              margin: "0 20px",
-            }}
-          >
-            <a href="#features" className="btn-text" style={{ color: brand.text }}>
-              Features
-            </a>
-            <a href="#about" className="btn-text" style={{ color: brand.text }}>
-              About
-            </a>
-          </nav>
+  className="header-nav flex flex-wrap items-center gap-3 text-sm sm:text-base"
+  style={{
+    justifySelf: "start",
+    display: "flex",
+    alignItems: "center",
+    gap: "24px",
+    margin: "0 20px",
+  }}
+>
+  <a href="#features" className="btn-text" style={{ color: brand.text }}>
+    Features
+  </a>
+  <a href="#about" className="btn-text" style={{ color: brand.text }}>
+    About
+  </a>
+</nav>
+
 
           {/* CENTER: Clickable logo to top */}
-          <div className="order-first sm:order-none w-full sm:w-auto flex justify-center">
-            <a href="#home" >
-              <img
-                src={PROJECT.logo}
-                alt="Aruma Logo"
-                className="object-contain cursor-pointer hover:opacity-80 transition"
-                style={{
-                  height: "56px",
-                  width: "auto",
-                  filter: "contrast(95%) brightness(98%)",
-                  transition: "opacity 0.3s ease",
-                }}
-              />
-            </a>
-          </div>
+          <div className="header-logo order-first sm:order-none w-full sm:w-auto flex justify-center">
+          <a href="#home">
+    <img
+      src={PROJECT.logo}
+      alt="Aruma Logo"
+      className="object-contain cursor-pointer hover:opacity-80 transition"
+      style={{
+        height: "56px",
+        width: "auto",
+        filter: "contrast(95%) brightness(98%)",
+        transition: "opacity 0.3s ease",
+      }}
+    />
+  </a>
+</div>
+
 
           {/* RIGHT: Button */}
           <div className="aruma-btn-container" style={{ justifySelf: "end" }}>

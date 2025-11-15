@@ -177,3 +177,28 @@ img {
   max-width: auto;
   height: 100%;
 }
+.header-logo img {
+  height: 56px;
+}
+
+@media (max-width: 640px) {
+  .header-logo img {
+    height: 40px !important; /* smaller logo for phones */
+  }
+}
+/* NAV: default desktop size */
+.header-nav a {
+  font-size: 1rem;
+}
+
+/* NAV: responsive on mobile */
+@media (max-width: 640px) {
+  .header-nav {
+    gap: 12px !important;
+    margin: 0 10px !important;
+  }
+
+  .header-nav a {
+    font-size: 0.8rem !important;
+  }
+}
