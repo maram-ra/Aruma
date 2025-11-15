@@ -42,8 +42,10 @@ Below is an overview of the main features currently implemented in the platform.
 
 Through the **User Type** page, users can choose whether they want to continue as an **artisan** or a **client**, ensuring a tailored experience from the start.
 
-- **Screenshot:**
-  - `Aruma/landing_page/public/User Type.png`
+**Screenshot:**
+
+![](Aruma/landing_page/public/User%20Type.png)
+
 
 ---
 
@@ -54,9 +56,14 @@ Clients can:
 - Create an account with their basic information.
 - Log in to access their profile and request history.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/cRegistration.png` – Client Registration
-  - `Aruma/landing_page/public/Login.png` – Client Login
+**Screenshots:**
+
+- **Client Registration**  
+  ![](Aruma/landing_page/public/cRegistration.png)
+
+- **Client Login**  
+  ![](Aruma/landing_page/public/Login.png)
+
 
 ---
 
@@ -67,9 +74,14 @@ Artisans can:
 - Register to create their artisan profile.
 - Log in to manage their profile and work.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/aRegistration.png` – Artisan Registration
-  - `Aruma/landing_page/public/Login.png` – Artisan Login
+**Screenshots:**
+
+- **Artisan Registration**  
+  ![](Aruma/landing_page/public/aRegistration.png)
+
+- **Artisan Login**  
+  ![](Aruma/landing_page/public/Login.png)
+
 
 ---
 
@@ -80,9 +92,13 @@ Clients can browse a curated **marketplace** of artisans:
 - View artisan cards and short info.
 - Open detailed profiles to learn more and request services.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/Marketplace.png`
-  - `Aruma/landing_page/public/Marketplace2.png`
+**Screenshots:**
+
+- **Marketplace View**  
+  ![](Aruma/landing_page/public/Marketplace.png)
+
+- **Marketplace View 2**  
+  ![](Aruma/landing_page/public/Marketplace2.png)
 
 ---
 
@@ -94,10 +110,16 @@ Artisans can manage all details shown on their public profile:
 - Edit account information.
 - Manage the “My Work” section with their offerings.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/aArtisan_Profile.png` – Artisan view of profile
-  - `Aruma/landing_page/public/aEdit_Account.png` – Edit Account form
-  - `Aruma/landing_page/public/aMy_Work.png` – Manage My Work form
+**Screenshots:**
+
+- **Artisan View of Profile**  
+  ![](Aruma/landing_page/public/aArtisan_Profile.png)
+
+- **Edit Account Form**  
+  ![](Aruma/landing_page/public/aEdit_Account.png)
+
+- **Manage My Work Form**  
+  ![](Aruma/landing_page/public/aMy_Work.png)
 
 ---
 
@@ -109,9 +131,14 @@ From the client side, users can:
 - View detailed information about the artisan's work.
 - Send a request using a dedicated request form.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/cArtisan_Profile.png` – Client view of artisan profile
-  - `Aruma/landing_page/public/cSend_Request.png` – “Send Request” form
+**Screenshots:**
+
+- **Client View of Artisan Profile**  
+  ![](Aruma/landing_page/public/cArtisan_Profile.png)
+
+- **“Send Request” Form**  
+  ![](Aruma/landing_page/public/cSend_Request.png)
+
 
 ---
 
@@ -122,9 +149,14 @@ Both **artisans** and **clients** can track the status of their requests:
 - Artisans see requests received from clients.
 - Clients see requests they have sent to artisans.
 
-- **Screenshots:**
-  - `Aruma/landing_page/public/aRequests Tracking.png` – Artisan view of requests
-  - `Aruma/landing_page/public/cRequests_Tracking.png` – Client view of requests
+**Screenshots:**
+
+- **Artisan View of Requests**  
+  ![](Aruma/landing_page/public/aRequests%20Tracking.png)
+
+- **Client View of Requests**  
+  ![](Aruma/landing_page/public/cRequests_Tracking.png)
+
 
 ---
 
