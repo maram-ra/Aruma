@@ -43,9 +43,6 @@ Below is an overview of the main features currently implemented in the platform.
 Through the **User Type** page, users can choose whether they want to continue as an **artisan** or a **client**, ensuring a tailored experience from the start.
 
 **Screenshot:**
-
-
-![User Type](https://github.com/maram-ra/Aruma/blob/main/landing_page/public/User%20Type.png)
 ![User Type](landing_page/public/User%20Type.png)
 
 
@@ -67,7 +64,7 @@ Clients can:
   ![](Aruma/landing_page/public/cRegistration.png)
 
 - **Client Login**  
-  ![](Aruma/landing_page/public/Login.png)
+  ![](landing_page/public/Login.png)
 
 
 ---
@@ -82,10 +79,10 @@ Artisans can:
 **Screenshots:**
 
 - **Artisan Registration**  
-  ![](Aruma/landing_page/public/aRegistration.png)
+  ![](landing_page/public/aRegistration.png)
 
 - **Artisan Login**  
-  ![](Aruma/landing_page/public/Login.png)
+  ![](landing_page/public/Login.png)
 
 
 ---
@@ -100,10 +97,10 @@ Clients can browse a curated **marketplace** of artisans:
 **Screenshots:**
 
 - **Marketplace View**  
-  ![](Aruma/landing_page/public/Marketplace.png)
+  ![](landing_page/public/Marketplace.png)
 
 - **Marketplace View 2**  
-  ![](Aruma/landing_page/public/Marketplace2.png)
+  ![](landing_page/public/Marketplace2.png)
 
 ---
 
@@ -118,13 +115,13 @@ Artisans can manage all details shown on their public profile:
 **Screenshots:**
 
 - **Artisan View of Profile**  
-  ![](Aruma/landing_page/public/aArtisan_Profile.png)
+  ![](landing_page/public/aArtisan_Profile.png)
 
 - **Edit Account Form**  
-  ![](Aruma/landing_page/public/aEdit_Account.png)
+  ![](landing_page/public/aEdit_Account.png)
 
 - **Manage My Work Form**  
-  ![](Aruma/landing_page/public/aMy_Work.png)
+  ![](landing_page/public/aMy_Work.png)
 
 ---
 
@@ -139,10 +136,10 @@ From the client side, users can:
 **Screenshots:**
 
 - **Client View of Artisan Profile**  
-  ![](Aruma/landing_page/public/cArtisan_Profile.png)
+  ![](landing_page/public/cArtisan_Profile.png)
 
 - **“Send Request” Form**  
-  ![](Aruma/landing_page/public/cSend_Request.png)
+  ![](landing_page/public/cSend_Request.png)
 
 
 ---
@@ -157,10 +154,10 @@ Both **artisans** and **clients** can track the status of their requests:
 **Screenshots:**
 
 - **Artisan View of Requests**  
-  ![](Aruma/landing_page/public/aRequests%20Tracking.png)
+  ![](landing_page/public/aRequests%20Tracking.png)
 
 - **Client View of Requests**  
-  ![](Aruma/landing_page/public/cRequests_Tracking.png)
+  ![](landing_page/public/cRequests_Tracking.png)
 
 
 ---
