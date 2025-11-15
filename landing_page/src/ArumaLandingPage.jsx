@@ -144,7 +144,7 @@ export default function ArumaLandingPage() {
           backdropFilter: "blur(6px)",
         }}
       > 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3"
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 grid items-center gap-3"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr auto 1fr", // left / center / right
