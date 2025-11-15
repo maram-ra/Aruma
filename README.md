@@ -58,7 +58,7 @@ Clients can:
 **Screenshots:**
 
 - **Client Registration**
-  ![](Aruma/landing_page/public/cRegistration.png)
+  ![](landing_page/public/cRegistration.png)
 
 - **Client Login**  
   ![](landing_page/public/Login.png)
