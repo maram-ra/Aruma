@@ -95,8 +95,6 @@ Clients can browse a curated **marketplace** of artisans:
 
 - **Marketplace View**  
   ![](landing_page/public/Marketplace.png)
-
-- **Marketplace View 2**  
   ![](landing_page/public/Marketplace2.png)
 
 ---
