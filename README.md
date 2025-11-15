@@ -2,7 +2,7 @@
 
 > A digital platform that empowers artisans to showcase their products and services, reach more clients, and strengthen their market presence through a comprehensive online space.
 
-![Aruma Logo](ArumaLogo.png)
+![Aruma Logo](landing_page/public/ArumaLogo.png)
 ![Aruma Cover](cover.jpg)
 
 ---
