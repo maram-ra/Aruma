@@ -159,10 +159,23 @@ Both **artisans** and **clients** can track the status of their requests:
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React (Vite), Tailwind CSS, Responsive UI components  
-- **Backend:** FastAPI (Python)  
-- **Database:** Supabase (PostgreSQL)  
-- **Deployment:** Vercel (Frontend) & Uvicorn/FastAPI (Backend local or server deployment)
+### **Frontend**
+- React (Vite)
+- React Router
+- Bootstrap 5
+- Custom UI Components
+
+### **Backend**
+- FastAPI (Python)
+- Uvicorn (Development Server)
+
+### **Database**
+- Supabase (PostgreSQL + Auth + Storage)
+
+### **Deployment**
+- **Frontend:** Vercel  
+- **Backend:** Render
+
 
 ---
 
