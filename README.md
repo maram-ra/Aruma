@@ -109,7 +109,7 @@ Artisans can manage all details shown on their public profile:
 
 **Screenshots:**
 
-- **Artisan View of Profile**  
+- **Artisan View To their Profile**  
   ![](landing_page/public/aArtisan_Profile.png)
 
 - **Edit Account Form**  
