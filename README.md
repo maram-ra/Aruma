@@ -43,10 +43,10 @@ Below is an overview of the main features currently implemented in the platform.
 Through the **User Type** page, users can choose whether they want to continue as an **artisan** or a **client**, ensuring a tailored experience from the start.
 
 **Screenshot:**
-![Aruma Cover](Aruma/landing_page/public/User%20Type.png)
-![Aruma Cover](cover.jpg)
 
-![](Aruma/landing_page/public/User%20Type.png)
+
+![User Type](https://github.com/maram-ra/Aruma/blob/main/landing_page/public/User%20Type.png)
+![User Type](landing_page/public/User%20Type.png)
 
 
 ---
