@@ -1,0 +1,166 @@
+# Aruma
+
+> A digital platform that empowers artisans to showcase their products and services, reach more clients, and strengthen their market presence through a comprehensive online space.
+
+![Aruma Logo](ArumaLogo.png)
+![Aruma Cover](cover.jpg)
+
+---
+
+## 🌐 Live Demo & Repository
+
+- **Live Website:** [Go to Aruma Website](https://aruma-seven.vercel.app/)
+- **Repository:** [GitHub Repo](https://github.com/maram-ra/Aruma)
+
+---
+
+## 🎯 Project Overview
+
+Many Saudi artisans struggle to find a unified digital space to present their handcrafted work, manage requests, and connect with modern clients.  
+
+**Aruma** was created to bridge that gap by providing:
+
+- A **dedicated profile** for artisans to present their work.
+- A **marketplace** where clients can discover artisans.
+- A **request and tracking system** connecting both sides.
+
+This project was developed as part of a portfolio project for  
+[Holberton School](https://www.holbertonschool.com/) in collaboration with  
+[Tuwaiq Academy](https://tuwaiq.edu.sa/), combining technology and culture in a meaningful way.
+
+---
+
+## ✨ Features
+
+Aruma serves **two main user types**: **artisans** and **clients**.  
+Below is an overview of the main features currently implemented in the platform.
+
+### 1. User Type Selection
+
+Through the **User Type** page, users can choose whether they want to continue as an **artisan** or a **client**, ensuring a tailored experience from the start.
+
+- **Screenshot:**
+  - `User Type.png`
+
+---
+
+### 2. Client Registration & Login
+
+Clients can:
+
+- Create an account with their basic information.
+- Log in to access their profile and request history.
+
+- **Screenshots:**
+  - `cRegistration.png` – Client Registration
+  - `Login.png` – Client Login
+
+---
+
+### 3. Artisan Registration & Login
+
+Artisans can:
+
+- Register to create their artisan profile.
+- Log in to manage their profile and work.
+
+- **Screenshots:**
+  - `aRegistration.png` – Artisan Registration
+  - `Login.png` – Artisan Login
+
+---
+
+### 4. Marketplace Browsing
+
+Clients can browse a curated **marketplace** of artisans:
+
+- View artisan cards and short info.
+- Open detailed profiles to learn more and request services.
+
+- **Screenshots:**
+  - `Marketplace.png`
+  - `Marketplace2.png`
+
+---
+
+### 5. Artisan Profile Management
+
+Artisans can manage all details shown on their public profile:
+
+- View how their profile appears to clients.
+- Edit account information.
+- Manage the “My Work” section with their offerings.
+
+- **Screenshots:**
+  - `aArtisan_Profile.png` – Artisan view of profile
+  - `aEdit_Account.png` – Edit Account form
+  - `aMy_Work.png` – Manage My Work form
+
+---
+
+### 6. Browsing Artisan Profile & Sending Requests
+
+From the client side, users can:
+
+- Open an artisan’s profile page.
+- View detailed information about the artisan's work.
+- Send a request using a dedicated request form.
+
+- **Screenshots:**
+  - `cArtisan_Profile.png` – Client view of artisan profile
+  - `cSend_Request.png` – “Send Request” form
+
+---
+
+### 7. Requests Tracking
+
+Both **artisans** and **clients** can track the status of their requests:
+
+- Artisans see requests received from clients.
+- Clients see requests they have sent to artisans.
+
+- **Screenshots:**
+  - `aRequests Tracking.png` – Artisan view of requests
+  - `cRequests_Tracking.png` – Client view of requests
+
+---
+
+## 🧩 Tech & UI Highlights
+
+This repository includes a **React** landing page built with a focus on clarity and storytelling:
+
+- Smooth scrolling navigation (`Features`, `About` sections).
+- Fixed header with logo linked back to the top.
+- Responsive layout with grid-based feature galleries.
+- Structured **Features** and **About the Project** sections.
+- Developer cards with inline SVG icons for **LinkedIn** and **GitHub**.
+- Year-agnostic footer:  
+  `© {new Date().getFullYear()} Aruma. All rights reserved.`
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React
+- **Styling:** CSS + utility classes (with responsive layout & grid)
+- **Deployment:** Vercel (`https://aruma-seven.vercel.app/`)
+
+---
+
+## 👩‍💻 Our Developers
+
+| Name              | Role                                  | LinkedIn | GitHub |
+|-------------------|----------------------------------------|----------|--------|
+| **Maram Alsofyani** | Frontend Developer & UI/UX Designer   | [LinkedIn](https://www.linkedin.com/in/maram-alsufyani-b2a761259?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/maram-ra) |
+| **Shurooq Alabbadi** | Frontend Developer & QA Engineer      | [LinkedIn](https://www.linkedin.com/in/shurooq-alabbadi-1738131b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/ShAlabbadi) |
+| **Razan Alabdulhadi** | Backend Developer & QA Engineer       | [LinkedIn](https://www.linkedin.com/in/razan-alabdulhadii-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/CODERrazan) |
+| **Layan Aljunayh**   | Backend & Database Developer          | [LinkedIn](https://www.linkedin.com/in/layan-aljunayh-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/CoderLayan) |
+
+---
+
+## 🚀 Getting Started (Local Setup)
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/maram-ra/Aruma.git
+   cd Aruma
