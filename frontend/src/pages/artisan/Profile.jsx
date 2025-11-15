@@ -1,8 +1,9 @@
-// src/pages/artisan/Profile.jsx
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ProfileLoader from "../../components/ProfileLoader";
+
 import {
   alertSuccess,
   alertError,
@@ -487,13 +488,10 @@ export default function Profile() {
     if (artisanId && token) load();
   }, [artisanId, token]);
 
-  if (!artisan) {
-    return (
-      <div className="text-center py-5">
-        <p>Loading profile...</p>
-      </div>
-    );
-  }
+ if (!artisan) {
+  return <ProfileLoader />;
+}
+
 
   return (
     <div className="artisan-profile">
