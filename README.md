@@ -4,7 +4,6 @@
 
 
 ---
-/*![Aruma Cover](landing_page/public/cover.jpg)*/
 
 # Aruma
 
@@ -45,7 +44,7 @@ Below is an overview of the main features currently implemented in the platform.
 Through the **User Type** page, users can choose whether they want to continue as an **artisan** or a **client**, ensuring a tailored experience from the start.
 
 - **Screenshot:**
-  - `User Type.png`
+  - `landing_page/public/User Type.png`
 
 ---
 
@@ -57,8 +56,8 @@ Clients can:
 - Log in to access their profile and request history.
 
 - **Screenshots:**
-  - `cRegistration.png` – Client Registration
-  - `Login.png` – Client Login
+  - `landing_page/public/cRegistration.png` – Client Registration
+  - `landing_page/public/Login.png` – Client Login
 
 ---
 
@@ -70,8 +69,8 @@ Artisans can:
 - Log in to manage their profile and work.
 
 - **Screenshots:**
-  - `aRegistration.png` – Artisan Registration
-  - `Login.png` – Artisan Login
+  - `landing_page/public/aRegistration.png` – Artisan Registration
+  - `landing_page/public/Login.png` – Artisan Login
 
 ---
 
@@ -83,8 +82,8 @@ Clients can browse a curated **marketplace** of artisans:
 - Open detailed profiles to learn more and request services.
 
 - **Screenshots:**
-  - `Marketplace.png`
-  - `Marketplace2.png`
+  - `landing_page/public/Marketplace.png`
+  - `landing_page/public/Marketplace2.png`
 
 ---
 
@@ -97,9 +96,9 @@ Artisans can manage all details shown on their public profile:
 - Manage the “My Work” section with their offerings.
 
 - **Screenshots:**
-  - `aArtisan_Profile.png` – Artisan view of profile
-  - `aEdit_Account.png` – Edit Account form
-  - `aMy_Work.png` – Manage My Work form
+  - `landing_page/public/aArtisan_Profile.png` – Artisan view of profile
+  - `landing_page/public/aEdit_Account.png` – Edit Account form
+  - `landing_page/public/aMy_Work.png` – Manage My Work form
 
 ---
 
@@ -112,8 +111,8 @@ From the client side, users can:
 - Send a request using a dedicated request form.
 
 - **Screenshots:**
-  - `cArtisan_Profile.png` – Client view of artisan profile
-  - `cSend_Request.png` – “Send Request” form
+  - `landing_page/public/cArtisan_Profile.png` – Client view of artisan profile
+  - `landing_page/public/cSend_Request.png` – “Send Request” form
 
 ---
 
@@ -125,8 +124,8 @@ Both **artisans** and **clients** can track the status of their requests:
 - Clients see requests they have sent to artisans.
 
 - **Screenshots:**
-  - `aRequests Tracking.png` – Artisan view of requests
-  - `cRequests_Tracking.png` – Client view of requests
+  - `landing_page/public/aRequests Tracking.png` – Artisan view of requests
+  - `landing_page/public/cRequests_Tracking.png` – Client view of requests
 
 ---
 
