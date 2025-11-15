@@ -30,9 +30,8 @@ Many Saudi artisans struggle to find a unified digital space to present their ha
 - A **marketplace** where clients can discover artisans.
 - A **request and tracking system** connecting both sides.
 
-This project was developed as part of a portfolio project for  
-[Holberton School](https://www.holbertonschool.com/) in collaboration with  
-[Tuwaiq Academy](https://tuwaiq.edu.sa/), combining technology and culture in a meaningful way.
+This project was developed collaboratively as part of a portfolio project for  
+[Holberton School](https://www.holbertonschool.com/) Supervised by [Tuwaiq Academy](https://tuwaiq.edu.sa/), and represents our shared vision to combine technology and culture in a meaningful way.
 
 ---
 
@@ -163,10 +162,3 @@ This repository includes a **React** landing page built with a focus on clarity 
 | **Layan Aljunayh**   | Backend & Database Developer          | [LinkedIn](https://www.linkedin.com/in/layan-aljunayh-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/CoderLayan) |
 
 ---
-
-## 🚀 Getting Started (Local Setup)
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/maram-ra/Aruma.git
-   cd Aruma
