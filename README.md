@@ -94,7 +94,8 @@ Clients can browse a curated **marketplace** of artisans:
 
 - **Marketplace View**  
   ![](landing_page/public/Marketplace.png)
-  ![](landing_page/public/Marketplace2.png)
+  <img width="1877" height="911" alt="Screenshot 2025-11-11 213116" src="https://github.com/user-attachments/assets/7abf621c-99c4-4024-9c23-25456825923c" />
+
 
 ---
 
