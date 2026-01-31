@@ -15,7 +15,6 @@
 ## 🌐 Live Demo
 
 - **Live Website:** [Go to Aruma Website](https://aruma-seven.vercel.app/)
-- **Landing Page:** [Go to Aruma Landing Page](https://arumalandingpage.vercel.app/)
 
 ---
 
