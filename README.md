@@ -180,13 +180,12 @@ Both **artisans** and **clients** can track the status of their requests:
 ---
 
 ## 👩‍💻 Our Developers
+| Name                | Role                                         | LinkedIn | GitHub |
+|---------------------|----------------------------------------------|----------|--------|
+| **Maram Alsofyani** | Frontend Developer, UI/UX Designer, Project Manager | [LinkedIn](https://www.linkedin.com/in/maram-alsufyani-b2a761259) | [GitHub](https://github.com/maram-ra) |
+| **Shurooq Alabbadi** | Frontend Developer & QA Engineer             | [LinkedIn](https://www.linkedin.com/in/shurooq-alabbadi-1738131b6) | [GitHub](https://github.com/ShAlabbadi) |
+| **Razan Alabdulhadi** | Backend Developer & QA Engineer              | [LinkedIn](https://www.linkedin.com/in/razan-alabdulhadii-) | [GitHub](https://github.com/CODERrazan) |
+| **Layan Aljunayh**   | Backend & Database Developer                 | [LinkedIn](https://www.linkedin.com/in/layan-aljunayh-) | [GitHub](https://github.com/CoderLayan) |
 
-| Name              | Role                                  | LinkedIn | GitHub |
-|-------------------|----------------------------------------|----------|--------|
-| **Maram Alsofyani** | Frontend Developer, UI/UX Designer
- | [LinkedIn](https://www.linkedin.com/in/maram-alsufyani-b2a761259?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/maram-ra) |
-| **Shurooq Alabbadi** | Frontend Developer & QA Engineer      | [LinkedIn](https://www.linkedin.com/in/shurooq-alabbadi-1738131b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/ShAlabbadi) |
-| **Razan Alabdulhadi** | Backend Developer & QA Engineer       | [LinkedIn](https://www.linkedin.com/in/razan-alabdulhadii-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/CODERrazan) |
-| **Layan Aljunayh**   | Backend & Database Developer          | [LinkedIn](https://www.linkedin.com/in/layan-aljunayh-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) | [GitHub](https://github.com/CoderLayan) |
 
 ---
